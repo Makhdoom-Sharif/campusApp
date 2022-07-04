@@ -22,6 +22,7 @@ import FormControl from "@mui/material/FormControl";
 import { signUp } from "../firebase/signup";
 import { registerFail, registerStart, registerSuccess } from "../redux/action";
 import { LoadingButton } from "@mui/lab";
+import { Alert, Snackbar } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -44,12 +45,14 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const [error, setError] = useState();
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const UserDetails = useSelector((state) => state.user);
   // const { currentUser, error } = useSelector((state) => state?.user);
   useEffect(() => {
-    if (UserDetails.currentUser) {
+    if (UserDetails.currentUser===true) {
       navigate("/homepage");
     }
   }, [UserDetails.currentUser, navigate]);
@@ -76,8 +79,6 @@ export default function SignUp() {
     validationSchema,
 
     onSubmit: async (values) => {
-      // console.log(validationSchema);
-      // alert(JSON.stringify(values, null, 2));
       dispatch(registerStart());
       try {
         await signUp({
@@ -85,38 +86,26 @@ export default function SignUp() {
           password: values.password,
           roll: values.roll,
           userName: values.userName,
+          dispatch,
         });
-        dispatch(registerSuccess(values));
         alert("SignUp Successfully");
       } catch (e) {
         dispatch(registerFail());
-        alert(e.message);
+        setOpen(true);
+        console.log(e);
+        setError(e.message);
       }
     },
   });
   console.log(formik.errors);
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log(data.get);
-  //   console.log({
-  //     fullname: data.get("fullname"),
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //     roll: roll,
-  //   });
-  //   try {
-  //     await signUp({
-  //       fullname: data.get("fullname"),
-  //       email: data.get("email"),
-  //       password: data.get("password"),
-  //       roll: roll,
-  //     });
-  //     alert("SignUp Successfully");
-  //   } catch (e) {
-  //     alert(e.message);
-  //   }
-  // };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,6 +119,20 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -161,10 +164,6 @@ export default function SignUp() {
                     {formik.errors.email}
                   </p>
                 )}
-                {/* <ErrorMessage name="name" /> */}
-                {/* <ErrorMessage name="email">
-                  {(msg) => <div>{msg}</div>}
-                </ErrorMessage> */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -185,13 +184,10 @@ export default function SignUp() {
                 )}
               </Grid>
               <Grid item xs={12}>
-                {/* <RadioButtonsGroup func={pull_data} /> */}
                 <FormControl>
                   <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
-                    // name="row-radio-buttons-group"
-                    // onChange={formik.handleChange}
                     name="roll"
                     value={formik.values.inCompliance}
                     onChange={(e) => {

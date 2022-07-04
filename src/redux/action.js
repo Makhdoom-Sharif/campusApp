@@ -10,7 +10,12 @@ export const registerStart = () => ({
 });
 export const registerSuccess = (Data) => ({
   type: type.REGISTER_SUCCESS,
-  payload: Data.roll
+  payload: {
+    uid: Data.uid,
+    roll: Data.roll,
+    email: Data.email,
+    userName: Data.userName,
+  },
 });
 export const registerFail = () => ({
   type: type.REGISTER_FAIL,
@@ -26,7 +31,12 @@ export const saveUid = (Data) => ({
 });
 export const loginSuccess = (Data) => ({
   type: type.LOGIN_SUCCESS,
-  payload: Data.roll,
+  payload: {
+    email: Data.email,
+    uid: Data.uid,
+    roll: Data.roll,
+    userName: Data.userName,
+  },
 });
 export const loginFail = () => ({
   type: type.LOGIN_FAIL,
@@ -36,13 +46,13 @@ export const logoutStart = () => ({
   type: type.LOGOUT_START,
 });
 export const passwordResetInitiaite = () => ({
-type: type.PASSWORD_RESET_INITIATE,
+  type: type.PASSWORD_RESET_INITIATE,
 });
 export const passwordResetSuccess = () => ({
-  type: type.PASSWORD_RESET_SUCCESS
+  type: type.PASSWORD_RESET_SUCCESS,
 });
 export const passordResetFail = () => ({
-  type: type.PASSWORD_RESET_FAIL
+  type: type.PASSWORD_RESET_FAIL,
 });
 export const logoutSuccess = () => ({
   type: type.LOGOUT_SUCCESS,
