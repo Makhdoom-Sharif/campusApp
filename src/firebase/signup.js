@@ -1,7 +1,7 @@
-import {firebaseConfig, app, database} from './firebaseConfig'
-import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { ref, set } from "firebase/database";
 import { registerSuccess } from '../redux/action';
+import { database } from './firebaseConfig';
 
 
 const auth = getAuth();
@@ -24,7 +24,8 @@ async function writeUserData(uid,email, roll,userName,dispatch) {
         console.log(error)
     };}
 
-  export{
-    signUp
+  export {
+  signUp
 
-  }
+};
+

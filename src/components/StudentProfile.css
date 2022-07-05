@@ -1,41 +1,67 @@
-.profile{
-    display: flex;
-    align-content: space-between;
-    justify-content: space-between;
+.profileHead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-bottom: 5%;
 }
 
-.data p{
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    align-items: center;
-    border: 2px solid #9c27b0;
-    border-radius: 8px;
-    padding: 5px;
-    width: 50%;
-
+.profile {
+  width: 40%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.input-field {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.Icon-btn {
+  cursor: pointer;
+  width: 0.75em !important;
+  height: 0.75em !important;
+  fill: #757575 !important;
+}
+.Icon-btn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.uploadBtn {
+  position: absolute;
+  z-index: 1;
+  margin-left: 15%;
+  /* display: none; */
+}
+.Avatar {
+  width: 20vh !important;
+  height: 20vh !important;
+  margin-top: 4%;
+}
+.head {
+  position: relative;
 }
 
-.data{
-    text-align: left ;
-    margin-left: 5px;
+.bottom-btns {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+  align-items: center;
+  flex-direction: row;
 }
-
-.Personal-info{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 40%;
-
-}
-
-.textfield{
-    margin-bottom: 10px;
-}
-.profile-left{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 5%;
+.apply-btn {
+  margin-right: 15px;
 }

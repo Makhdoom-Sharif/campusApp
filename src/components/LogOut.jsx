@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logoutFail, logoutStart, logoutSuccess } from "../redux/action";
 
 const auth = getAuth();

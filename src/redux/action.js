@@ -2,71 +2,85 @@ import * as type from "./actionType";
 import { auth } from "../firebase/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from "firebase/auth";
 
 export const registerStart = () => ({
-  type: type.REGISTER_START,
+  type: type.REGISTER_START
 });
-export const registerSuccess = (Data) => ({
+export const registerSuccess = Data => ({
   type: type.REGISTER_SUCCESS,
   payload: {
     uid: Data.uid,
     roll: Data.roll,
     email: Data.email,
-    userName: Data.userName,
-  },
+    userName: Data.userName
+  }
 });
 export const registerFail = () => ({
-  type: type.REGISTER_FAIL,
+  type: type.REGISTER_FAIL
 });
 
 export const loginStart = () => ({
-  type: type.LOGIN_START,
+  type: type.LOGIN_START
 });
 
-export const saveUid = (Data) => ({
+export const saveUid = Data => ({
   type: type.SAVE_UID,
-  payload: Data,
+  payload: Data
 });
-export const loginSuccess = (Data) => ({
+export const loginSuccess = Data => ({
   type: type.LOGIN_SUCCESS,
   payload: {
     email: Data.email,
     uid: Data.uid,
     roll: Data.roll,
-    userName: Data.userName,
-  },
+    userName: Data.userName
+  }
 });
 export const loginFail = () => ({
-  type: type.LOGIN_FAIL,
+  type: type.LOGIN_FAIL
 });
 
 export const logoutStart = () => ({
-  type: type.LOGOUT_START,
+  type: type.LOGOUT_START
 });
 export const passwordResetInitiaite = () => ({
-  type: type.PASSWORD_RESET_INITIATE,
+  type: type.PASSWORD_RESET_INITIATE
 });
 export const passwordResetSuccess = () => ({
-  type: type.PASSWORD_RESET_SUCCESS,
+  type: type.PASSWORD_RESET_SUCCESS
 });
 export const passordResetFail = () => ({
-  type: type.PASSWORD_RESET_FAIL,
+  type: type.PASSWORD_RESET_FAIL
 });
 export const logoutSuccess = () => ({
-  type: type.LOGOUT_SUCCESS,
+  type: type.LOGOUT_SUCCESS
 });
-export const logoutFail = (error) => ({
+export const logoutFail = error => ({
   type: type.LOGOUT_FAIL,
-  payload: error,
+  payload: error
 });
 
-export const setUser = (user) => ({
+export const setUser = user => ({
   type: type.SET_USER,
-  payload: user,
+  payload: user
 });
 
 export const clearError = () => ({
-  type: type.CLEAR_ERROR,
+  type: type.CLEAR_ERROR
+});
+export const StudentProfileUpdateInit = () => ({
+  type: type.STUDENT_POFILE_UPDATE_INIT
+});
+export const StudentProfileUpdateSuccess = Data => ({
+  type: type.STUDENT_POFILE_UPDATE_SUCCESS,
+  payload: {
+    fullname: Data.fullname,
+    fathername: Data.fathername,
+    cnic: Data.cnic,
+    address: Data.address,
+    contact: Data.contact,
+    qualification: Data.qualification
+  }
 });

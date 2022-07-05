@@ -1,76 +1,86 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import SchoolIcon from "@mui/icons-material/School";
-import {
-  Avatar,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
-import Title from "./Title";
-import "./StudentProfile.css";
-import UpdateIcon from "@mui/icons-material/Update";
-import { useState } from "react";
 import { AccountCircle } from "@material-ui/icons";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
+import CallIcon from "@mui/icons-material/Call";
+import DoneIcon from "@mui/icons-material/Done";
+import EditIcon from "@mui/icons-material/Edit";
 import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
-import CallIcon from "@mui/icons-material/Call";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getDatabase, ref, child, get } from "firebase/database";
-import EditIcon from "@mui/icons-material/Edit";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import DoneIcon from "@mui/icons-material/Done";
+import SchoolIcon from "@mui/icons-material/School";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import DatePicker from "@mui/lab/DatePicker";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { Avatar, InputAdornment, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import { child, get, getDatabase, ref } from "firebase/database";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Textfield from "./Inputfeild/Textfield";
+import "./StudentProfile.css";
+import Title from "./Title";
+import NumbersIcon from "@mui/icons-material/Numbers";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import { LoadingButton } from "@mui/lab";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import studentDataUpdate from "../firebase/studentDataUpdate";
+import { StudentProfileUpdateInit } from "../redux/action";
 
 export default function StudentProfile() {
-  const UserDetails = useSelector((state) => state.user);
-  const [date, setDate] = useState(null);
   const [disable, setDisable] = useState(true);
-
-  const handleUpdate = (event) => {
-    event.preventDefault();
+  const UserDetails = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const handleChange = (e) => {
     setDisable(false);
+    formik.handleChange(e);
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(data.get);
-    console.log({
-      fullname: data.get("fullname"),
-      email: data.get("email"),
-      password: data.get("password"),
-      fathername: data.get("fathername"),
-    });
+  const handleReset = () => {
     setDisable(true);
+    formik.handleReset();
   };
-  useEffect(() => {
-    const dbRef = ref(getDatabase());
-    const fetchData = async () => {
-      await get(child(dbRef, `users/${UserDetails.uid}`))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            console.log(snapshot.val());
-          } else {
-            console.log("Data not exist");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-    fetchData();
-    console.log(UserDetails.uid);
-  }, [disable]);
+
+  const validationSchema = Yup.object({
+    fullname: Yup.string(),
+    fathername: Yup.string(),
+    cnic: Yup.number(),
+    address: Yup.string(),
+    contact: Yup.number(),
+    qualification: Yup.string()
+  });
+  const Input = styled("input")({
+    display: "none"
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      fullname: UserDetails.fullname,
+      fathername: UserDetails.fathername,
+      cnic: UserDetails.cnic,
+      address: UserDetails.address,
+      contact: UserDetails.contact,
+      qualification: UserDetails.qualification
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      dispatch(StudentProfileUpdateInit())
+      setDisable(true);
+      console.log("dsds", values);
+
+      await studentDataUpdate({
+        uid: UserDetails.uid,
+        dispatch: dispatch,
+        fullname: values.fullname,
+        fathername: values.fathername,
+        cnic: values.cnic,
+        address: values.address,
+        contact: values.contact,
+        qualification: values.qualification
+      });
+    }
+  });
+
   return (
     <>
       <Box
@@ -81,235 +91,245 @@ export default function StudentProfile() {
           "& > :not(style)": {
             m: 1,
             width: "128vh",
-            height: "128vh",
-          },
+            height: "128vh"
+          }
         }}
       >
         <Paper
           elevation={3}
-          component="form"
-          onSubmit={disable ? handleUpdate : handleSubmit}
+          component='form'
+          onSubmit={formik.handleSubmit}
+          // onSubmit={disable ? handleUpdate : handleSubmit}
         >
-          <div className="profile">
-            <div className="profile-left">
+          <div className='profileHead'>
+            <div className='head'>
               <div>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="/static/images/avatar/1.jpg"
-                  sx={{
-                    width: "25vh",
-                    height: "25vh",
-                    marginLeft: "2%",
-                    marginTop: "4%",
-                  }}
-                />
+                <label htmlFor='icon-button-file' className='uploadBtn'>
+                  <Input accept='image/*' id='icon-button-file' type='file' />
+                  <IconButton aria-label='upload picture' component='span'>
+                    <PhotoCamera />
+                  </IconButton>
+                </label>
               </div>
+              <Avatar alt='Remy Sharp' src='#' className='Avatar' />
             </div>
-            <div style={{ width: "65%" }}>
-              <div className="Personal-info">
-                <Title>Personal Info</Title>
-                <div>
-                  <TextField
-                    multiline
-                    rowsMax={4}
-                    id="input-with-icon-textfield"
-                    label="Full Name"
-                    required
-                    value={UserDetails.name}
-                    name="fullname"
-                    fullWidth
-                    disabled={disable}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountCircle />
-                        </InputAdornment>
-                      ),
-                      disableUnderline: disable,
-                    }}
-                    variant="standard"
-                    style={{ marginBottom: "10px" }}
-                  />
-                  <EditIcon />
-                  <DoneIcon />
-                </div>
-                <TextField
-                  id="input-with-icon-textfield"
-                  label="Father Name"
-                  fullWidth
-                  multiline
-                  name="fathername"
-                  rowsMax={4}
-                  disabled={disable}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    ),
-                    disableUnderline: disable,
-                  }}
-                  variant="standard"
-                  style={{ marginBottom: "10px" }}
-                />
-                <TextField
-                  variant="standard"
-                  id="standard-basic"
-                  label="CNIC No"
-                  type="tel"
-                  disabled={disable}
-                  fullWidth
-                  multiline
-                  rowsMax={4}
-                  name="cnic no."
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                      event.preventDefault();
-                    }
-                  }}
-                  inputProps={{
-                    minLength: 13,
-                    maxLength: 13,
-                  }}
-                  InputProps={{ disableUnderline: disable }}
-                  autoComplete="off"
-                  style={{ marginBottom: "10px" }}
-                />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignCcontent: "center",
+              justifyContent: "center"
+            }}
+          >
+            <div className='profile'>
+              <Title>Personal Info</Title>
+              <Textfield
+                id='input-with-icon-textfield'
+                label='Full Name'
+                name='fullname'
+                fullWidth
+                onChange={handleChange}
+                value={formik.values.fullname}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <AccountCircle />
+                    </InputAdornment>
+                  )
+                }}
+                variant='standard'
+                style={{ marginBottom: "10px" }}
+              />
+
+              <Textfield
+                id='input-with-icon-textfield'
+                label='Father Name'
+                fullWidth={true}
+                name='fathername'
+                onChange={handleChange}
+                value={formik.values.fathername}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <AccountCircle />
+                    </InputAdornment>
+                  )
+                }}
+                variant='standard'
+                style={{ marginBottom: "10px" }}
+              />
+              <Textfield
+                variant='standard'
+                id='standard-basic'
+                label='CNIC No'
+                type='tel'
+                fullWidth={true}
+                name='cnic'
+                onChange={handleChange}
+                value={formik.values.cnic}
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <NumbersIcon />
+                    </InputAdornment>
+                  )
+                }}
+                inputProps={{
+                  minLength: 13,
+                  maxLength: 13
+                }}
+                autoComplete='off'
+                style={{ marginBottom: "10px" }}
+              />
+              {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     disabled={disable}
                     renderInput={(props) => (
                       <TextField
                         fullWidth
                         disabled={disable}
-                        variant="standard"
-                        id="standard-basic"
+                        variant='standard'
+                        id='standard-basic'
                         multiline
                         rowsMax={4}
-                        label="Date Of Birth"
-                        name="DOB"
-                        autoComplete="off"
+                        label='Date Of Birth'
+                        name='DOB'
+                        autoComplete='off'
                         {...props}
                         InputProps={{ disableUnderline: disable }}
                       />
                     )}
-                    label="Date Of Birth"
+                    label='Date Of Birth'
                     value={date}
                     onChange={(newValue) => {
                       setDate(new Date(newValue).toString());
                     }}
                   />
-                </LocalizationProvider>
-                <br />
-                <Title>Contact Info</Title>
-                <TextField
-                  id="input-with-icon-textfield"
-                  label="Email"
-                  fullWidth
-                  required
-                  disabled={disable}
-                  multiline
-                  rowsMax={4}
-                  type="email"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <EmailIcon />
-                      </InputAdornment>
-                    ),
-                    disableUnderline: disable,
-                  }}
-                  variant="standard"
-                  style={{ marginBottom: "10px" }}
-                />
-                <TextField
-                  id="input-with-icon-textfield"
-                  label="Permenant Address"
-                  fullWidth
-                  multiline
-                  disabled={disable}
-                  rowsMax={4}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    ),
-                    disableUnderline: disable,
-                  }}
-                  variant="standard"
-                  style={{ marginBottom: "10px" }}
-                />
-                <TextField
-                  variant="standard"
-                  id="input-with-icon-textfield"
-                  label="Contact No"
-                  disabled={disable}
-                  type="tel"
-                  fullWidth
-                  multiline
-                  rowsMax={4}
-                  name="contact no."
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                      event.preventDefault();
-                    }
-                  }}
-                  inputProps={{ minLength: 11, maxLength: 11 }}
-                  autoComplete="off"
-                  style={{ marginBottom: "10px" }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <CallIcon />
-                      </InputAdornment>
-                    ),
-                    disableUnderline: disable,
-                  }}
-                />
-                <br />
-                <Title>Academic Info</Title>
-                <TextField
-                  multiline
-                  rowsMax={4}
-                  id="input-with-icon-textfield"
-                  label="Highest Qualification"
-                  fullWidth
-                  disabled={disable}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SchoolIcon />
-                      </InputAdornment>
-                    ),
-                    disableUnderline: disable,
-                  }}
-                  variant="standard"
-                  style={{ marginBottom: "10px" }}
-                />
-              </div>
+                </LocalizationProvider> */}
+              {/* {disable ? (
+                  <button className='btn'>
+                    <EditIcon className='Icon-btn' />
+                  </button>
+                ) : (
+                  <button className='btn'>
+                    <DoneIcon className='Icon-btn' />
+                  </button>
+                )}
+              </div>*/}
+              <br />
+              <Title>Contact Info</Title>
+              <TextField
+                id='input-with-icon-textfield'
+                label='Email'
+                fullWidth
+                disabled={true}
+                multiline
+                rowsMax={4}
+                type='email'
+                value={UserDetails.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                  disableUnderline: true
+                }}
+                variant='standard'
+                style={{ marginBottom: "10px" }}
+              />
+              <Textfield
+                id='input-with-icon-textfield'
+                label='Permenant Address'
+                fullWidth={true}
+                name='address'
+                onChange={handleChange}
+                value={formik.values.address}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <HomeIcon />
+                    </InputAdornment>
+                  )
+                }}
+                variant='standard'
+                style={{ marginBottom: "10px" }}
+              />
+              <Textfield
+                variant='standard'
+                id='input-with-icon-textfield'
+                label='Contact No'
+                type='tel'
+                fullWidth={true}
+                name='contact'
+                onChange={handleChange}
+                value={formik.values.contact}
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+                inputProps={{ minLength: 11, maxLength: 11 }}
+                autoComplete='off'
+                style={{ marginBottom: "10px" }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <CallIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+              <br />
+              <Title>Academic Info</Title>
+              <Textfield
+                id='input-with-icon-textfield'
+                label='Highest Qualification'
+                name='qualification'
+                fullWidth={true}
+                onChange={handleChange}
+                value={formik.values.qualification}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <SchoolIcon />
+                    </InputAdornment>
+                  )
+                }}
+                variant='standard'
+                style={{ marginBottom: "10px" }}
+              />
             </div>
           </div>
-
-          {disable === true ? (
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ marginRight: "10px" }}
-              type="submit"
-            >
-              Update
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ marginRight: "10px" }}
-              type="submit"
-            >
-              Apply Changes
-            </Button>
-          )}
+          <div className='bottom-btns'>
+            <div className='apply-btn'>
+              <LoadingButton
+                type='submit'
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+                disabled={disable}
+                loading={UserDetails.loading ? true : false}
+              >
+                Apply Changes
+              </LoadingButton>
+            </div>
+            <div className='reset-btn'>
+              <LoadingButton
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+                disabled={disable}
+                loading={UserDetails.loading ? true : false}
+                onClick={handleReset}
+              >
+                Reset
+              </LoadingButton>
+            </div>
+          </div>
         </Paper>
       </Box>
     </>

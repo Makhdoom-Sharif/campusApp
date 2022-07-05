@@ -10,6 +10,12 @@ const initialState = {
   approve: true,
   email: "",
   userName: "",
+  fullname: "",
+  fathername: "",
+  cnic: "",
+  address: "",
+  contact: "",
+  qualification: ""
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -19,10 +25,7 @@ const userReducer = (state = initialState, action) => {
     case type.PASSWORD_RESET_INITIATE:
       // case type.GOOGLE_LOGIN_START:
       // case type.FACEBOOK_LOGIN_START:
-      return {
-        ...state,
-        loading: true,
-      };
+      return { ...state, loading: true };
     case type.LOGOUT_SUCCESS:
       return {
         ...state,
@@ -31,15 +34,20 @@ const userReducer = (state = initialState, action) => {
         roll: null,
         userName: "",
         email: "",
-        uid: null,
+        uid: null
       };
-    case type.SET_USER:
+    case type.STUDENT_POFILE_UPDATE_INIT:
+      return { ...state, loading: true };
+    case type.STUDENT_POFILE_UPDATE_SUCCESS:
       return {
         ...state,
         loading: false,
-        currentUser: true,
-        roll: action.payload,
-        error: "",
+        fullname: action.payload.fullname,
+        fathername: action.payload.fathername,
+        cnic: action.payload.cnic,
+        address: action.payload.address,
+        contact: action.payload.contact,
+        qualification: action.payload.qualification
       };
     case type.LOGIN_SUCCESS:
     case type.REGISTER_SUCCESS:
@@ -50,13 +58,10 @@ const userReducer = (state = initialState, action) => {
         roll: action.payload.roll,
         email: action.payload.email,
         uid: action.payload.uid,
-        userName: action.payload.userName,
+        userName: action.payload.userName
       };
-      case type.LOGOUT_FAIL:
-          return {
-              ...state,
-              loading: false
-          }
+    case type.LOGOUT_FAIL:
+      return { ...state, loading: false };
 
     //   // case type.GOOGLE_LOGIN_SUCCESS:
     //   // case type.FACEBOOK_LOGIN_SUCCESS:
@@ -69,27 +74,14 @@ const userReducer = (state = initialState, action) => {
     //   };
     case type.REGISTER_FAIL:
     case type.LOGIN_FAIL:
-      return {
-        ...state,
-        loading: false,
-        currentUser: false,
-      };
+      return { ...state, loading: false, currentUser: false };
     case type.PASSWORD_RESET_FAIL:
     case type.PASSWORD_RESET_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
+      return { ...state, loading: false };
     case type.CLEAR_ERROR:
-      return {
-        ...state,
-        error: "",
-      };
+      return { ...state, error: "" };
     case type.SAVE_UID:
-      return {
-        ...state,
-        uid: action.payload,
-      };
+      return { ...state, uid: action.payload };
     default:
       return state;
   }
