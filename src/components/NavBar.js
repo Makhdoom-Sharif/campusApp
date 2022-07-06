@@ -14,7 +14,8 @@ import { Avatar, Button } from "@mui/material";
 import "./NavBar.css";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { LogOut } from "./LogOut";
+import { LogOut } from "./LongMenu/LogOut";
+import LongMenu from "./LongMenu/LongMenu";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -78,13 +79,14 @@ export default function BackToTop(props) {
             </Link>
           </Typography>
           <div className="buttons">
-            {currentUser ? (
+            {currentUser &&(
               <>
                 <div style={{ marginRight: "15px" }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 </div>
-                <div>
-                  <Link
+                {/* <div> */}
+                  <LongMenu/>
+                  {/* <Link
                     to={
                       roll === "student" ? "/studentprofile" : "/companyprofile"
                     }
@@ -97,11 +99,11 @@ export default function BackToTop(props) {
                     >
                       Profile
                     </Button>
-                  </Link>
+                  </Link> 
                 </div>
-                <LogOut />
+                <LogOut />*/}
               </>
-            ) : <></>}
+            ) }
           </div>
         </Toolbar>
       </AppBar>

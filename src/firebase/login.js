@@ -1,6 +1,6 @@
-import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import { getDatabase, ref, child, get } from "firebase/database";
-import { loginInitiate,clearError,loginStart,loginSuccess,loginFail } from "../redux/action";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { child, get, getDatabase, ref } from "firebase/database";
+import { loginSuccess } from "../redux/action";
 
 const auth = getAuth();
 const loginUser= async (authParams)=>{
@@ -14,8 +14,8 @@ await get(child(dbRef, `users/${uid}`))
   .then(async (snapshot) => {
     if (snapshot.exists()) {
       console.log(snapshot.val());
-      const { userName, roll } = await snapshot.val();
-       await dispatch(loginSuccess({uid, email, userName, roll}));
+      await snapshot.val();
+       await dispatch(loginSuccess(snapshot.val()));
     } else {
       console.log("Login fail");
     }

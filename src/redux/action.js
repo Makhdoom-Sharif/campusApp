@@ -35,7 +35,13 @@ export const loginSuccess = Data => ({
     email: Data.email,
     uid: Data.uid,
     roll: Data.roll,
-    userName: Data.userName
+    userName: Data.userName,
+    fullname: Data.fullname,
+    fathername: Data.fathername,
+    cnic: Data.cnic,
+    address: Data.address,
+    contact: Data.contact,
+    qualification: Data.qualification
   }
 });
 export const loginFail = () => ({
@@ -83,4 +89,7 @@ export const StudentProfileUpdateSuccess = Data => ({
     contact: Data.contact,
     qualification: Data.qualification
   }
+});
+export const StudentProfileUpdateFail = Data => ({
+  type: type.STUDENT_POFILE_UPDATE_Fail
 });

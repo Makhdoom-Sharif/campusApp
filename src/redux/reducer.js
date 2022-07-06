@@ -2,9 +2,9 @@ import * as type from "./actionType";
 
 const initialState = {
   loading: false,
-  currentUser: null,
-  uid: null,
-  roll: null,
+  currentUser: false,
+  uid: "",
+  roll: "",
   error: "",
   isAdmin: false,
   approve: true,
@@ -31,10 +31,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: false,
         loading: false,
-        roll: null,
+        roll: "",
         userName: "",
         email: "",
-        uid: null
+        uid: ""
       };
     case type.STUDENT_POFILE_UPDATE_INIT:
       return { ...state, loading: true };
@@ -58,20 +58,17 @@ const userReducer = (state = initialState, action) => {
         roll: action.payload.roll,
         email: action.payload.email,
         uid: action.payload.uid,
-        userName: action.payload.userName
+        userName: action.payload.userName,
+        fullname: action.payload.fullname,
+        fathername: action.payload.fathername,
+        cnic: action.payload.cnic,
+        address: action.payload.address,
+        contact: action.payload.contact,
+        qualification: action.payload.qualification
       };
+    case type.STUDENT_POFILE_UPDATE_Fail:
     case type.LOGOUT_FAIL:
       return { ...state, loading: false };
-
-    //   // case type.GOOGLE_LOGIN_SUCCESS:
-    //   // case type.FACEBOOK_LOGIN_SUCCESS:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     currentUser: true,
-    //     roll: action.payload,
-    //     error: "",
-    //   };
     case type.REGISTER_FAIL:
     case type.LOGIN_FAIL:
       return { ...state, loading: false, currentUser: false };

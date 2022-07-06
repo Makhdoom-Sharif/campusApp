@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-export  {firebaseConfig, app, database,auth}
+export { firebaseConfig, app, database, auth };
 
 // import { initializeApp } from "firebase/app";
 // import { getDatabase } from "firebase/database";

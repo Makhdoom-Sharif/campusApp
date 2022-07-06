@@ -1,32 +1,30 @@
 import { AccountCircle } from "@material-ui/icons";
 import CallIcon from "@mui/icons-material/Call";
-import DoneIcon from "@mui/icons-material/Done";
-import EditIcon from "@mui/icons-material/Edit";
 import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
+import NumbersIcon from "@mui/icons-material/Numbers";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import SchoolIcon from "@mui/icons-material/School";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import DatePicker from "@mui/lab/DatePicker";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { LoadingButton } from "@mui/lab";
 import { Avatar, InputAdornment, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import { child, get, getDatabase, ref } from "firebase/database";
-import { useEffect, useState } from "react";
+import { styled } from "@mui/material/styles";
+import { useFormik } from "formik";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import studentDataUpdate from "../firebase/studentDataUpdate";
+import uploadImage from "../firebase/uploadImg";
+import {
+  StudentProfileUpdateFail,
+  StudentProfileUpdateInit,
+  StudentProfileUpdateSuccess
+} from "../redux/action";
 import Textfield from "./Inputfeild/Textfield";
 import "./StudentProfile.css";
 import Title from "./Title";
-import NumbersIcon from "@mui/icons-material/Numbers";
-import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import { LoadingButton } from "@mui/lab";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import studentDataUpdate from "../firebase/studentDataUpdate";
-import { StudentProfileUpdateInit } from "../redux/action";
 
 export default function StudentProfile() {
   const [disable, setDisable] = useState(true);
@@ -41,6 +39,10 @@ export default function StudentProfile() {
     formik.handleReset();
   };
 
+  const handleUploadImage = async (e) => {
+    console.log(e.target.files[0]);
+    await uploadImage(e.target.files[0]);
+  };
   const validationSchema = Yup.object({
     fullname: Yup.string(),
     fathername: Yup.string(),
@@ -64,22 +66,28 @@ export default function StudentProfile() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(StudentProfileUpdateInit())
+      dispatch(StudentProfileUpdateInit());
       setDisable(true);
-      console.log("dsds", values);
-
-      await studentDataUpdate({
-        uid: UserDetails.uid,
-        dispatch: dispatch,
-        fullname: values.fullname,
-        fathername: values.fathername,
-        cnic: values.cnic,
-        address: values.address,
-        contact: values.contact,
-        qualification: values.qualification
-      });
+      try {
+        await studentDataUpdate({
+          uid: UserDetails.uid,
+          dispatch: dispatch,
+          fullname: values.fullname,
+          fathername: values.fathername,
+          cnic: values.cnic,
+          address: values.address,
+          contact: values.contact,
+          qualification: values.qualification
+        });
+        dispatch(StudentProfileUpdateSuccess(values));
+      } catch (e) {
+        console.log(e);
+        dispatch(StudentProfileUpdateFail());
+      }
     }
   });
+
+
 
   return (
     <>
@@ -105,7 +113,12 @@ export default function StudentProfile() {
             <div className='head'>
               <div>
                 <label htmlFor='icon-button-file' className='uploadBtn'>
-                  <Input accept='image/*' id='icon-button-file' type='file' />
+                  <Input
+                    accept='image/*'
+                    onChange={handleUploadImage}
+                    id='icon-button-file'
+                    type='file'
+                  />
                   <IconButton aria-label='upload picture' component='span'>
                     <PhotoCamera />
                   </IconButton>

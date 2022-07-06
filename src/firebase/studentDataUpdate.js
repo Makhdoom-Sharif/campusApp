@@ -1,35 +1,21 @@
-import { child, getDatabase, push, ref, update, get } from "firebase/database";
-import { StudentProfileUpdateSuccess } from "../redux/action";
+import { getDatabase, ref, update } from "firebase/database";
+import {
+  StudentProfileUpdateSuccess
+} from "../redux/action";
 export default async function studentDataUpdate(userData) {
-  console.log("firebase", userData);
   const dbRef = ref(getDatabase());
   const db = getDatabase();
-    await get(child(dbRef, `users/${userData.uid}`)).then(async (snapshot) => { 
-   const postData = {
-    email: await snapshot.val().email,
-    userName: await snapshot.val().userName,
-    roll: await snapshot.val().roll,
-    fullname: userData.fullname,
-    fathername: userData.fathername,
-    cnic: userData.cnic,
-    address: userData.address,
-    contact: userData.contact,
-    qualification: userData.qualification
-  };
-
+  const Data = JSON.parse(JSON.stringify(userData));
+  console.log("Data to be update", Data, Data.type);
   const updates = {};
-  updates["/users/" + await userData.uid] = postData;
+  updates["users/" + userData.uid] = Data;
 
-  await update(ref(db), updates)
+  await update(ref(db, `users/${userData.uid}`), Data)
     .then(() => {
-      userData.dispatch(StudentProfileUpdateSuccess(postData));
+      userData.dispatch(StudentProfileUpdateSuccess(userData));
       console.log("Data saved successfully!");
     })
     .catch(error => {
       console.log(error);
     });
-
-}).catch((error) => {
-    console.error(error);
-  })
 }

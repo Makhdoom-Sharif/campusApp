@@ -1,9 +1,10 @@
-import { Button } from "@mui/material";
+import { Button, MenuItem } from "@mui/material";
 import { getAuth, signOut } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logoutFail, logoutStart, logoutSuccess } from "../redux/action";
+import { logoutFail, logoutStart, logoutSuccess } from "../../redux/action";
+import { Link } from "react-router-dom";
 
 const auth = getAuth();
 
@@ -24,15 +25,15 @@ export const LogOut = () => {
   };
   useEffect(() => {
     if (UserDetails.currentUser === false) {
-      navigate("/");
+      <Link to={"/"}></Link>;
     }
-  }, [UserDetails.currentUser, navigate]);
+  }, [UserDetails.currentUser]);
 
   return (
     <div>
-      <Button variant="contained" onClick={handleLogOut} disableElevation>
+      <MenuItem variant="contained" onClick={handleLogOut} disableElevation>
         Logout
-      </Button>
+      </MenuItem>
     </div>
   );
 };
