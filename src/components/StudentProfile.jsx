@@ -15,7 +15,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import studentDataUpdate from "../firebase/studentDataUpdate";
+import {studentDataUpdate} from "../firebase/studentDataUpdate";
 import uploadImage from "../firebase/uploadImg";
 import {
   StudentProfileUpdateFail,
@@ -40,8 +40,7 @@ export default function StudentProfile() {
   };
 
   const handleUploadImage = async (e) => {
-    console.log(e.target.files[0]);
-    await uploadImage(e.target.files[0]);
+    await uploadImage({e:e, dispatch:dispatch,ImgName:UserDetails.uid});
   };
   const validationSchema = Yup.object({
     fullname: Yup.string(),
@@ -87,8 +86,6 @@ export default function StudentProfile() {
     }
   });
 
-
-
   return (
     <>
       <Box
@@ -124,7 +121,11 @@ export default function StudentProfile() {
                   </IconButton>
                 </label>
               </div>
-              <Avatar alt='Remy Sharp' src='#' className='Avatar' />
+              <Avatar
+                alt={UserDetails.fullname}
+                src={UserDetails.profilePicture}
+                className='Avatar'
+              />
             </div>
           </div>
           <div

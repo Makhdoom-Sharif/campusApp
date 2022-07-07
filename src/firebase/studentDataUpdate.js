@@ -1,12 +1,9 @@
 import { getDatabase, ref, update } from "firebase/database";
-import {
-  StudentProfileUpdateSuccess
-} from "../redux/action";
-export default async function studentDataUpdate(userData) {
+import { StudentProfileUpdateSuccess } from "../redux/action";
+export async function studentDataUpdate(userData) {
   const dbRef = ref(getDatabase());
   const db = getDatabase();
   const Data = JSON.parse(JSON.stringify(userData));
-  console.log("Data to be update", Data, Data.type);
   const updates = {};
   updates["users/" + userData.uid] = Data;
 
@@ -17,5 +14,21 @@ export default async function studentDataUpdate(userData) {
     })
     .catch(error => {
       console.log(error);
+    });
+}
+
+export async function imgUpdate(url, uid) {
+  const db = getDatabase();
+  console.log("url==>", url);
+  const URL = JSON.parse(JSON.stringify(url));
+
+  const updates = {};
+  updates["users/" + uid] = URL;
+  await update(ref(db, `users/${uid}`), URL)
+    .then(() => {
+      console.log("url update");
+    })
+    .catch(() => {
+      console.log("error occurred");
     });
 }

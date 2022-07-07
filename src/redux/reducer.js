@@ -15,7 +15,8 @@ const initialState = {
   cnic: "",
   address: "",
   contact: "",
-  qualification: ""
+  qualification: "",
+  profilePicture: ""
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -64,7 +65,8 @@ const userReducer = (state = initialState, action) => {
         cnic: action.payload.cnic,
         address: action.payload.address,
         contact: action.payload.contact,
-        qualification: action.payload.qualification
+        qualification: action.payload.qualification,
+        profilePicture: action.payload.profilePicture,
       };
     case type.STUDENT_POFILE_UPDATE_Fail:
     case type.LOGOUT_FAIL:
@@ -79,6 +81,11 @@ const userReducer = (state = initialState, action) => {
       return { ...state, error: "" };
     case type.SAVE_UID:
       return { ...state, uid: action.payload };
+    case type.PROFILE_PICTURE_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        profilePicture: action.payload
+      };
     default:
       return state;
   }

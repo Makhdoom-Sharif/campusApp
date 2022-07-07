@@ -41,7 +41,8 @@ export const loginSuccess = Data => ({
     cnic: Data.cnic,
     address: Data.address,
     contact: Data.contact,
-    qualification: Data.qualification
+    qualification: Data.qualification,
+    ImgUrl: Data.ImgUrl
   }
 });
 export const loginFail = () => ({
@@ -92,4 +93,8 @@ export const StudentProfileUpdateSuccess = Data => ({
 });
 export const StudentProfileUpdateFail = Data => ({
   type: type.STUDENT_POFILE_UPDATE_Fail
+});
+export const ProfilePictureUploadSuccess = Data => ({
+  type: type.PROFILE_PICTURE_UPLOAD_SUCCESS,
+  payload: Data
 });
