@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutFail, logoutStart, logoutSuccess } from "../../redux/action";
 import { Link } from "react-router-dom";
-
+import {app} from '../../firebase/firebaseConfig'
 const auth = getAuth();
 
 export const LogOut = () => {

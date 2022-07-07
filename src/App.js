@@ -12,9 +12,11 @@ import {
 } from "react-router-dom";
 import StudentHomePage from "./pages/StudentHomePage";
 import CompanyHomePage from "./pages/CompanyHomePage";
-import CompanyProfile from "./pages/CompanyProfile";
+import CompanyProfilePage from "./pages/CompanyProfilePage";
 import StudentProfilePage from "./pages/StudentProfilePage";
 import ForgotPassword from "./pages/ForgotPassword";
+import PostNewJobPage from "./pages/PostNewJobPage";
+import PostedJobPage from "./pages/PostedJobPage";
 
 function App() {
   return (
@@ -26,8 +28,10 @@ function App() {
         <Route path="/homepage" element={<StudentHomePage />} />
         <Route path="/company" element={<CompanyHomePage />} />
         <Route path="/studentprofile" element={<StudentProfilePage />} />
-        <Route path="/companyprofile" element={<CompanyProfile />} />
+        <Route path="/companyprofile" element={<CompanyProfilePage />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/postnewjobs" element={<PostNewJobPage />}></Route>
+        <Route path="/postedjobs" element={<PostedJobPage />}></Route>
       </Routes>
     </div>
   );

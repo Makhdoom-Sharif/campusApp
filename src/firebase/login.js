@@ -10,14 +10,24 @@ const loginUser= async (authParams)=>{
   
   const { user: { uid } } = await signInWithEmailAndPassword(auth, email, password)
   const dbRef = ref(getDatabase());
-await get(child(dbRef, `users/${uid}`))
+await get(child(dbRef, `student/${uid}`))
   .then(async (snapshot) => {
     if (snapshot.exists()) {
       console.log(snapshot.val());
       await snapshot.val();
        await dispatch(loginSuccess(snapshot.val()));
     } else {
-      console.log("Login fail");
+      await get(child(dbRef, `company/${uid}`))
+      .then(async (snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          await snapshot.val();
+         await dispatch(loginSuccess(snapshot.val()));
+        }   
+
+      }).catch((error)=>{
+        console.error(error)    
+      })
     }
   })
   .catch((error) => {

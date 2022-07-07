@@ -1,4 +1,3 @@
-// 
 import * as React from 'react';
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
@@ -11,16 +10,20 @@ import { Button } from '@mui/material';
 
 const Data = [
   {
-    Name:"ABC",
-    Email:"ABC@gmail.com",
-    Category:"Fresher"
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
   },
- { Name:"ABC",
-    Email:"ABC@gmail.com",
-    Category:"Fresher"},
-    { Name:"ABC",
-    Email:"ABC@gmail.com",
-    Category:"Fresher"}
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  }
 ];
 
 function preventDefault(event) {
@@ -41,7 +44,7 @@ export default function NewApprovals() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Data.slice(0,2).map((Data) => (
+          {Data.slice(0, 2).map((Data) => (
             <TableRow key={Data.id}>
               <TableCell>{Data.Name}</TableCell>
               <TableCell>{Data.Email}</TableCell>

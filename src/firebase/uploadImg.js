@@ -1,6 +1,6 @@
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ProfilePictureUploadSuccess } from "../redux/action";
-import { imgUpdate } from "./studentDataUpdate";
+import { imgUpdate } from "./ProfileUpdate";
 export default async function uploadImage(Data) {
   const storage = getStorage();
   const storageRef = ref(storage, "image/" + Data.ImgName);
@@ -8,9 +8,8 @@ export default async function uploadImage(Data) {
     .then(async snapshot => {
       console.log("Uploaded a blob or file!");
       const url = await getDownloadURL(storageRef);
-      await imgUpdate({ ImgUrl: url },Data.ImgName);
+      await imgUpdate({ ImgUrl: url },Data.ImgName,Data.roll);
       Data.dispatch(ProfilePictureUploadSuccess(url));
-      // console.log(url);
     })
     .catch(e => {
       console.log("error==>", e);

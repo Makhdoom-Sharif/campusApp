@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/Navbar/NavBar'
 import ResetPassword from "../components/ResetPassword";
 const ForgotPassword = () => {
   return (

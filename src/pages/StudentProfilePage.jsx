@@ -1,6 +1,6 @@
 import React from 'react'
-import NavBar from '../components/NavBar'
-import StudentProfile from '../components/StudentProfile'
+import NavBar from '../components/Navbar/NavBar'
+import StudentProfile from '../components/StudentProfile/StudentProfile'
 const StudentProfilePage = () => {
   return (
     <div>

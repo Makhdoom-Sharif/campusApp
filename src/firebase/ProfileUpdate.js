@@ -1,15 +1,15 @@
 import { getDatabase, ref, update } from "firebase/database";
-import { StudentProfileUpdateSuccess } from "../redux/action";
-export async function studentDataUpdate(userData) {
+import { ProfileUpdateSuccess } from "../redux/action";
+export async function ProfileUpdate(userData) {
   const dbRef = ref(getDatabase());
   const db = getDatabase();
   const Data = JSON.parse(JSON.stringify(userData));
   const updates = {};
-  updates["users/" + userData.uid] = Data;
-
-  await update(ref(db, `users/${userData.uid}`), Data)
+  console.log("service====>",userData.service);
+  updates[`${userData.roll}/${userData.uid}`] =  Data;
+  await update(ref(db, `${userData.roll}/${userData.uid}`), Data)  
     .then(() => {
-      userData.dispatch(StudentProfileUpdateSuccess(userData));
+      userData.dispatch(ProfileUpdateSuccess(userData));
       console.log("Data saved successfully!");
     })
     .catch(error => {
@@ -17,14 +17,13 @@ export async function studentDataUpdate(userData) {
     });
 }
 
-export async function imgUpdate(url, uid) {
+export async function imgUpdate(url, uid,roll) {
   const db = getDatabase();
-  console.log("url==>", url);
   const URL = JSON.parse(JSON.stringify(url));
-
   const updates = {};
-  updates["users/" + uid] = URL;
-  await update(ref(db, `users/${uid}`), URL)
+
+  updates[`${roll}/${uid}`] = URL;
+  await update(ref(db, `${roll}/${uid}`), URL)
     .then(() => {
       console.log("url update");
     })

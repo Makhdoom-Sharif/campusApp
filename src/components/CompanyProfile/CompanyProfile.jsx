@@ -15,19 +15,23 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import {studentDataUpdate} from "../firebase/studentDataUpdate";
-import uploadImage from "../firebase/uploadImg";
+import {ProfileUpdate} from "../../firebase/ProfileUpdate";
+import uploadImage from "../../firebase/uploadImg";
 import {
-  StudentProfileUpdateFail,
-  StudentProfileUpdateInit,
-  StudentProfileUpdateSuccess
-} from "../redux/action";
-import Textfield from "./Inputfeild/Textfield";
-import "./StudentProfile.css";
-import Title from "./Title";
+  ProfileUpdateFail,
+  ProfileUpdateInit,
+  ProfileUpdateSuccess
+} from "../../redux/action";
+import Textfield from "../Inputfeild/Textfield";
+import "../StudentProfile/StudentProfile.css";
+import Title from "../Title";
+import LanguageIcon from '@mui/icons-material/Language';
+import CategoryIcon from '@mui/icons-material/Category';
+import DropDown from "../DropDown/DropDown";
 
 export default function StudentProfile() {
   const [disable, setDisable] = useState(true);
+  const [ImgLoader, setImgLoader] = useState(false);
   const UserDetails = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -40,15 +44,16 @@ export default function StudentProfile() {
   };
 
   const handleUploadImage = async (e) => {
-    await uploadImage({e:e, dispatch:dispatch,ImgName:UserDetails.uid});
+    setImgLoader(true);
+    await uploadImage({e:e, dispatch:dispatch,ImgName:UserDetails.uid,roll:UserDetails.roll});
+    setImgLoader(false);
   };
   const validationSchema = Yup.object({
     fullname: Yup.string(),
-    fathername: Yup.string(),
-    cnic: Yup.number(),
+    website: Yup.string(),
     address: Yup.string(),
     contact: Yup.number(),
-    qualification: Yup.string()
+    service: Yup.string()
   });
   const Input = styled("input")({
     display: "none"
@@ -57,31 +62,30 @@ export default function StudentProfile() {
   const formik = useFormik({
     initialValues: {
       fullname: UserDetails.fullname,
-      fathername: UserDetails.fathername,
-      cnic: UserDetails.cnic,
+      website: UserDetails.website,
       address: UserDetails.address,
       contact: UserDetails.contact,
-      qualification: UserDetails.qualification
+      service: UserDetails.service
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(StudentProfileUpdateInit());
+      dispatch(ProfileUpdateInit());
       setDisable(true);
       try {
-        await studentDataUpdate({
+        await ProfileUpdate({
           uid: UserDetails.uid,
           dispatch: dispatch,
           fullname: values.fullname,
-          fathername: values.fathername,
-          cnic: values.cnic,
+          website: values.website,
           address: values.address,
           contact: values.contact,
-          qualification: values.qualification
+          service: values.service,
+          roll:UserDetails.roll,
         });
-        dispatch(StudentProfileUpdateSuccess(values));
+        dispatch(ProfileUpdateSuccess(values));
       } catch (e) {
         console.log(e);
-        dispatch(StudentProfileUpdateFail());
+        dispatch(ProfileUpdateFail());
       }
     }
   });
@@ -104,7 +108,6 @@ export default function StudentProfile() {
           elevation={3}
           component='form'
           onSubmit={formik.handleSubmit}
-          // onSubmit={disable ? handleUpdate : handleSubmit}
         >
           <div className='profileHead'>
             <div className='head'>
@@ -123,7 +126,7 @@ export default function StudentProfile() {
               </div>
               <Avatar
                 alt={UserDetails.fullname}
-                src={UserDetails.profilePicture}
+                src={ImgLoader?'https://cdn.dribbble.com/users/3432202/screenshots/7090834/media/b27b345dc25d5ae622b249f604d0dfb0.gif':UserDetails.profilePicture}
                 className='Avatar'
               />
             </div>
@@ -136,10 +139,10 @@ export default function StudentProfile() {
             }}
           >
             <div className='profile'>
-              <Title>Personal Info</Title>
+              <Title>Company Info</Title>
               <Textfield
                 id='input-with-icon-textfield'
-                label='Full Name'
+                label='Company Name'
                 name='fullname'
                 fullWidth
                 onChange={handleChange}
@@ -155,86 +158,24 @@ export default function StudentProfile() {
                 style={{ marginBottom: "10px" }}
               />
 
+              
               <Textfield
                 id='input-with-icon-textfield'
-                label='Father Name'
+                label='Website'
                 fullWidth={true}
-                name='fathername'
+                name='website'
                 onChange={handleChange}
-                value={formik.values.fathername}
+                value={formik.values.website}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <AccountCircle />
+                      <LanguageIcon />
                     </InputAdornment>
                   )
                 }}
                 variant='standard'
                 style={{ marginBottom: "10px" }}
               />
-              <Textfield
-                variant='standard'
-                id='standard-basic'
-                label='CNIC No'
-                type='tel'
-                fullWidth={true}
-                name='cnic'
-                onChange={handleChange}
-                value={formik.values.cnic}
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <NumbersIcon />
-                    </InputAdornment>
-                  )
-                }}
-                inputProps={{
-                  minLength: 13,
-                  maxLength: 13
-                }}
-                autoComplete='off'
-                style={{ marginBottom: "10px" }}
-              />
-              {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    disabled={disable}
-                    renderInput={(props) => (
-                      <TextField
-                        fullWidth
-                        disabled={disable}
-                        variant='standard'
-                        id='standard-basic'
-                        multiline
-                        rowsMax={4}
-                        label='Date Of Birth'
-                        name='DOB'
-                        autoComplete='off'
-                        {...props}
-                        InputProps={{ disableUnderline: disable }}
-                      />
-                    )}
-                    label='Date Of Birth'
-                    value={date}
-                    onChange={(newValue) => {
-                      setDate(new Date(newValue).toString());
-                    }}
-                  />
-                </LocalizationProvider> */}
-              {/* {disable ? (
-                  <button className='btn'>
-                    <EditIcon className='Icon-btn' />
-                  </button>
-                ) : (
-                  <button className='btn'>
-                    <DoneIcon className='Icon-btn' />
-                  </button>
-                )}
-              </div>*/}
               <br />
               <Title>Contact Info</Title>
               <TextField
@@ -259,7 +200,7 @@ export default function StudentProfile() {
               />
               <Textfield
                 id='input-with-icon-textfield'
-                label='Permenant Address'
+                label='Location'
                 fullWidth={true}
                 name='address'
                 onChange={handleChange}
@@ -300,23 +241,15 @@ export default function StudentProfile() {
                 }}
               />
               <br />
-              <Title>Academic Info</Title>
-              <Textfield
-                id='input-with-icon-textfield'
-                label='Highest Qualification'
-                name='qualification'
-                fullWidth={true}
-                onChange={handleChange}
-                value={formik.values.qualification}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <SchoolIcon />
-                    </InputAdornment>
-                  )
-                }}
-                variant='standard'
-                style={{ marginBottom: "10px" }}
+              <Title>Service Info</Title>
+              <DropDown
+              variant='standard'
+              label='Services'
+              name='service'
+              onChange={handleChange}
+              id='service'
+              value={formik.values.service}
+              fullWidth={true}
               />
             </div>
           </div>

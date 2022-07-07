@@ -16,7 +16,9 @@ const initialState = {
   address: "",
   contact: "",
   qualification: "",
-  profilePicture: ""
+  profilePicture: "",
+  website:"",
+  service:""
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -37,9 +39,9 @@ const userReducer = (state = initialState, action) => {
         email: "",
         uid: ""
       };
-    case type.STUDENT_POFILE_UPDATE_INIT:
+    case type.POFILE_UPDATE_INIT:
       return { ...state, loading: true };
-    case type.STUDENT_POFILE_UPDATE_SUCCESS:
+    case type.POFILE_UPDATE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -48,7 +50,9 @@ const userReducer = (state = initialState, action) => {
         cnic: action.payload.cnic,
         address: action.payload.address,
         contact: action.payload.contact,
-        qualification: action.payload.qualification
+        qualification: action.payload.qualification,
+        website:action.payload.website,
+        service:action.payload.service
       };
     case type.LOGIN_SUCCESS:
     case type.REGISTER_SUCCESS:
@@ -66,9 +70,11 @@ const userReducer = (state = initialState, action) => {
         address: action.payload.address,
         contact: action.payload.contact,
         qualification: action.payload.qualification,
-        profilePicture: action.payload.profilePicture,
+        profilePicture: action.payload.ImgUrl,
+        website: action.payload.website,
+        service: action.payload.service
       };
-    case type.STUDENT_POFILE_UPDATE_Fail:
+    case type.POFILE_UPDATE_Fail:
     case type.LOGOUT_FAIL:
       return { ...state, loading: false };
     case type.REGISTER_FAIL:

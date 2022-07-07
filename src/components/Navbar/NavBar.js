@@ -14,8 +14,9 @@ import { Avatar, Button } from "@mui/material";
 import "./NavBar.css";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { LogOut } from "./LongMenu/LogOut";
-import LongMenu from "./LongMenu/LongMenu";
+import { LogOut } from "../LongMenu/LogOut";
+import LongMenu from "../LongMenu/LongMenu";
+import Drawer from "../Drawer/Drawer";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -56,7 +57,7 @@ ScrollTop.propTypes = {
 };
 
 export default function BackToTop(props) {
-  const { currentUser, loading, roll } = useSelector((state) => state.user);
+  const { currentUser, loading, roll, profilePicture, fullname, userName } = useSelector((state) => state.user);
   const location = useLocation();
   console.log(location.pathname);
   return (
@@ -65,45 +66,34 @@ export default function BackToTop(props) {
       <AppBar>
         <Toolbar style={{ justifyContent: "space-between" }}>
           <Typography variant="h6" component="div">
-            <Link
-              to={
-                currentUser
-                  ? roll === "student"
-                    ? "/homepage"
-                    : "/company"
-                  : "/"
-              }
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              The Campus Recruitment App
-            </Link>
+            <div className="Left-Nav">
+              <Drawer />
+
+
+              <Link
+                to={
+                  currentUser
+                    ? roll === "student"
+                      ? "/homepage"
+                      : "/company"
+                    : "/"
+                }
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                The Campus Recruitment App
+              </Link>
+            </div>
           </Typography>
           <div className="buttons">
-            {currentUser &&(
+            {currentUser && (
               <>
-                <div style={{ marginRight: "15px" }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <div style={{ marginRight: "15px", display: "flex", flexDirection: "row", alignItems: "center" }}>
+                  <Avatar alt={fullname} src={profilePicture} style={{ marginRight: "10px" }} />
+                  <p>{roll === "student" ? "StudentID:" : ""}{userName}</p>
                 </div>
-                {/* <div> */}
-                  <LongMenu/>
-                  {/* <Link
-                    to={
-                      roll === "student" ? "/studentprofile" : "/companyprofile"
-                    }
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Button
-                      variant="contained"
-                      disableElevation
-                      style={{ marginRight: "10px" }}
-                    >
-                      Profile
-                    </Button>
-                  </Link> 
-                </div>
-                <LogOut />*/}
+                <LongMenu />
               </>
-            ) }
+            )}
           </div>
         </Toolbar>
       </AppBar>

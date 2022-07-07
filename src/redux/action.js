@@ -1,9 +1,4 @@
 import * as type from "./actionType";
-import { auth } from "../firebase/firebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from "firebase/auth";
 
 export const registerStart = () => ({
   type: type.REGISTER_START
@@ -25,10 +20,7 @@ export const loginStart = () => ({
   type: type.LOGIN_START
 });
 
-export const saveUid = Data => ({
-  type: type.SAVE_UID,
-  payload: Data
-});
+
 export const loginSuccess = Data => ({
   type: type.LOGIN_SUCCESS,
   payload: {
@@ -42,7 +34,9 @@ export const loginSuccess = Data => ({
     address: Data.address,
     contact: Data.contact,
     qualification: Data.qualification,
-    ImgUrl: Data.ImgUrl
+    ImgUrl: Data.ImgUrl,
+    website: Data.website,
+    service:Data.service
   }
 });
 export const loginFail = () => ({
@@ -69,30 +63,26 @@ export const logoutFail = error => ({
   payload: error
 });
 
-export const setUser = user => ({
-  type: type.SET_USER,
-  payload: user
-});
 
-export const clearError = () => ({
-  type: type.CLEAR_ERROR
+
+export const ProfileUpdateInit = () => ({
+  type: type.POFILE_UPDATE_INIT
 });
-export const StudentProfileUpdateInit = () => ({
-  type: type.STUDENT_POFILE_UPDATE_INIT
-});
-export const StudentProfileUpdateSuccess = Data => ({
-  type: type.STUDENT_POFILE_UPDATE_SUCCESS,
+export const ProfileUpdateSuccess = Data => ({
+  type: type.POFILE_UPDATE_SUCCESS,
   payload: {
     fullname: Data.fullname,
     fathername: Data.fathername,
     cnic: Data.cnic,
     address: Data.address,
     contact: Data.contact,
-    qualification: Data.qualification
+    qualification: Data.qualification,
+    website: Data.website,
+    service:Data.service
   }
 });
-export const StudentProfileUpdateFail = Data => ({
-  type: type.STUDENT_POFILE_UPDATE_Fail
+export const ProfileUpdateFail = Data => ({
+  type: type.POFILE_UPDATE_Fail
 });
 export const ProfilePictureUploadSuccess = Data => ({
   type: type.PROFILE_PICTURE_UPLOAD_SUCCESS,

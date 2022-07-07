@@ -35,7 +35,7 @@ export default function LongMenu() {
         aria-haspopup='true'
         onClick={handleClick}
       >
-        <MoreVertIcon />
+        <MoreVertIcon style={{color: "#FFFFFF"}}/>
       </IconButton>
       <Menu
         id='long-menu'
@@ -52,34 +52,6 @@ export default function LongMenu() {
           }
         }}
       >
-        {/* {options.map((option) => (
-          <MenuItem
-            key={option}
-            selected={option === "Pyxis"}
-            onClick={option === "Profile" ? (
-                <Link
-                  to={
-                    roll === "student" ? "/studentprofile" : "/companyprofile"
-                  }
-                  style={{ textDecoration: "none" }}
-                ></Link>
-              ) : (
-                <LogOut />
-              )
-            }
-          >
-            {option}
-          </MenuItem>
-        ))} */}
-        {/* <MenuItem
-          onClick={
-            roll === "student"
-              ? navigate("/studentprofile")
-              : navigate("/companyprofile")
-          }
-        >
-          Profile
-        </MenuItem> */}
         <ProfileNavigation/>
         <LogOut />
       </Menu>

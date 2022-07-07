@@ -15,7 +15,7 @@ async function signUp(authParams){
   
 async function writeUserData(uid,email, roll,userName,dispatch) {
   try {
-    await set(ref(database, "users/" + uid), {
+    await set(ref(database, roll==='student'?`student/${uid}`:`company/${uid}`), {
        uid:uid,
        email: email,
        roll: roll,

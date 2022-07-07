@@ -63,7 +63,7 @@ export default function SignUp() {
       ),
     password: Yup.string().min(6).max(10).required(),
     roll: Yup.string().required(),
-    userName: Yup.string().min(4).max(6).required("Input Must be valid"),
+    userName: Yup.string().required("Input Must be valid"),
   });
 
   const formik = useFormik({
@@ -206,7 +206,6 @@ export default function SignUp() {
                   </RadioGroup>
                 </FormControl>
               </Grid>
-              {console.log(roll)}
               <Grid item xs={12}>
                 {(() => {
                   if (roll === "student") {

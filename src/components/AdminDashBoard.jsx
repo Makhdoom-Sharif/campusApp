@@ -21,7 +21,7 @@ import { mainListItems, secondaryListItems } from './listitems';
 import NewApprovals from './NewApprovals';
 import TotalDetails from './TotalDetails';
 import Orders from './StudentsData';
-import NavBar from './NavBar'
+import NavBar from './Navbar/NavBar'
 import CompanyData from './CompanyData'
 import StudentsData from './StudentsData'
 
