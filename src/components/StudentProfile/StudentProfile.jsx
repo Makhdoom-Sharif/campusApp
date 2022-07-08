@@ -15,7 +15,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import {ProfileUpdate} from "../../firebase/ProfileUpdate";
+import { ProfileUpdate } from "../../firebase/ProfileUpdate";
 import uploadImage from "../../firebase/uploadImg";
 import {
   ProfileUpdateFail,
@@ -23,8 +23,8 @@ import {
   ProfileUpdateSuccess
 } from "../../redux/action";
 import Textfield from "../Inputfeild/Textfield";
-import "./StudentProfile.css";
 import Title from "../Title";
+import "./StudentProfile.css";
 
 export default function StudentProfile() {
   const [disable, setDisable] = useState(true);
@@ -42,7 +42,7 @@ export default function StudentProfile() {
 
   const handleUploadImage = async (e) => {
     setImgLoader(true)
-    await uploadImage({e:e, dispatch:dispatch,ImgName:UserDetails.uid,roll:UserDetails.roll});
+    await uploadImage({ e: e, dispatch: dispatch, ImgName: UserDetails.uid, roll: UserDetails.roll });
     setImgLoader(false)
   };
   const validationSchema = Yup.object({
@@ -80,7 +80,7 @@ export default function StudentProfile() {
           address: values.address,
           contact: values.contact,
           qualification: values.qualification,
-          roll:UserDetails.roll,
+          roll: UserDetails.roll,
         });
         dispatch(ProfileUpdateSuccess(values));
       } catch (e) {
@@ -108,7 +108,7 @@ export default function StudentProfile() {
           elevation={3}
           component='form'
           onSubmit={formik.handleSubmit}
-          // onSubmit={disable ? handleUpdate : handleSubmit}
+        // onSubmit={disable ? handleUpdate : handleSubmit}
         >
           <div className='profileHead'>
             <div className='head'>
@@ -127,8 +127,8 @@ export default function StudentProfile() {
               </div>
               <Avatar
                 alt={UserDetails.fullname}
-                
-                src={ImgLoader?'https://cdn.dribbble.com/users/3432202/screenshots/7090834/media/b27b345dc25d5ae622b249f604d0dfb0.gif':UserDetails.profilePicture}
+
+                src={ImgLoader ? 'https://cdn.dribbble.com/users/3432202/screenshots/7090834/media/b27b345dc25d5ae622b249f604d0dfb0.gif' : UserDetails.profilePicture}
                 className='Avatar'
               />
             </div>
@@ -143,6 +143,7 @@ export default function StudentProfile() {
             <div className='profile'>
               <Title>Personal Info</Title>
               <Textfield
+                editIcon={true}
                 id='input-with-icon-textfield'
                 label='Full Name'
                 name='fullname'
@@ -161,6 +162,7 @@ export default function StudentProfile() {
               />
 
               <Textfield
+                editIcon={true}
                 id='input-with-icon-textfield'
                 label='Father Name'
                 fullWidth={true}
@@ -178,6 +180,7 @@ export default function StudentProfile() {
                 style={{ marginBottom: "10px" }}
               />
               <Textfield
+                editIcon={true}
                 variant='standard'
                 id='standard-basic'
                 label='CNIC No'
@@ -243,6 +246,7 @@ export default function StudentProfile() {
               <br />
               <Title>Contact Info</Title>
               <TextField
+                editIcon={true}
                 id='input-with-icon-textfield'
                 label='Email'
                 fullWidth
@@ -263,6 +267,7 @@ export default function StudentProfile() {
                 style={{ marginBottom: "10px" }}
               />
               <Textfield
+                editIcon={true}
                 id='input-with-icon-textfield'
                 label='Permenant Address'
                 fullWidth={true}
@@ -280,6 +285,7 @@ export default function StudentProfile() {
                 style={{ marginBottom: "10px" }}
               />
               <Textfield
+                editIcon={true}
                 variant='standard'
                 id='input-with-icon-textfield'
                 label='Contact No'
@@ -307,6 +313,7 @@ export default function StudentProfile() {
               <br />
               <Title>Academic Info</Title>
               <Textfield
+                editIcon={true}
                 id='input-with-icon-textfield'
                 label='Highest Qualification'
                 name='qualification'

@@ -17,17 +17,17 @@ const initialState = {
   contact: "",
   qualification: "",
   profilePicture: "",
-  website:"",
-  service:""
+  website: "",
+  service: "",
+  alljobs: {}
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case type.GET_ALL_JOB_INIT:
     case type.REGISTER_START:
     case type.LOGIN_START:
     case type.LOGOUT_START:
     case type.PASSWORD_RESET_INITIATE:
-      // case type.GOOGLE_LOGIN_START:
-      // case type.FACEBOOK_LOGIN_START:
       return { ...state, loading: true };
     case type.LOGOUT_SUCCESS:
       return {
@@ -39,6 +39,7 @@ const userReducer = (state = initialState, action) => {
         email: "",
         uid: ""
       };
+    case type.JOB_POST_INIT:
     case type.POFILE_UPDATE_INIT:
       return { ...state, loading: true };
     case type.POFILE_UPDATE_SUCCESS:
@@ -51,8 +52,8 @@ const userReducer = (state = initialState, action) => {
         address: action.payload.address,
         contact: action.payload.contact,
         qualification: action.payload.qualification,
-        website:action.payload.website,
-        service:action.payload.service
+        website: action.payload.website,
+        service: action.payload.service
       };
     case type.LOGIN_SUCCESS:
     case type.REGISTER_SUCCESS:
@@ -74,24 +75,27 @@ const userReducer = (state = initialState, action) => {
         website: action.payload.website,
         service: action.payload.service
       };
+    case type.JOB_POST_FAIL:
+    case type.PASSWORD_RESET_FAIL:
+    case type.PASSWORD_RESET_SUCCESS:
+    case type.JOB_POST_SUCCESS:
     case type.POFILE_UPDATE_Fail:
     case type.LOGOUT_FAIL:
       return { ...state, loading: false };
     case type.REGISTER_FAIL:
     case type.LOGIN_FAIL:
       return { ...state, loading: false, currentUser: false };
-    case type.PASSWORD_RESET_FAIL:
-    case type.PASSWORD_RESET_SUCCESS:
-      return { ...state, loading: false };
-    case type.CLEAR_ERROR:
-      return { ...state, error: "" };
-    case type.SAVE_UID:
-      return { ...state, uid: action.payload };
     case type.PROFILE_PICTURE_UPLOAD_SUCCESS:
       return {
         ...state,
         profilePicture: action.payload
       };
+    case type.GET_ALL_JOB_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        alljobs: action.payload
+      }
     default:
       return state;
   }

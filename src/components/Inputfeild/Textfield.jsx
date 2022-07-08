@@ -40,16 +40,13 @@ const Textfield = (props) => {
         autoComplete={props.autoComplete}
       />
       {/* {disable ? ( */}
-      {disable && (
+      {props.editIcon ? disable && (
         <button className='btn' onClick={handleBtn}>
           <EditIcon className='Icon-btn' />
         </button>
-      )}
-      {/* ) : (
-        <button className='btn' onClick={handleBtn}>
-          <DoneIcon className='Icon-btn' />
-        </button>
-      )} */}
+      ) : <></>
+
+      }
     </div>
   );
 };

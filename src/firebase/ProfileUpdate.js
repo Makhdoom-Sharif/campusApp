@@ -5,9 +5,8 @@ export async function ProfileUpdate(userData) {
   const db = getDatabase();
   const Data = JSON.parse(JSON.stringify(userData));
   const updates = {};
-  console.log("service====>",userData.service);
-  updates[`${userData.roll}/${userData.uid}`] =  Data;
-  await update(ref(db, `${userData.roll}/${userData.uid}`), Data)  
+  updates[`${userData.roll}/${userData.uid}`] = Data;
+  await update(ref(db, `${userData.roll}/${userData.uid}`), Data)
     .then(() => {
       userData.dispatch(ProfileUpdateSuccess(userData));
       console.log("Data saved successfully!");
@@ -17,7 +16,7 @@ export async function ProfileUpdate(userData) {
     });
 }
 
-export async function imgUpdate(url, uid,roll) {
+export async function imgUpdate(url, uid, roll) {
   const db = getDatabase();
   const URL = JSON.parse(JSON.stringify(url));
   const updates = {};

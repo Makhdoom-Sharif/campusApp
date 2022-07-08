@@ -36,7 +36,7 @@ export const loginSuccess = Data => ({
     qualification: Data.qualification,
     ImgUrl: Data.ImgUrl,
     website: Data.website,
-    service:Data.service
+    service: Data.service
   }
 });
 export const loginFail = () => ({
@@ -78,7 +78,7 @@ export const ProfileUpdateSuccess = Data => ({
     contact: Data.contact,
     qualification: Data.qualification,
     website: Data.website,
-    service:Data.service
+    service: Data.service
   }
 });
 export const ProfileUpdateFail = Data => ({
@@ -88,3 +88,26 @@ export const ProfilePictureUploadSuccess = Data => ({
   type: type.PROFILE_PICTURE_UPLOAD_SUCCESS,
   payload: Data
 });
+
+export const JobPostInit = () => ({
+  type: type.JOB_POST_INIT
+})
+
+
+export const JobPostSuccess = () => ({
+  type: type.JOB_POST_SUCCESS
+})
+
+export const JobPostFail = () => ({
+  type: type.JOB_POST_FAIL
+})
+
+
+export const GetAllJobInit = () => ({
+  type: type.GET_ALL_JOB_INIT
+})
+
+export const GetAllJobSuccess = (Data) => ({
+  type: type.GET_ALL_JOB_SUCCESS,
+  payload: Data
+})

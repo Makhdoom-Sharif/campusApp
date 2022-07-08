@@ -49,11 +49,12 @@ export default function Drawer() {
                                 <ListItemText primary={text} />
                             </ListItemButton>
                         </ListItem>
+                        <Divider />
+
                     </Link>
                 ))}
             </List>
-            <Divider />
-            <List>
+            {/*<List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
@@ -64,7 +65,7 @@ export default function Drawer() {
                         </ListItemButton>
                     </ListItem>
                 ))}
-            </List>
+            </List> */}
         </Box >
     );
 
