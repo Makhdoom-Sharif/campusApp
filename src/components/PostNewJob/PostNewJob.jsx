@@ -24,8 +24,6 @@ import {
 import Textfield from "../Inputfeild/Textfield";
 import "../StudentProfile/StudentProfile.css";
 import Title from "../Title";
-// import { uuid } from "uuidv4";
-// const { uuid } = require('uuidv4')
 
 export default function PostNewJob() {
     const [disable, setDisable] = useState(true);
@@ -77,7 +75,7 @@ export default function PostNewJob() {
                     JobDescription: values.JobDescription,
                     jobID: `${v4()}`
                 });
-                dispatch(JobPostSuccess());
+
                 handleReset()
             } catch (e) {
                 console.log(e);

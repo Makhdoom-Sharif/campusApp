@@ -36,7 +36,8 @@ export const loginSuccess = Data => ({
     qualification: Data.qualification,
     ImgUrl: Data.ImgUrl,
     website: Data.website,
-    service: Data.service
+    service: Data.service,
+    alljobs: Data.postedJobs
   }
 });
 export const loginFail = () => ({
@@ -94,8 +95,17 @@ export const JobPostInit = () => ({
 })
 
 
-export const JobPostSuccess = () => ({
-  type: type.JOB_POST_SUCCESS
+export const JobPostSuccess = (Data) => ({
+  type: type.JOB_POST_SUCCESS,
+  payload: {
+    Category: Data.Category,
+    JobDesignation: Data.JobDesignation,
+    Location: Data.Location,
+    RequiredQualification: Data.RequiredQualification,
+    VacantPosition: Data.VacantPosition,
+    jobID: Data.jobID
+
+  }
 })
 
 export const JobPostFail = () => ({
@@ -110,4 +120,36 @@ export const GetAllJobInit = () => ({
 export const GetAllJobSuccess = (Data) => ({
   type: type.GET_ALL_JOB_SUCCESS,
   payload: Data
+})
+
+
+export const JobUpdateInit = () => ({
+  type: type.JOB_UPDATE_INIT
+})
+
+export const JobUpdateSuccess = (Data) => ({
+  type: type.JOB_UPDATE_SUCCESS,
+  payload: {
+    Category: Data.Category,
+    JobDesignation: Data.JobDesignation,
+    Location: Data.Location,
+    RequiredQualification: Data.RequiredQualification,
+    VacantPosition: Data.VacantPosition,
+    jobID: Data.jobID
+
+  }
+})
+export const JobUpdateFail = () => ({
+  type: type.JOB_UPDATE_FAIL
+})
+
+
+export const JobDeleteInit = () => ({
+  type: type.JOB_DELETE_INIT
+})
+
+
+export const JobDeleteSuccess = (Data) => ({
+  type: type.JOB_DELETE_SUCCESS,
+  payload: Data.jobID
 })

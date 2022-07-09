@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { set } from 'date-fns';
 import * as React from 'react';
 import { useLayoutEffect } from 'react';
 import { useEffect, useState } from 'react';
@@ -47,10 +48,10 @@ const PostedJobs = () => {
 
 
 
-    const fetchData = async () => {
+    // const fetchData = async () => {
 
-        await GetAllPostedJobs(UserDetails.uid, dispatch)
-    }
+    //     await GetAllPostedJobs(UserDetails.uid, dispatch)
+    // }
 
 
     const UserDetails = useSelector((state) => state.user)
@@ -58,21 +59,21 @@ const PostedJobs = () => {
     const dispatch = useDispatch();
 
 
+
     useEffect(() => {
-        fetchData()
-        Object.entries(UserDetails?.alljobs).forEach(([key, value]) => {
-            setJobs(prev => {
-                return [...prev, value]
-            })
 
-
-
-        })
+        UserDetails.alljobs && setJobs([...Object.entries(UserDetails?.alljobs).map(entry => entry[1])])
 
 
 
 
-    }, [])
+    }, [UserDetails])
+
+
+
+
+
+
 
     useEffect(() => {
         console.log("Jobs", Jobs)
@@ -111,9 +112,9 @@ const PostedJobs = () => {
                         <Grid container spacing={4}>
 
 
-                            {Jobs.map((item) => (
+                            {Jobs.map((item, index) => (
 
-                                <JobsCard card={item.jobID} item={item} />
+                                <JobsCard card={item.jobID} item={item} index={index} />
 
                             ))
                             }

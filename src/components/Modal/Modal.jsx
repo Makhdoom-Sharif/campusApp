@@ -19,7 +19,9 @@ import PeopleIcon from '@mui/icons-material/People';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import SchoolIcon from "@mui/icons-material/School";
 import { LoadingButton } from '@mui/lab';
-import { UpdateJob } from '../../firebase/PostAndUpdateJobs';
+import { DeleteJob, UpdateJob } from '../../firebase/PostAndUpdateJobs';
+import { JobDeleteInit, JobDeleteSuccess, JobUpdateFail, JobUpdateInit, JobUpdateSuccess } from '../../redux/action';
+import DialogBox from '../DialogBox/DialogBox';
 
 const style = {
     position: 'absolute',
@@ -34,20 +36,34 @@ const style = {
 };
 
 export default function EditModal(props) {
-    const { JobDetails } = props
+    const dispatch = useDispatch();
+    const UserDetails = useSelector((state) => state.user);
+    const { JobDetails, index } = props
     // console.log("modal==>", JobDetails)
     const [open, setOpen] = useState(false);
     const handleEdit = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [disable, setDisable] = useState(true)
 
 
 
+    const handleReset = () => {
+        setDisable(true);
+        formik.handleReset();
+    };
+    const handleChange = (e) => {
+        setDisable(false)
+        formik.handleChange(e)
+    }
+    const handleDelete = async () => {
+        dispatch(JobDeleteInit())
+        console.log(JobDetails)
+        await DeleteJob(JobDetails, UserDetails.uid, dispatch)
 
 
+    }
 
 
-    const dispatch = useDispatch();
-    const UserDetails = useSelector((state) => state.user);
     const validationSchema = Yup.object({
         JobDesignation: Yup.string(),
         RequiredQualification: Yup.string(),
@@ -69,8 +85,8 @@ export default function EditModal(props) {
         validationSchema,
         onSubmit: async (values) => {
             console.log("submit works")
-            // dispatch(JobPostInit());
-            // setDisable(true);
+            dispatch(JobUpdateInit());
+            setDisable(true);
             try {
                 await UpdateJob({
                     uid: UserDetails.uid,
@@ -81,11 +97,12 @@ export default function EditModal(props) {
                     VacantPosition: values.VacantPosition,
                     Category: values.Category,
                     jobID: JobDetails.jobID
-                });
-                // dispatch(JobPostSuccess());
+                })
+
+                dispatch(JobUpdateSuccess({ ...values, jobID: JobDetails.jobID }));
             } catch (e) {
                 console.log(e);
-                // dispatch(JobPostFail());
+                dispatch(JobUpdateFail());
             }
         }
     });
@@ -153,7 +170,7 @@ export default function EditModal(props) {
                             label='Job Designation'
                             name='JobDesignation'
                             fullWidth
-                            onChange={formik.handleChange}
+                            onChange={handleChange}
                             value={formik.values.JobDesignation}
                             InputProps={{
                                 startAdornment: (
@@ -172,7 +189,7 @@ export default function EditModal(props) {
                             label='Required Qualification'
                             fullWidth={true}
                             name='RequiredQualification'
-                            onChange={formik.handleChange}
+                            onChange={handleChange}
                             value={formik.values.RequiredQualification}
                             InputProps={{
                                 startAdornment: (
@@ -190,7 +207,7 @@ export default function EditModal(props) {
                             label='Location'
                             fullWidth={true}
                             name='Location'
-                            onChange={formik.handleChange}
+                            onChange={handleChange}
                             value={formik.values.Location}
                             InputProps={{
                                 startAdornment: (
@@ -210,7 +227,7 @@ export default function EditModal(props) {
                             type='tel'
                             fullWidth={true}
                             name='VacantPosition'
-                            onChange={formik.handleChange}
+                            onChange={handleChange}
                             value={formik.values.VacantPosition}
                             onKeyPress={(event) => {
                                 if (!/[0-9]/.test(event.key)) {
@@ -234,7 +251,7 @@ export default function EditModal(props) {
                             label='Category'
                             name='Category'
                             fullWidth={true}
-                            onChange={formik.handleChange}
+                            onChange={handleChange}
                             value={formik.values.Category}
                             InputProps={{
                                 startAdornment: (
@@ -250,7 +267,7 @@ export default function EditModal(props) {
                             editIcon={true}
                             id='input-with-icon-textfield'
                             label='Job Description'
-                            onChange={formik.handleChange}
+                            onChange={handleChange}
                             fullWidth
                             name="JobDescription"
                             disabled={true}
@@ -276,8 +293,8 @@ export default function EditModal(props) {
                                     type='submit'
                                     variant='contained'
                                     sx={{ mt: 3, mb: 2 }}
-                                // disabled={disable}
-                                // loading={UserDetails.loading ? true : false}
+                                    disabled={disable}
+                                    loading={UserDetails.loading ? true : false}
                                 >
                                     Apply Changes
                                 </LoadingButton>
@@ -286,42 +303,18 @@ export default function EditModal(props) {
                                 <LoadingButton
                                     variant='contained'
                                     sx={{ mt: 3, mb: 2 }}
-                                // disabled={disable}
-                                // loading={UserDetails.loading ? true : false}
-                                // onClick={handleReset}
+                                    disabled={disable}
+                                    loading={UserDetails.loading ? true : false}
+                                    onClick={handleReset}
                                 >
                                     Reset
                                 </LoadingButton>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        {/* <Typography id="transition-modal-title" variant="h6" component="h2">
-                            Text in a modal
-                        </Typography>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography> */}
                     </Box>
                 </Fade>
             </Modal>
-            <Button size="small">Delete</Button>
+            <DialogBox ButtonText={"Delete"} size="small" DialogBoxTitle={"Do you want to delete this posted job?"} DialogBoxText={"Note:This post will be deleted permenantly."} AgreeButtonText={"Yes"} CancelButtonText={"No"} handleAgreeClick={handleDelete} />
             <Button size="small" onClick={handleEdit}>Edit</Button>
         </div>
     );

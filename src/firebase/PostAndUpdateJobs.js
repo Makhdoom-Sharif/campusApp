@@ -1,13 +1,12 @@
-import { push, ref, getDatabase, set, update } from "firebase/database";
+import { push, ref, getDatabase, set, update, remove } from "firebase/database";
 import { database } from './firebaseConfig';
 
-
+import { JobDeleteSuccess, JobPostSuccess } from '../redux/action';
 
 
 async function AddNewJob(JobData) {
     try {
         const Data = JSON.parse(JSON.stringify(JobData));
-        console.log(Data)
         await set(ref(database, `company/${Data.uid}/postedJobs/${Data.jobID}`), {
             JobDesignation: Data.JobDesignation,
             RequiredQualification: Data.RequiredQualification,
@@ -16,12 +15,27 @@ async function AddNewJob(JobData) {
             Category: Data.Category,
             jobID: Data.jobID
         });
+        JobData.dispatch(JobPostSuccess(Data));
         console.log("job post successfull")
     } catch (error) {
         console.log(error)
     };
 }
 
+async function DeleteJob(JobData, uid, dispatch) {
+
+    const Data = JSON.parse(JSON.stringify(JobData))
+    console.log("data==>", Data)
+    await remove(ref(database, `company/${uid}/postedJobs/${Data.jobID}`)).then(() => {
+        dispatch(JobDeleteSuccess(Data))
+        console.log("Deleted Success")
+    }).catch((e) => {
+        console.log("delete fails", e)
+    })
+
+
+
+}
 
 async function UpdateJob(JobData) {
     console.log("function==>>", JobData)
@@ -46,4 +60,4 @@ async function UpdateJob(JobData) {
 
 }
 
-export { AddNewJob, UpdateJob }
+export { AddNewJob, UpdateJob, DeleteJob }

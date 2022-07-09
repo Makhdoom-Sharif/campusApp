@@ -25,7 +25,7 @@ import EditModal from '../Modal/Modal';
 
 
 const JobsCard = (props) => {
-    const { item, card } = props
+    const { item, card, index } = props
     const dispatch = useDispatch();
     const UserDetails = useSelector((state) => state.user);
     const [editIcon, SetEditIcon] = useState(false)
@@ -49,8 +49,6 @@ const JobsCard = (props) => {
         },
         validationSchema,
         onSubmit: async (values) => {
-            // dispatch(JobPostInit());
-            // setDisable(true);
             try {
                 console.log({
                     uid: UserDetails.uid,
@@ -96,23 +94,6 @@ const JobsCard = (props) => {
                     </Typography>
 
 
-                    {/* <Textfield
-                        id='input-with-icon-textfield'
-                        label='Job Designation'
-                        name='JobDesignation'
-                        fullWidth
-                        // onChange={handleChange}
-                        // value={formik.values.JobDesignation}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position='start'>
-                                    <PersonSearchIcon />
-                                </InputAdornment>
-                            )
-                        }}
-                        variant='standard'
-                        style={{ marginBottom: "10px" }}
-                    /> */}
 
                     <Textfield
                         editIcon={false}
@@ -217,7 +198,7 @@ const JobsCard = (props) => {
                 </CardContent>
                 <CardActions>
                     <EditModal
-                        JobDetails={item}
+                        JobDetails={item} index={index}
                     />
 
                 </CardActions>

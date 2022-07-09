@@ -42,10 +42,16 @@ const theme = createTheme();
 
 export default function SignUp() {
   const [error, setError] = useState();
+  // const [Jobs, setJobs] = useState([]);
   const [open, setOpen] = useState(false);
+  // const Usestate = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const UserDetails = useSelector((state) => state.user);
+
+
+
+
   useEffect(() => {
     if (UserDetails.currentUser === true) {
       navigate("/homepage");
@@ -91,6 +97,14 @@ export default function SignUp() {
 
     setOpen(false);
   };
+
+
+
+
+  useEffect(() => { { console.log("email touch", formik) } }, [formik])
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -143,7 +157,7 @@ export default function SignUp() {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                 />
-                {console.log("email" + formik.touched.email)}
+                {console.log("email touch", formik)}
                 {formik.errors.email && (
                   <p style={{ color: "red", marginLeft: "5px" }}>
                     {formik.errors.email}

@@ -39,6 +39,7 @@ const userReducer = (state = initialState, action) => {
         email: "",
         uid: ""
       };
+    case type.JOB_UPDATE_INIT:
     case type.JOB_POST_INIT:
     case type.POFILE_UPDATE_INIT:
       return { ...state, loading: true };
@@ -73,12 +74,14 @@ const userReducer = (state = initialState, action) => {
         qualification: action.payload.qualification,
         profilePicture: action.payload.ImgUrl,
         website: action.payload.website,
-        service: action.payload.service
+        service: action.payload.service,
+        alljobs: action.payload.alljobs
       };
+    case type.JOB_UPDATE_FAIL:
     case type.JOB_POST_FAIL:
     case type.PASSWORD_RESET_FAIL:
     case type.PASSWORD_RESET_SUCCESS:
-    case type.JOB_POST_SUCCESS:
+
     case type.POFILE_UPDATE_Fail:
     case type.LOGOUT_FAIL:
       return { ...state, loading: false };
@@ -95,6 +98,40 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         alljobs: action.payload
+      }
+    case type.JOB_UPDATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+
+        alljobs: {
+          ...state.alljobs,
+          [action.payload.jobID]: action.payload,
+
+        }
+      }
+    case type.JOB_DELETE_INIT:
+      return {
+        ...state,
+        loading: true
+      }
+    case type.JOB_DELETE_SUCCESS:
+      const alljobs = { ...state.alljobs }
+      delete alljobs[action.payload]
+
+      return {
+        ...state,
+        loading: false,
+        alljobs
+      }
+    case type.JOB_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        alljobs: {
+          ...state.alljobs,
+          [action.payload.jobID]: action.payload
+        }
       }
     default:
       return state;
