@@ -50,8 +50,8 @@ const ApplicationCards = (props) => {
                         Heading
                     </Typography>
                     <Typography>
-                        This is a media card. You can use this section to describe the
-                        content.
+                        {/* This is a media card. You can use this section to describe the
+                        content. */}
                     </Typography>
                 </CardContent>
                 <CardActions>

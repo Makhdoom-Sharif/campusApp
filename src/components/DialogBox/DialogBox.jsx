@@ -19,7 +19,9 @@ export default function DialogBox(props) {
     };
 
     const handleClose = () => {
+        props.handleAgreeClick()
         setOpen(false);
+
     };
 
     return (
@@ -42,7 +44,7 @@ export default function DialogBox(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>{props.CancelButtonText}</Button>
-                    <Button onClick={handleClose && props.handleAgreeClick}>{props.AgreeButtonText}</Button>
+                    <Button onClick={handleClose}>{props.AgreeButtonText}</Button>
                 </DialogActions>
             </Dialog>
         </div>

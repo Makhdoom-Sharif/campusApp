@@ -37,9 +37,12 @@ export const loginSuccess = Data => ({
     ImgUrl: Data.ImgUrl,
     website: Data.website,
     service: Data.service,
-    alljobs: Data.postedJobs
   }
 });
+export const GetAllJobs = Data => ({
+  type: type.GET_ALL_JOB,
+  payload: Data
+})
 export const loginFail = () => ({
   type: type.LOGIN_FAIL
 });
@@ -113,14 +116,6 @@ export const JobPostFail = () => ({
 })
 
 
-export const GetAllJobInit = () => ({
-  type: type.GET_ALL_JOB_INIT
-})
-
-export const GetAllJobSuccess = (Data) => ({
-  type: type.GET_ALL_JOB_SUCCESS,
-  payload: Data
-})
 
 
 export const JobUpdateInit = () => ({

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import JobsCard from './JobsCard';
+import JobsCard from "./JobsCards";
 
 
 
@@ -38,9 +38,10 @@ const theme = createTheme();
 
 
 
-const PostedJobs = () => {
+const AvailabeJobs = () => {
 
     const [Jobs, setJobs] = useState([])
+    const [FlatJobs, setFlatJobs] = useState([])
 
 
     const UserDetails = useSelector((state) => state.user)
@@ -50,12 +51,22 @@ const PostedJobs = () => {
 
 
     useEffect(() => {
-        UserDetails.alljobs && setJobs([...Object.entries(UserDetails?.alljobs).map(entry => entry[1])])
+        console.log();
+        UserDetails.alljobs && setJobs([...Object.values(UserDetails?.alljobs).map(values => values)])
     }, [UserDetails])
 
 
     useEffect(() => {
-        console.log("JobsFilter", Jobs.filter(element => element.companyID === UserDetails.uid))
+        // if (Jobs) {
+        //     setFlatJobs([Object.assign(...Jobs)])
+        // }
+        // const FlatJobsArray = [];
+        // Jobs.map((item, index) => {
+        //     FlatJobsArray.push(item)
+        // })
+        // Jobs && setFlatJobs(Object.assign(...Jobs));
+        // console.log("merged Jobs", FlatJobs)
+        console.log("Jobs", Jobs)
     }, [Jobs])
 
 
@@ -91,7 +102,7 @@ const PostedJobs = () => {
                         <Grid container spacing={4}>
 
 
-                            {Jobs.filter(element => element.companyID === UserDetails.uid).map((item, index) => (
+                            {Jobs.map((item, index) => (
 
                                 <JobsCard card={item.jobID} item={item} index={index} />
 
@@ -124,4 +135,4 @@ const PostedJobs = () => {
     )
 }
 
-export default PostedJobs
+export default AvailabeJobs

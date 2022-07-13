@@ -23,7 +23,7 @@ const initialState = {
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case type.GET_ALL_JOB_INIT:
+    // case type.GET_ALL_JOB_INIT:
     case type.REGISTER_START:
     case type.LOGIN_START:
     case type.LOGOUT_START:
@@ -75,8 +75,12 @@ const userReducer = (state = initialState, action) => {
         profilePicture: action.payload.ImgUrl,
         website: action.payload.website,
         service: action.payload.service,
-        alljobs: action.payload.alljobs
       };
+    case type.GET_ALL_JOB:
+      return {
+        ...state,
+        alljobs: action.payload
+      }
     case type.JOB_UPDATE_FAIL:
     case type.JOB_POST_FAIL:
     case type.PASSWORD_RESET_FAIL:
@@ -93,12 +97,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         profilePicture: action.payload
       };
-    case type.GET_ALL_JOB_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        alljobs: action.payload
-      }
+    // case type.GET_ALL_JOB_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     alljobs: action.payload
+    //   }
     case type.JOB_UPDATE_SUCCESS:
       return {
         ...state,
