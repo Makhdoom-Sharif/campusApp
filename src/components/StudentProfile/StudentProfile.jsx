@@ -22,6 +22,7 @@ import {
   ProfileUpdateInit,
   ProfileUpdateSuccess
 } from "../../redux/action";
+import Footer from "../Footer/Footer";
 import Textfield from "../Inputfeild/Textfield";
 import Title from "../Title";
 import "./StudentProfile.css";
@@ -357,6 +358,7 @@ export default function StudentProfile() {
             </div>
           </div>
         </Paper>
+        {/* <Footer /> */}
       </Box>
     </>
   );

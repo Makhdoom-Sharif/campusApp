@@ -15,7 +15,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import WorkIcon from '@mui/icons-material/Work';
+import { useSelector } from 'react-redux';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import LinkIcon from '@mui/icons-material/Link';
 export default function Drawer() {
+    const { roll } = useSelector((state) => state.user);
     const [state, setState] = useState({
         bottom: false,
     });
@@ -38,7 +42,7 @@ export default function Drawer() {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <List>
+            {roll === 'company' ? <List>
                 {['Post New Jobs', 'Posted Jobs'].map((text, index) => (
                     <Link to={text === 'Post New Jobs' ? "/postnewjobs" : "/postedjobs"} style={{ textDecoration: "none", color: "inherit" }}>
                         <ListItem key={text} disablePadding>
@@ -54,18 +58,22 @@ export default function Drawer() {
                     </Link>
                 ))}
             </List>
-            {/*<List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List> */}
+                :
+                <List>
+                    {['View Applied Jobs', 'View Related Jobs'].map((text, index) => (
+                        <Link to={text === 'View Applied Jobs' ? "/appliedjobs" : "/relatedjobs"} style={{ textDecoration: "none", color: "inherit" }}>
+                            <ListItem key={text} disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        {index % 2 === 0 ? <FactCheckIcon /> : <LinkIcon />}
+                                    </ListItemIcon>
+                                    <ListItemText primary={text} />
+                                </ListItemButton>
+                            </ListItem>
+                            <Divider />
+                        </Link>
+                    ))}
+                </List>}
         </Box >
     );
 

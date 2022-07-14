@@ -25,12 +25,12 @@ async function AddNewJob(JobData) {
     };
 }
 
-async function DeleteJob(JobData, uid, dispatch) {
+async function DeleteJob(JobData, uid, dispatch, index) {
 
     const Data = JSON.parse(JSON.stringify(JobData))
-    console.log("data==>", Data)
+    // console.log("data==>", Data)
     await remove(ref(database, `postedJobs/${Data.jobID}`)).then(() => {
-        dispatch(JobDeleteSuccess(Data))
+        dispatch(JobDeleteSuccess(index))
         console.log("Deleted Success")
     }).catch((e) => {
         console.log("delete fails", e)

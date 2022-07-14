@@ -130,8 +130,8 @@ export const JobUpdateSuccess = (Data) => ({
     Location: Data.Location,
     RequiredQualification: Data.RequiredQualification,
     VacantPosition: Data.VacantPosition,
-    jobID: Data.jobID
-
+    jobID: Data.jobID,
+    index: Data.index
   }
 })
 export const JobUpdateFail = () => ({
@@ -146,5 +146,5 @@ export const JobDeleteInit = () => ({
 
 export const JobDeleteSuccess = (Data) => ({
   type: type.JOB_DELETE_SUCCESS,
-  payload: Data.jobID
+  payload: Data
 })

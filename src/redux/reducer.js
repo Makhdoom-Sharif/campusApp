@@ -19,7 +19,7 @@ const initialState = {
   profilePicture: "",
   website: "",
   service: "",
-  alljobs: {}
+  alljobs: []
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -31,13 +31,27 @@ const userReducer = (state = initialState, action) => {
       return { ...state, loading: true };
     case type.LOGOUT_SUCCESS:
       return {
-        ...state,
-        currentUser: false,
         loading: false,
+        currentUser: false,
+        uid: "",
         roll: "",
-        userName: "",
+        error: "",
+        isAdmin: false,
+        approve: true,
         email: "",
-        uid: ""
+        userName: "",
+        fullname: "",
+        fathername: "",
+        cnic: "",
+        address: "",
+        contact: "",
+        qualification: "",
+        profilePicture: "",
+        website: "",
+        service: "",
+        alljobs: [],
+        appliedjobs: [],
+        relatedjobs: []
       };
     case type.JOB_UPDATE_INIT:
     case type.JOB_POST_INIT:
@@ -104,15 +118,21 @@ const userReducer = (state = initialState, action) => {
     //     alljobs: action.payload
     //   }
     case type.JOB_UPDATE_SUCCESS:
+
+      const newArray = [...state.alljobs]
+      newArray[action.payload.index] = action.payload
+
+
+
       return {
         ...state,
         loading: false,
+        alljobs: newArray
+        // alljobs: {
+        //   ...state.alljobs,
+        //   [action.payload.jobID]: action.payload,
 
-        alljobs: {
-          ...state.alljobs,
-          [action.payload.jobID]: action.payload,
-
-        }
+        // }
       }
     case type.JOB_DELETE_INIT:
       return {
@@ -120,22 +140,28 @@ const userReducer = (state = initialState, action) => {
         loading: true
       }
     case type.JOB_DELETE_SUCCESS:
-      const alljobs = { ...state.alljobs }
-      delete alljobs[action.payload]
+      // const alljobs = { ...state.alljobs }
+      // delete alljobs[action.payload]
 
       return {
         ...state,
         loading: false,
-        alljobs
+        alljobs: [
+          ...state.alljobs.slice(0, action.payload),
+          ...state.alljobs.slice(action.payload + 1)
+        ],
+
       }
     case type.JOB_POST_SUCCESS:
       return {
         ...state,
         loading: false,
-        alljobs: {
-          ...state.alljobs,
-          [action.payload.jobID]: action.payload
-        }
+        alljobs: [...state.alljobs, action.payload]
+        // alljobs: {
+        //   ...state.alljobs,
+
+        //   [action.payload.jobID]: action.payload
+        // }
       }
     default:
       return state;

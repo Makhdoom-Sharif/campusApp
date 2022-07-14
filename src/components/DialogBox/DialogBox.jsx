@@ -18,11 +18,15 @@ export default function DialogBox(props) {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        props.handleAgreeClick()
+    const handleCancel = () => {
+
         setOpen(false);
 
     };
+    const handleClose = () => {
+        props.handleAgreeClick()
+        setOpen(false)
+    }
 
     return (
         <div>
@@ -33,7 +37,7 @@ export default function DialogBox(props) {
                 open={open}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={handleClose}
+                onClose={handleCancel}
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle>{props.DialogBoxTitle}</DialogTitle>
@@ -43,7 +47,7 @@ export default function DialogBox(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>{props.CancelButtonText}</Button>
+                    <Button onClick={handleCancel}>{props.CancelButtonText}</Button>
                     <Button onClick={handleClose}>{props.AgreeButtonText}</Button>
                 </DialogActions>
             </Dialog>

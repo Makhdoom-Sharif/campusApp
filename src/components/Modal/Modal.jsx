@@ -58,7 +58,7 @@ export default function EditModal(props) {
     const handleDelete = async () => {
         dispatch(JobDeleteInit())
         console.log(JobDetails)
-        await DeleteJob(JobDetails, UserDetails.uid, dispatch)
+        await DeleteJob(JobDetails, UserDetails.uid, dispatch, index)
 
 
     }
@@ -99,7 +99,7 @@ export default function EditModal(props) {
                     jobID: JobDetails.jobID
                 })
 
-                dispatch(JobUpdateSuccess({ ...values, jobID: JobDetails.jobID }));
+                dispatch(JobUpdateSuccess({ ...values, jobID: JobDetails.jobID, index }));
             } catch (e) {
                 console.log(e);
                 dispatch(JobUpdateFail());
@@ -314,8 +314,12 @@ export default function EditModal(props) {
                     </Box>
                 </Fade>
             </Modal>
-            <DialogBox ButtonText={"Delete"} size="small" DialogBoxTitle={"Do you want to delete this posted job?"} DialogBoxText={"Note:This post will be deleted permenantly."} AgreeButtonText={"Yes"} CancelButtonText={"No"} handleAgreeClick={handleDelete} />
-            <Button size="small" onClick={handleEdit}>Edit</Button>
+            <div style={{ display: "flex" }}>
+                <DialogBox ButtonText={"Delete"} size="small" DialogBoxTitle={"Do you want to delete this posted job?"} DialogBoxText={"Note:This post will be deleted permenantly."} AgreeButtonText={"Yes"} CancelButtonText={"No"} handleAgreeClick={handleDelete} />
+                <Button size="small" onClick={handleEdit}>Edit</Button>
+                <Button size="small" > View Applicants</Button>
+            </div>
+
         </div>
     );
 }

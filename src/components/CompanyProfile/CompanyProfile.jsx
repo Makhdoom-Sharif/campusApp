@@ -28,6 +28,7 @@ import Title from "../Title";
 import LanguageIcon from '@mui/icons-material/Language';
 import CategoryIcon from '@mui/icons-material/Category';
 import DropDown from "../DropDown/DropDown";
+import Footer from "../Footer/Footer";
 
 export default function StudentProfile() {
   const [disable, setDisable] = useState(true);
@@ -282,6 +283,7 @@ export default function StudentProfile() {
             </div>
           </div>
         </Paper>
+        {/* <Footer /> */}
       </Box>
     </>
   );

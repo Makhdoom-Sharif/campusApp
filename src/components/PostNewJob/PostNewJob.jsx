@@ -21,6 +21,7 @@ import {
     JobPostInit,
     JobPostSuccess
 } from "../../redux/action";
+import Footer from '../Footer/Footer';
 import Textfield from "../Inputfeild/Textfield";
 import "../StudentProfile/StudentProfile.css";
 import Title from "../Title";
@@ -265,6 +266,7 @@ export default function PostNewJob() {
                         </div>
                     </div>
                 </Paper>
+                {/* <Footer /> */}
             </Box>
         </>
     );

@@ -20,23 +20,23 @@ import {
   loginStart
 } from "../redux/action";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {"Copyright © "}
-      <Link to={"/"} style={{ color: "inherit", textDecoration: "underline" }}>
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant='body2'
+//       color='text.secondary'
+//       align='center'
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link to={"/"} style={{ color: "inherit", textDecoration: "underline" }}>
+//         Your Website
+//       </Link>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme();
 
@@ -52,11 +52,11 @@ export default function SignUp() {
 
 
 
-  useEffect(() => {
-    if (UserDetails.currentUser === true) {
-      navigate("/homepage");
-    }
-  }, [UserDetails.currentUser, navigate]);
+  // useEffect(() => {
+  //   if (UserDetails.currentUser === true) {
+  //     navigate("/homepage");
+  //   }
+  // }, [UserDetails.currentUser, navigate]);
   const validationSchema = Yup.object({
     email: Yup.string()
       .email()
@@ -80,7 +80,8 @@ export default function SignUp() {
         await loginUser({
           email: values.email,
           password: values.password,
-          dispatch
+          dispatch,
+          navigate
         });
       } catch (e) {
         dispatch(loginFail());
@@ -101,7 +102,7 @@ export default function SignUp() {
 
 
 
-  useEffect(() => { { console.log("email touch", formik) } }, [formik])
+  // useEffect(() => { { console.log("email touch", formik) } }, [formik])
 
 
 
@@ -193,19 +194,26 @@ export default function SignUp() {
               Log In
             </LoadingButton>
             <Grid container justifyContent='flex-end'>
-              <Grid item>
+              <Grid style={{ justifyContent: 'space-between' }} item>
+                <Link
+                  to={UserDetails.loading ? "#" : "/forgotpassword"}
+                  style={{ color: "inherit", textDecoration: "underline", paddingRight: "30px" }}
+                >
+                  {"Forget Passwrord?"}
+                </Link>
                 <Link
                   to={UserDetails.loading ? "#" : "/signup"}
                   style={{ color: "inherit", textDecoration: "underline" }}
                 >
                   {"Don't have an account? Sign Up"}
                 </Link>
+
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }

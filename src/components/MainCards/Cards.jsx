@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -15,76 +14,27 @@ import PeopleIcon from '@mui/icons-material/People';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import SchoolIcon from "@mui/icons-material/School";
 import { InputAdornment } from "@mui/material";
+import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import DialogBox from '../DialogBox/DialogBox';
 import Textfield from "../Inputfeild/Textfield";
 import "../StudentProfile/StudentProfile.css";
-import { useState } from 'react';
-import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { useFormik } from "formik";
+import { ApplyJob } from '../../firebase/ApplyandCancelJob';
 import EditModal from '../Modal/Modal';
 
 
 const JobsCard = (props) => {
-    const { item, card, index } = props
-    const dispatch = useDispatch();
-    const UserDetails = useSelector((state) => state.user);
-    const [editIcon, SetEditIcon] = useState(false)
-    // const validationSchema = Yup.object({
-    //     JobDesignation: Yup.string(),
-    //     RequiredQualification: Yup.string(),
-    //     Location: Yup.number(),
-    //     VacantPosition: Yup.string(),
-    //     Category: Yup.number(),
-    //     JobDescription: Yup.string()
-    // });
+    const handleApply = () => {
+        ApplyJob(props.item, props.uid)
+    }
 
-    // const formik = useFormik({
-    //     initialValues: {
-    //         JobDesignation: props.item.JobDesignation,
-    //         RequiredQualification: props.item.RequiredQualification,
-    //         Location: props.item.Location,
-    //         VacantPosition: props.item.VacantPosition,
-    //         Category: props.item.Category,
-    //         JobDescription: props.item.JobDescription
-    //     },
-    //     validationSchema,
-    //     onSubmit: async (values) => {
-    //         try {
-    //             console.log({
-    //                 uid: UserDetails.uid,
-    //                 dispatch: dispatch,
-    //                 JobDesignation: values.JobDesignation,
-    //                 RequiredQualification: values.RequiredQualification,
-    //                 Location: values.Location,
-    //                 VacantPosition: values.VacantPosition,
-    //                 Category: values.Category,
-    //                 jobID: ``
-    //             });
-    //             // dispatch(JobPostSuccess());
-    //         } catch (e) {
-    //             console.log(e);
-    //             // dispatch(JobPostFail());
-    //         }
-    //     }
-    // });
-
-
-
-
-
-
-
-
-
-
-    // useEffect(() => {
-    //     console.log("card", props.card)
-    //     console.log("item", props.item)
-    // }, [])
-
+    const handleAgreeClick = () => {
+        handleApply()
+    }
     return (
 
-        <Grid item key={props.card} xs={12} sm={6} md={4}>
+
+        <Grid item key={props.jobID} xs={12} sm={6} md={4}>
             <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >
@@ -92,9 +42,6 @@ const JobsCard = (props) => {
                     <Typography gutterBottom variant="h5" component="h2">
                         <PersonSearchIcon /> {props.item.JobDesignation}
                     </Typography>
-
-
-
                     <Textfield
                         editIcon={false}
                         id='input-with-icon-textfield'
@@ -197,10 +144,13 @@ const JobsCard = (props) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <EditModal
-                        JobDetails={item} index={index}
-                    />
 
+                    {props.DialogBox && <DialogBox ButtonText={props.DialogBoxButtonText} size="small" DialogBoxTitle={props.DialogBoxTitle} DialogBoxText={props.DialogBoxText} AgreeButtonText={props.DialogAgreeButtonText} CancelButtonText={props.DialogCancelButtonText}
+                        handleAgreeClick={handleAgreeClick}
+                    />}
+                    {props.EditModal && <EditModal
+                        JobDetails={props.item} index={props.index}
+                    />}
                 </CardActions>
             </Card>
         </Grid>

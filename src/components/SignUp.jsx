@@ -21,23 +21,23 @@ import * as Yup from "yup";
 import { signUp } from "../firebase/signup";
 import { registerFail, registerStart } from "../redux/action";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link to={"/"} style={{ color: "inherit", textDecoration: "underline" }}>
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link to={"/"} style={{ color: "inherit", textDecoration: "underline" }}>
+//         Your Website
+//       </Link>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme();
 
@@ -48,11 +48,11 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const UserDetails = useSelector((state) => state.user);
   // const { currentUser, error } = useSelector((state) => state?.user);
-  useEffect(() => {
-    if (UserDetails.currentUser===true) {
-      navigate("/homepage");
-    }
-  }, [UserDetails.currentUser, navigate]);
+  // useEffect(() => {
+  //   if (UserDetails.currentUser===true) {
+  //     navigate("/homepage");
+  //   }
+  // }, [UserDetails.currentUser, navigate]);
   const [roll, setRoll] = useState(null);
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -83,9 +83,10 @@ export default function SignUp() {
           password: values.password,
           roll: values.roll,
           userName: values.userName,
-          dispatch,
+          dispatch
         });
         alert("SignUp Successfully");
+        values.roll === 'student' ? navigate('/student') : navigate('/company')
       } catch (e) {
         dispatch(registerFail());
         setOpen(true);
@@ -94,7 +95,7 @@ export default function SignUp() {
       }
     },
   });
-  console.log(formik.errors);
+  // console.log(formik.errors);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -269,7 +270,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );

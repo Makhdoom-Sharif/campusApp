@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutFail, logoutStart, logoutSuccess } from "../../redux/action";
 import { Link } from "react-router-dom";
-import {app} from '../../firebase/firebaseConfig'
+import { app } from '../../firebase/firebaseConfig'
 const auth = getAuth();
 
 export const LogOut = () => {
@@ -23,11 +23,11 @@ export const LogOut = () => {
       dispatch(logoutFail());
     }
   };
-  useEffect(() => {
-    if (UserDetails.currentUser === false) {
-      <Link to={"/"}></Link>;
-    }
-  }, [UserDetails.currentUser]);
+  // useEffect(() => {
+  //   if (UserDetails.currentUser === false) {
+  //     <Link to={"/"}></Link>;
+  //   }
+  // }, [UserDetails.currentUser]);
 
   return (
     <div>

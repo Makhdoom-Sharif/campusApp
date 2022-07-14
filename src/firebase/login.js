@@ -9,36 +9,34 @@ const auth = getAuth();
 const loginUser = async (authParams) => {
 
   const auth = getAuth();
-  const { email, password, dispatch } = authParams
-  // const { Jobs, setJobs } = ArryJobs
+  const { email, password, dispatch, navigate } = authParams
   const { user: { uid } } = await signInWithEmailAndPassword(auth, email, password)
   const dbRef = ref(getDatabase());
   await get(child(dbRef, `student/${uid}`))
     .then(async (snapshot) => {
       if (snapshot.exists()) {
         console.log(snapshot.val());
-        await AvailableJobs(dispatch)
+        await AvailableJobs(dispatch, uid)
         await snapshot.val();
         await dispatch(loginSuccess(snapshot.val()));
+        navigate("/student")
       } else {
         await get(child(dbRef, `company/${uid}`))
           .then(async (snapshot) => {
             if (snapshot.exists()) {
               await dispatch(loginSuccess(snapshot.val()))
+
               await get(child(dbRef, `postedJobs/`)).then(async (snapshot) => {
 
-                // const ref = database.ref(database,'postedJobs');
-                // ref.orderByChild('').equalTo(25).on('child_added', (snapshot) => {
-                //   console.log(snapshot.key);
-                // });
-                // const qData = await query(ref(database, 'postedJobs'), equalTo(uid))
-                // console.log("qData====>", qData)
-                // console.log("database==>", equalTo(uid, child("companyID")))
-                if (snapshot.exists())
+                if (snapshot.exists()) {
 
-
-                  console.log("jobs==>", snapshot.val())
-                dispatch(GetAllJobs(snapshot.val()))
+                  async function myFunction() {
+                    return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
+                  }
+                  const jobArray = await myFunction()
+                  dispatch(GetAllJobs(jobArray))
+                  navigate("/company")
+                }
               })
 
                 ;
@@ -47,6 +45,7 @@ const loginUser = async (authParams) => {
           }).catch((error) => {
             console.error(error)
           })
+        navigate("/company")
       }
     })
     .catch((error) => {
