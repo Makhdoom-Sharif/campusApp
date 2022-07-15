@@ -148,3 +148,15 @@ export const JobDeleteSuccess = (Data) => ({
   type: type.JOB_DELETE_SUCCESS,
   payload: Data
 })
+
+
+export const GetAppliedStudents = (Data) => ({
+  type: type.GET_APPLIED_STUDENTS,
+  payload: Data
+})
+
+
+
+export const RemoveAppliedStudent = () => ({
+  type: type.REMOVE_APPLIED_STUDENT
+})

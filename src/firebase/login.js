@@ -30,11 +30,22 @@ const loginUser = async (authParams) => {
 
                 if (snapshot.exists()) {
 
-                  async function myFunction() {
+                  async function filterArray() {
                     return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
                   }
-                  const jobArray = await myFunction()
+                  const jobArray = await filterArray()
                   dispatch(GetAllJobs(jobArray))
+                  //                   async function filterApplicants() {
+                  //                     return const Job appli await [jobArray.filter(element=> element.ApplicantsIDs)]
+                  // }
+
+
+
+
+
+
+
+
                   navigate("/company")
                 }
               })

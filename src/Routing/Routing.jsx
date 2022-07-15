@@ -15,7 +15,6 @@ import CompanyProfilePage from "../pages/CompanyProfilePage";
 import StudentProfilePage from "../pages/StudentProfilePage";
 import ForgotPassword from "../pages/ForgotPassword";
 import PostNewJobPage from "../pages/PostNewJobPage";
-import PostedJobPage from "../pages/PostedJobPage";
 import { useSelector } from 'react-redux';
 import AppliedJobs from '../pages/AppliedJobs';
 import RelatedJobs from '../pages/RelatedJobs';
@@ -29,7 +28,7 @@ const Routing = () => {
                 <Route exact path="/" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
-
+                <Route path="/admin" element={<AdminPage />}></Route>
                 <Route path="*" element={<Navigate replace to="/" />} />
 
             </Routes>
@@ -47,11 +46,7 @@ const Routing = () => {
                     <Route path="/company" element={<CompanyHomePage />} />
                     <Route path="/companyprofile" element={<CompanyProfilePage />} />
                     <Route path="/postnewjobs" element={<PostNewJobPage />}></Route>
-                    <Route path="/postedjobs" element={<PostedJobPage />}></Route>
                     <Route path="*" element={<Navigate replace to="/company" />} />
-
-
-
                 </Routes>
 
         }

@@ -19,7 +19,8 @@ const initialState = {
   profilePicture: "",
   website: "",
   service: "",
-  alljobs: []
+  alljobs: [],
+  AppliedStudents: []
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -162,6 +163,18 @@ const userReducer = (state = initialState, action) => {
 
         //   [action.payload.jobID]: action.payload
         // }
+      }
+
+    case type.GET_APPLIED_STUDENTS:
+      return {
+        ...state,
+        AppliedStudents: [...state.AppliedStudents, action.payload]
+      }
+
+    case type.REMOVE_APPLIED_STUDENT:
+      return {
+        ...state,
+        AppliedStudents: []
       }
     default:
       return state;

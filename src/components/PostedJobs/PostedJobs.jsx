@@ -132,7 +132,10 @@ const PostedJobs = () => {
 
     const UserDetails = useSelector((state) => state.user)
         ;
-
+    // const handleListModalOpen = async () => {
+    //     console.log("list open click")
+    //     await applicantsLinks()
+    // }
 
     return (
         <Main
@@ -141,6 +144,7 @@ const PostedJobs = () => {
             DialogBox={false}
             EditModal={true}
             Title={"Posted Jobs"}
+        // handleListModalOpen={handleListModalOpen}
         />
     )
 }

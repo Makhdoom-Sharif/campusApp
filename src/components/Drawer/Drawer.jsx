@@ -37,7 +37,7 @@ export default function Drawer() {
 
     const list = (anchor) => (
         <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+            sx={{ width: anchor === 'top' || anchor === 'left' ? 'auto' : 250 }}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
@@ -80,15 +80,15 @@ export default function Drawer() {
     return (
         <div>
 
-            <React.Fragment key={'bottom'}>
-                <Button onClick={toggleDrawer('bottom', true)}><  MenuIcon style={{ color: "#ffff" }} /></Button>
+            <React.Fragment key={'left'}>
+                <Button onClick={toggleDrawer('left', true)}><  MenuIcon style={{ color: "#ffff" }} /></Button>
                 <SwipeableDrawer
-                    anchor={'bottom'}
-                    open={state['bottom']}
-                    onClose={toggleDrawer('bottom', false)}
-                    onOpen={toggleDrawer('bottom', true)}
+                    anchor={'left'}
+                    open={state['left']}
+                    onClose={toggleDrawer('left', false)}
+                    onOpen={toggleDrawer('left', true)}
                 >
-                    {list('bottom')}
+                    {list('left')}
                 </SwipeableDrawer>
             </React.Fragment>
         </div>

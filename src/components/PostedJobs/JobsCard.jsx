@@ -21,7 +21,7 @@ import { useState } from 'react';
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import EditModal from '../Modal/Modal';
+import EditModal from '../Modal/EditModal';
 
 
 const JobsCard = (props) => {

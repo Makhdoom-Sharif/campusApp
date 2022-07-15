@@ -74,10 +74,12 @@ const Main = (props) => {
                                     DialogCancelButtonText={props.DialogCancelButtonText}
                                     DialogBox={props.DialogBox}
                                     EditModal={props.EditModal}
+                                // handleListModalOpen={props.handleListModalOpen}
                                 />
 
                             ))
                             }
+
 
                         </Grid>
                     </Container>

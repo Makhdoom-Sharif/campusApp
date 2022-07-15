@@ -20,7 +20,7 @@ import DialogBox from '../DialogBox/DialogBox';
 import Textfield from "../Inputfeild/Textfield";
 import "../StudentProfile/StudentProfile.css";
 import { ApplyJob } from '../../firebase/ApplyandCancelJob';
-import EditModal from '../Modal/Modal';
+import EditModal from '../Modal/EditModal';
 
 
 const JobsCard = (props) => {
@@ -150,7 +150,10 @@ const JobsCard = (props) => {
                     />}
                     {props.EditModal && <EditModal
                         JobDetails={props.item} index={props.index}
+                        handleListModalOpen={props.handleListModalOpen}
+                        Edit={true}
                     />}
+
                 </CardActions>
             </Card>
         </Grid>
