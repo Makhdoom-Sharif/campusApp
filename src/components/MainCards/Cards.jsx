@@ -24,12 +24,14 @@ import EditModal from '../Modal/EditModal';
 
 
 const JobsCard = (props) => {
-    const handleApply = () => {
-        ApplyJob(props.item, props.uid)
-    }
+    const UserDetails = useSelector((state) => state.user);
+    const dispatch = useDispatch()
+    // const handleApply = async () => {
 
-    const handleAgreeClick = () => {
-        handleApply()
+    // }
+
+    const handleAgreeClick = async () => {
+        await ApplyJob(props.item, props.uid, dispatch)
     }
     return (
 
@@ -39,8 +41,8 @@ const JobsCard = (props) => {
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >
                 <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        <PersonSearchIcon /> {props.item.JobDesignation}
+                    <Typography gutterBottom variant="h5" component="h2" style={{ wordBreak: "break-all" }}>
+                        {props.item.JobDesignation}
                     </Typography>
                     <Textfield
                         editIcon={false}
@@ -105,10 +107,10 @@ const JobsCard = (props) => {
                     <Textfield
                         editIcon={false}
                         id='input-with-icon-textfield'
-                        label='Category'
-                        name='Category'
+                        label='category'
+                        name='category'
                         fullWidth={true}
-                        value={props.item.Category}
+                        value={props.item.category}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
@@ -140,21 +142,38 @@ const JobsCard = (props) => {
                         variant='standard'
                         style={{ marginBottom: "10px" }}
                     />
-                    <Typography>
-                    </Typography>
+
                 </CardContent>
-                <CardActions>
+                {props.item.category === UserDetails.category && UserDetails.roll === "student" && <Typography>
+                    Note: Your Profile Matches
+                </Typography>}
 
-                    {props.DialogBox && <DialogBox ButtonText={props.DialogBoxButtonText} size="small" DialogBoxTitle={props.DialogBoxTitle} DialogBoxText={props.DialogBoxText} AgreeButtonText={props.DialogAgreeButtonText} CancelButtonText={props.DialogCancelButtonText}
-                        handleAgreeClick={handleAgreeClick}
-                    />}
-                    {props.EditModal && <EditModal
-                        JobDetails={props.item} index={props.index}
-                        handleListModalOpen={props.handleListModalOpen}
-                        Edit={true}
-                    />}
 
-                </CardActions>
+
+
+
+
+
+
+
+                {props.DialogBox && <CardActions style={{
+                    display: "flex",
+                    justifyContent: "flex-end"
+                }}>
+                    <DialogBox ButtonText={props.DialogBoxButtonText} size="small" DialogBoxTitle={props.DialogBoxTitle} DialogBoxText={props.DialogBoxText} AgreeButtonText={props.DialogAgreeButtonText} CancelButtonText={props.DialogCancelButtonText}
+                        handleAgreeClick={handleAgreeClick} />
+                </CardActions>}
+                {props.EditModal &&
+
+                    <CardActions style={{ display: "flex" }}>
+                        <EditModal
+                            JobDetails={props.item} index={props.index}
+                            handleListModalOpen={props.handleListModalOpen}
+                            Edit={true}
+                        />
+                    </CardActions>}
+
+
             </Card>
         </Grid>
 

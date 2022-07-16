@@ -1,6 +1,6 @@
+import CategoryIcon from '@mui/icons-material/Category';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import InfoIcon from '@mui/icons-material/Info';
-import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import SchoolIcon from "@mui/icons-material/School";
@@ -15,16 +15,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import * as Yup from "yup";
 import { AddNewJob } from "../../firebase/PostAndUpdateJobs";
-import uploadImage from "../../firebase/uploadImg";
 import {
     JobPostFail,
-    JobPostInit,
-    JobPostSuccess
+    JobPostInit
 } from "../../redux/action";
-import Footer from '../Footer/Footer';
+import DropDown from '../DropDown/DropDown';
 import Textfield from "../Inputfeild/Textfield";
 import "../StudentProfile/StudentProfile.css";
 import Title from "../Title";
+
+
+
+
 
 export default function PostNewJob() {
     const [disable, setDisable] = useState(true);
@@ -44,7 +46,7 @@ export default function PostNewJob() {
         RequiredQualification: Yup.string(),
         Location: Yup.string(),
         VacantPosition: Yup.string(),
-        Category: Yup.string(),
+        category: Yup.string(),
         JobDescription: Yup.string()
     });
     const Input = styled("input")({
@@ -57,7 +59,7 @@ export default function PostNewJob() {
             RequiredQualification: '',
             Location: '',
             VacantPosition: '',
-            Category: '',
+            category: '',
             JobDescription: ''
         },
         validationSchema,
@@ -72,7 +74,7 @@ export default function PostNewJob() {
                     RequiredQualification: values.RequiredQualification,
                     Location: values.Location,
                     VacantPosition: values.VacantPosition,
-                    Category: values.Category,
+                    category: values.category,
                     JobDescription: values.JobDescription,
                     jobID: `${v4()}`
                 });
@@ -201,24 +203,6 @@ export default function PostNewJob() {
                             <Textfield
                                 editIcon={true}
                                 id='input-with-icon-textfield'
-                                label='Category'
-                                name='Category'
-                                fullWidth={true}
-                                onChange={handleChange}
-                                value={formik.values.Category}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position='start'>
-                                            <LabelImportantIcon />
-                                        </InputAdornment>
-                                    )
-                                }}
-                                variant='standard'
-                                style={{ marginBottom: "10px" }}
-                            />
-                            <Textfield
-                                editIcon={true}
-                                id='input-with-icon-textfield'
                                 label='Job Description'
                                 onChange={handleChange}
                                 fullWidth
@@ -237,6 +221,18 @@ export default function PostNewJob() {
                                 }}
                                 variant='standard'
                                 style={{ marginBottom: "10px" }}
+                            />
+                            <DropDown
+                                sx={{ m: 1, width: 475 }}
+                                variant='standard'
+                                label='Category'
+                                name='category'
+                                onChange={handleChange}
+                                id='category'
+                                value={formik.values.category}
+                                arrayCategoray={["Fresher", "Mid-Level", "Senior"]}
+                                fullWidth={true}
+                                Icon={<CategoryIcon />}
                             />
 
                         </div>
@@ -266,7 +262,6 @@ export default function PostNewJob() {
                         </div>
                     </div>
                 </Paper>
-                {/* <Footer /> */}
             </Box>
         </>
     );

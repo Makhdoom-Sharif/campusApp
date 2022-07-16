@@ -14,7 +14,7 @@ async function AddNewJob(JobData) {
             RequiredQualification: Data.RequiredQualification,
             Location: Data.Location,
             VacantPosition: Data.VacantPosition,
-            Category: Data.Category,
+            category: Data.category,
             jobID: Data.jobID,
             companyID: Data.uid
         });

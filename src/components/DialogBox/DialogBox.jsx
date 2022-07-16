@@ -23,9 +23,12 @@ export default function DialogBox(props) {
         setOpen(false);
 
     };
-    const handleClose = () => {
-        props.handleAgreeClick()
-        setOpen(false)
+    const handleClose = async () => {
+
+        await props.handleAgreeClick().then(() => setOpen(false))
+
+
+
     }
 
     return (

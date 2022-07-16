@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { registerSuccess } from '../redux/action';
+import { AvailableJobs } from "./AvailableJobs";
 import { database } from './firebaseConfig';
 
 
@@ -21,6 +22,14 @@ async function writeUserData(uid, email, roll, userName, dispatch) {
       roll: roll,
       userName: userName,
     });
+
+
+
+
+
+
+
+    await AvailableJobs(dispatch)
     dispatch(registerSuccess({ uid, email, roll, userName }));
 
   } catch (error) {

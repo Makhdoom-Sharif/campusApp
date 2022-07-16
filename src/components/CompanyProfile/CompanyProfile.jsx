@@ -247,15 +247,20 @@ export default function StudentProfile() {
               />
               <br />
               <Title>Service Info</Title>
-              <DropDown
-                variant='standard'
-                label='Services'
-                name='service'
-                onChange={handleChange}
-                id='service'
-                value={formik.values.service}
-                fullWidth={true}
-              />
+              <div style={{ width: "100 %" }}>
+                <DropDown
+                  sx={{ m: 1, width: 475 }}
+                  variant='standard'
+                  label='Service'
+                  name='service'
+                  onChange={handleChange}
+                  id='service'
+                  value={formik.values.service}
+                  arrayCategoray={["Cloud Solutions Provider (CSP)", "Software As A Service (SaaS)", "Monitoring & Hourly IT Services Provider", "Managed Service Provider (MSP)"]}
+                  fullWidth={true}
+                  Icon={<CategoryIcon />}
+                />
+              </div>
             </div>
           </div>
           <div className='bottom-btns'>

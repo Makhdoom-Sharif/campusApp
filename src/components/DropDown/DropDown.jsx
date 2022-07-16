@@ -7,13 +7,14 @@ import Select from '@mui/material/Select';
 import { useState } from 'react';
 
 export default function DropDown(props) {
+  console.log(props)
   const [disable, setDisable] = useState(true);
 
-
+  const value = props.value
   return (
-    <Box  sx={{ minWidth: 120 }}>
+    <Box sx={props.sx}>
       <FormControl fullWidth={props.fullWidth} >
-        <InputLabel id="demo-simple-select-label" >{props.label}:</InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label" >{props.label}:</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id={props.id}
@@ -26,13 +27,22 @@ export default function DropDown(props) {
           onBlur={() => setDisable(true)}
           disabled={disable}
           onClick={() => setDisable(false)}
-          
+          disableUnderline={disable}
+          renderValue={(value) => {
+            console.log(value);
+            return (
+              <Box sx={{ display: "flex", gap: 1 }}>
+                {props.Icon}
+                {value}
+              </Box>
+            );
+          }}
         >
-          <MenuItem value={"IT Services"}>IT Service</MenuItem>
-          <MenuItem value={"Banking And Finance Services"}>Banking And Finance Services</MenuItem>
-          <MenuItem value={"E-Commerce Consultant"}>E-Commerce Consultant</MenuItem>
+          {props.arrayCategoray.map((item) => {
+            return < MenuItem value={item} > {item}</MenuItem>
+          })}
         </Select>
       </FormControl>
-    </Box>
+    </Box >
   );
 }

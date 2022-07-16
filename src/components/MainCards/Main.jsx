@@ -21,15 +21,6 @@ const theme = createTheme();
 
 
 const Main = (props) => {
-
-    // const handleApply = () => {
-    //     console.log("apply click", props.item)
-    //     ApplyJob(props.item, props.uid)
-    // }
-
-
-
-
     return (
         <>
             <ThemeProvider theme={theme}>
@@ -62,7 +53,7 @@ const Main = (props) => {
 
                             {props.alljobs.map((item, index) => (
 
-                                <Cards
+                                item && <Cards
                                     uid={props.uid}
                                     jobID={item.jobID}
                                     item={item}
@@ -74,7 +65,6 @@ const Main = (props) => {
                                     DialogCancelButtonText={props.DialogCancelButtonText}
                                     DialogBox={props.DialogBox}
                                     EditModal={props.EditModal}
-                                // handleListModalOpen={props.handleListModalOpen}
                                 />
 
                             ))

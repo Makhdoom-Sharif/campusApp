@@ -40,7 +40,7 @@ const style = {
 export default function ProfileModal(props) {
     const dispatch = useDispatch();
     const { ApplicantsDetails, index } = props
-    console.log("props", props)
+    // console.log("props", props)
     const [open, setOpen] = useState(false);
     const handleView = () => setOpen(true);
     const handleClose = () => setOpen(false);

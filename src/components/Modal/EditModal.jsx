@@ -24,6 +24,8 @@ import { JobDeleteInit, JobDeleteSuccess, JobUpdateFail, JobUpdateInit, JobUpdat
 import DialogBox from '../DialogBox/DialogBox';
 import ListDialog from './ListModal';
 import { GetAppliedStudentData } from '../../firebase/GetAppliedStudentData';
+import DropDown from '../DropDown/DropDown';
+import CategoryIcon from '@mui/icons-material/Category';
 
 const style = {
     position: 'absolute',
@@ -66,7 +68,7 @@ export default function EditModal(props) {
     }
     const handleListModalOpen = async () => {
         if (JobDetails.ApplicantsIDs) {
-            console.log("list open click", JobDetails.ApplicantsIDs)
+            // console.log("list open click", JobDetails.ApplicantsIDs)
             const ListArray = [...Object.entries(JobDetails?.ApplicantsIDs)?.map(entry => entry[0])]
             console.log("list array", ListArray)
             ListArray.map(async (item, index) =>
@@ -95,7 +97,7 @@ export default function EditModal(props) {
         RequiredQualification: Yup.string(),
         Location: Yup.string(),
         VacantPosition: Yup.string(),
-        Category: Yup.string(),
+        category: Yup.string(),
         JobDescription: Yup.string()
     });
 
@@ -105,7 +107,7 @@ export default function EditModal(props) {
             RequiredQualification: JobDetails.RequiredQualification,
             Location: JobDetails.Location,
             VacantPosition: JobDetails.VacantPosition,
-            Category: JobDetails.Category,
+            category: JobDetails.category,
             JobDescription: JobDetails.JobDescription
         },
         validationSchema,
@@ -121,8 +123,9 @@ export default function EditModal(props) {
                     RequiredQualification: values.RequiredQualification,
                     Location: values.Location,
                     VacantPosition: values.VacantPosition,
-                    Category: values.Category,
-                    jobID: JobDetails.jobID
+                    category: values.category,
+                    jobID: JobDetails.jobID,
+                    JobDescription: values.JobDescription
                 })
 
                 dispatch(JobUpdateSuccess({ ...values, jobID: JobDetails.jobID, index }));
@@ -240,24 +243,7 @@ export default function EditModal(props) {
                                 )
                             }}
                         />
-                        <Textfield
-                            editIcon={true}
-                            id='input-with-icon-textfield'
-                            label='Category'
-                            name='Category'
-                            fullWidth={true}
-                            onChange={handleChange}
-                            value={formik.values.Category}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position='start'>
-                                        <LabelImportantIcon />
-                                    </InputAdornment>
-                                )
-                            }}
-                            variant='standard'
-                            style={{ marginBottom: "10px" }}
-                        />
+
                         <Textfield
                             editIcon={true}
                             id='input-with-icon-textfield'
@@ -280,6 +266,20 @@ export default function EditModal(props) {
                             variant='standard'
                             style={{ marginBottom: "10px" }}
                         />
+
+                        <DropDown
+                            variant='standard'
+                            label='Category'
+                            name='category'
+                            onChange={handleChange}
+                            id='category'
+                            value={formik.values.category}
+                            arrayCategoray={["Fresher", "Mid-Level", "Senior"]}
+                            fullWidth={true}
+                            Icon={<LabelImportantIcon />}
+                        />
+
+
 
 
                         <div className='bottom-btns'>

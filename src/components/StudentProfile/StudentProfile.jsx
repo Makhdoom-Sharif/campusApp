@@ -22,10 +22,15 @@ import {
   ProfileUpdateInit,
   ProfileUpdateSuccess
 } from "../../redux/action";
+import DropDown from "../DropDown/DropDown";
 import Footer from "../Footer/Footer";
 import Textfield from "../Inputfeild/Textfield";
 import Title from "../Title";
 import "./StudentProfile.css";
+import CategoryIcon from '@mui/icons-material/Category';
+
+
+
 
 export default function StudentProfile() {
   const [disable, setDisable] = useState(true);
@@ -52,7 +57,8 @@ export default function StudentProfile() {
     cnic: Yup.number(),
     address: Yup.string(),
     contact: Yup.number(),
-    qualification: Yup.string()
+    qualification: Yup.string(),
+    category: Yup.string()
   });
   const Input = styled("input")({
     display: "none"
@@ -65,7 +71,8 @@ export default function StudentProfile() {
       cnic: UserDetails.cnic,
       address: UserDetails.address,
       contact: UserDetails.contact,
-      qualification: UserDetails.qualification
+      qualification: UserDetails.qualification,
+      category: UserDetails.category
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -82,7 +89,20 @@ export default function StudentProfile() {
           contact: values.contact,
           qualification: values.qualification,
           roll: UserDetails.roll,
+          category: values.category
         });
+        console.log({
+          uid: UserDetails.uid,
+          dispatch: dispatch,
+          fullname: values.fullname,
+          fathername: values.fathername,
+          cnic: values.cnic,
+          address: values.address,
+          contact: values.contact,
+          qualification: values.qualification,
+          roll: UserDetails.roll,
+          category: values.category
+        })
         dispatch(ProfileUpdateSuccess(values));
       } catch (e) {
         console.log(e);
@@ -209,41 +229,6 @@ export default function StudentProfile() {
                 autoComplete='off'
                 style={{ marginBottom: "10px" }}
               />
-              {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    disabled={disable}
-                    renderInput={(props) => (
-                      <TextField
-                        fullWidth
-                        disabled={disable}
-                        variant='standard'
-                        id='standard-basic'
-                        multiline
-                        rowsMax={4}
-                        label='Date Of Birth'
-                        name='DOB'
-                        autoComplete='off'
-                        {...props}
-                        InputProps={{ disableUnderline: disable }}
-                      />
-                    )}
-                    label='Date Of Birth'
-                    value={date}
-                    onChange={(newValue) => {
-                      setDate(new Date(newValue).toString());
-                    }}
-                  />
-                </LocalizationProvider> */}
-              {/* {disable ? (
-                  <button className='btn'>
-                    <EditIcon className='Icon-btn' />
-                  </button>
-                ) : (
-                  <button className='btn'>
-                    <DoneIcon className='Icon-btn' />
-                  </button>
-                )}
-              </div>*/}
               <br />
               <Title>Contact Info</Title>
               <TextField
@@ -330,6 +315,18 @@ export default function StudentProfile() {
                 }}
                 variant='standard'
                 style={{ marginBottom: "10px" }}
+              />
+              <DropDown
+                sx={{ m: 1, width: 475 }}
+                variant='standard'
+                label='Category'
+                name='category'
+                onChange={handleChange}
+                id='category'
+                value={formik.values.category}
+                arrayCategoray={["Fresher", "Mid-Level", "Senior"]}
+                fullWidth={true}
+                Icon={<CategoryIcon />}
               />
             </div>
           </div>

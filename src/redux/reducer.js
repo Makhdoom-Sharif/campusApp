@@ -20,7 +20,9 @@ const initialState = {
   website: "",
   service: "",
   alljobs: [],
-  AppliedStudents: []
+  AppliedStudents: [],
+  category: "",
+  AppliedJobs: []
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -69,7 +71,8 @@ const userReducer = (state = initialState, action) => {
         contact: action.payload.contact,
         qualification: action.payload.qualification,
         website: action.payload.website,
-        service: action.payload.service
+        service: action.payload.service,
+        category: action.payload.category
       };
     case type.LOGIN_SUCCESS:
     case type.REGISTER_SUCCESS:
@@ -90,6 +93,7 @@ const userReducer = (state = initialState, action) => {
         profilePicture: action.payload.ImgUrl,
         website: action.payload.website,
         service: action.payload.service,
+        category: action.payload.category
       };
     case type.GET_ALL_JOB:
       return {
@@ -175,6 +179,19 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         AppliedStudents: []
+      }
+
+    case type.APPLY_JOB_SUCCESS:
+      return {
+        ...state,
+        AppliedStudents: [...state.AppliedStudents, action.payload]
+      }
+
+
+    case type.APPLIED_JOBS_GET_SUCCESS:
+      return {
+        ...state,
+        AppliedJobs: action.payload
       }
     default:
       return state;

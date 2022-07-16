@@ -37,6 +37,7 @@ export const loginSuccess = Data => ({
     ImgUrl: Data.ImgUrl,
     website: Data.website,
     service: Data.service,
+    category: Data.category
   }
 });
 export const GetAllJobs = Data => ({
@@ -82,7 +83,8 @@ export const ProfileUpdateSuccess = Data => ({
     contact: Data.contact,
     qualification: Data.qualification,
     website: Data.website,
-    service: Data.service
+    service: Data.service,
+    category: Data.category
   }
 });
 export const ProfileUpdateFail = Data => ({
@@ -106,7 +108,8 @@ export const JobPostSuccess = (Data) => ({
     Location: Data.Location,
     RequiredQualification: Data.RequiredQualification,
     VacantPosition: Data.VacantPosition,
-    jobID: Data.jobID
+    jobID: Data.jobID,
+    category: Data.category
 
   }
 })
@@ -131,7 +134,8 @@ export const JobUpdateSuccess = (Data) => ({
     RequiredQualification: Data.RequiredQualification,
     VacantPosition: Data.VacantPosition,
     jobID: Data.jobID,
-    index: Data.index
+    index: Data.index,
+    JobDescription: Data.JobDescription
   }
 })
 export const JobUpdateFail = () => ({
@@ -159,4 +163,16 @@ export const GetAppliedStudents = (Data) => ({
 
 export const RemoveAppliedStudent = () => ({
   type: type.REMOVE_APPLIED_STUDENT
+})
+
+
+export const ApplyJobSuccess = (Data) => ({
+  type: type.APPLY_JOB_SUCCESS,
+  payload: Data
+})
+
+
+export const AppliedJobsGetSuccess = (Data) => ({
+  type: type.APPLIED_JOBS_GET_SUCCESS,
+  payload: Data
 })
