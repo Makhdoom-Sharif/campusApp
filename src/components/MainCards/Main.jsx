@@ -51,7 +51,7 @@ const Main = (props) => {
                         <Grid container spacing={4}>
 
 
-                            {props.alljobs.map((item, index) => (
+                            {props?.alljobs?.map((item, index) => (
 
                                 item && <Cards
                                     uid={props.uid}

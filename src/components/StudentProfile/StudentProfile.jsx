@@ -26,7 +26,7 @@ import DropDown from "../DropDown/DropDown";
 import Footer from "../Footer/Footer";
 import Textfield from "../Inputfeild/Textfield";
 import Title from "../Title";
-import "./StudentProfile.css";
+// import "./StudentProfile.css";
 import CategoryIcon from '@mui/icons-material/Category';
 
 

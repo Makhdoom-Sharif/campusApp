@@ -58,8 +58,7 @@ ScrollTop.propTypes = {
 
 export default function BackToTop(props) {
   const { currentUser, loading, roll, profilePicture, fullname, userName } = useSelector((state) => state.user);
-  const location = useLocation();
-  console.log(location.pathname);
+  // .log(location.pathname);
   return (
     <React.Fragment>
       <CssBaseline />

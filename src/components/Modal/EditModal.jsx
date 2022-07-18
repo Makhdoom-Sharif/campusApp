@@ -61,7 +61,7 @@ export default function EditModal(props) {
     }
     const handleDelete = async () => {
         dispatch(JobDeleteInit())
-        console.log(JobDetails)
+        // console.log(JobDetails)
         await DeleteJob(JobDetails, UserDetails.uid, dispatch, index)
 
 
@@ -70,7 +70,7 @@ export default function EditModal(props) {
         if (JobDetails.ApplicantsIDs) {
             // console.log("list open click", JobDetails.ApplicantsIDs)
             const ListArray = [...Object.entries(JobDetails?.ApplicantsIDs)?.map(entry => entry[0])]
-            console.log("list array", ListArray)
+            // console.log("list array", ListArray)
             ListArray.map(async (item, index) =>
                 await GetAppliedStudentData(item, dispatch)
 
@@ -112,7 +112,7 @@ export default function EditModal(props) {
         },
         validationSchema,
         onSubmit: async (values) => {
-            console.log("submit works")
+            // console.log("submit works")
             dispatch(JobUpdateInit());
             setDisable(true);
             try {

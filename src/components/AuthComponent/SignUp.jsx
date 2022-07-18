@@ -18,8 +18,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { signUp } from "../firebase/signup";
-import { registerFail, registerStart } from "../redux/action";
+import { signUp } from "../../firebase/signup";
+import { registerFail, registerStart } from "../../redux/action";
 
 // function Copyright(props) {
 //   return (

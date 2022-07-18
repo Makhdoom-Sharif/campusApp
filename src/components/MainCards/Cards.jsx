@@ -29,7 +29,7 @@ const JobsCard = (props) => {
     // const handleApply = async () => {
 
     // }
-
+    // console.log(props.item)
     const handleAgreeClick = async () => {
         await ApplyJob(props.item, props.uid, dispatch)
     }

@@ -5,48 +5,68 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import Title from '../Title';
 import { Button } from '@mui/material';
 
 
 const Data = [
-    {
-      Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"
-    },
-   { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"},
-      { Name:"ABC",
-      Email:"ABC@gmail.com",
-      Category:"Fresher"}
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  },
+  {
+    Name: "ABC",
+    Email: "ABC@gmail.com",
+    Category: "Fresher"
+  }
 
-  ];
+];
 
 function preventDefault(event) {
   event.preventDefault();
@@ -64,7 +84,7 @@ export default function StudentsData() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Data.slice(0,7).map((Data) => (
+          {Data.slice(0, 7).map((Data) => (
             <TableRow key={Data.id}>
               <TableCell>{Data.Name}</TableCell>
               <TableCell>{Data.Email}</TableCell>

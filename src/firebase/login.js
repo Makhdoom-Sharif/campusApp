@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { CompareRounded } from "@material-ui/icons";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { child, equalTo, get, getDatabase, query, ref } from "firebase/database";
@@ -35,22 +36,19 @@ const loginUser = async (authParams) => {
                   }
                   const jobArray = await filterArray()
                   dispatch(GetAllJobs(jobArray))
-                  //                   async function filterApplicants() {
-                  //                     return const Job appli await [jobArray.filter(element=> element.ApplicantsIDs)]
-                  // }
-
-
-
-
-
-
-
-
                   navigate("/company")
                 }
               })
 
                 ;
+            } else {
+              await get(child(dbRef, `admin/${uid}`))
+                .then(async (snapshot) => {
+                  if (snapshot.exists()) {
+                    await dispatch(loginSuccess(snapshot.val()))
+                  }
+                })
+
             }
 
           }).catch((error) => {

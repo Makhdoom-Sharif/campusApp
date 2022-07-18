@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import { useState } from 'react';
 
 export default function DropDown(props) {
-  console.log(props)
+  // console.log(props)
   const [disable, setDisable] = useState(true);
 
   const value = props.value

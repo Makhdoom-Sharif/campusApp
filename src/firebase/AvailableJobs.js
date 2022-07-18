@@ -11,18 +11,36 @@ async function AvailableJobs(dispatch, uid) {
                 return await [...Object.entries(snapshot.val()).map(entry => entry[1])]
             }
             const jobArray = await myFunction()
-            dispatch(GetAllJobs(jobArray))
+
+
+
+            async function AvailableJobs() {
+
+                return await jobArray?.map((item, index) =>
+                    item?.ApplicantsIDs ?
+                        Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? false : item) : item)
+            }
 
 
             async function AppliedJobs() {
 
                 return await jobArray?.map((item, index) =>
-                    item?.ApplicantsIDs &&
-                    Object?.keys(item?.ApplicantsIDs) == uid && item)
+                    item?.ApplicantsIDs ?
+                        Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? item : false) : false)
             }
 
+            const AvailableJobsArray = await AvailableJobs()
+
             const AppliedJobsArray = await AppliedJobs()
-            dispatch(AppliedJobsGetSuccess(AppliedJobsArray))
+
+            dispatch(GetAllJobs(AvailableJobsArray.flat()))
+
+            dispatch(AppliedJobsGetSuccess(AppliedJobsArray.flat()))
+
+
+            // console.log('Availablearray=>', AvailableJobsArray.flat())
+            // console.log('Appliedarray=>', AppliedJobsArray.flat())
+
 
 
 

@@ -1,13 +1,13 @@
 import React from 'react'
 import NavBar from '../components/Navbar/NavBar'
-import AdminDashBoard from '../components/AdminDashBoard'
+import AdminDashBoard from '../components/AdminDashBoard/AdminDashBoard'
 
 
 const AdminPage = () => {
   return (
     <div>
-        <NavBar/>
-        <AdminDashBoard/>
+      <NavBar />
+      <AdminDashBoard />
 
     </div>
   )

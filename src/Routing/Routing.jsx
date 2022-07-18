@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminLoginPage from "../pages/AdminLoginPage";
+// import AdminLoginPage from "../pages/AdminLoginPage";
 import AdminPage from "../pages/AdminPage";
 import SignUpPage from "../pages/SignUpPage";
 import LoginPage from "../pages/LoginPage";
@@ -33,21 +33,25 @@ const Routing = () => {
 
             </Routes>
             :
-
-            UserDetails.currentUser && UserDetails.roll === 'student' ? <Routes>
-                <Route path="/student" element={<StudentHomePage />} />
-                <Route path="/studentprofile" element={<StudentProfilePage />} />
-                <Route path="/appliedjobs" element={<AppliedJobs />} />
-                <Route path="/relatedjobs" element={<RelatedJobs />} />
-                <Route path="*" element={<Navigate replace to="/student" />} />
-            </Routes>
-                :
+            UserDetails.currentUser && UserDetails.roll === 'admin' ?
                 <Routes>
-                    <Route path="/company" element={<CompanyHomePage />} />
-                    <Route path="/companyprofile" element={<CompanyProfilePage />} />
-                    <Route path="/postnewjobs" element={<PostNewJobPage />}></Route>
-                    <Route path="*" element={<Navigate replace to="/company" />} />
+                    <Route path="/admin" element={<AdminPage />}></Route>
+                    <Route path="*" element={<Navigate replace to="/admin" />} />
+                </Routes> :
+                UserDetails.currentUser && UserDetails.roll === 'student' ? <Routes>
+                    <Route path="/student" element={<StudentHomePage />} />
+                    <Route path="/studentprofile" element={<StudentProfilePage />} />
+                    <Route path="/appliedjobs" element={<AppliedJobs />} />
+                    <Route path="/relatedjobs" element={<RelatedJobs />} />
+                    <Route path="*" element={<Navigate replace to="/student" />} />
                 </Routes>
+                    :
+                    <Routes>
+                        <Route path="/company" element={<CompanyHomePage />} />
+                        <Route path="/companyprofile" element={<CompanyProfilePage />} />
+                        <Route path="/postnewjobs" element={<PostNewJobPage />}></Route>
+                        <Route path="*" element={<Navigate replace to="/company" />} />
+                    </Routes>
 
         }
     </>

@@ -14,11 +14,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import loginUser from "../firebase/login";
+import loginUser from "../../firebase/login";
 import {
   loginFail,
   loginStart
-} from "../redux/action";
+} from "../../redux/action";
 
 // function Copyright(props) {
 //   return (
@@ -158,7 +158,7 @@ export default function SignUp() {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                 />
-                {console.log("email touch", formik)}
+                {/* {console.log("email touch", formik)} */}
                 {formik.errors.email && (
                   <p style={{ color: "red", marginLeft: "5px" }}>
                     {formik.errors.email}
