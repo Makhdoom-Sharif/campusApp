@@ -1,17 +1,3 @@
-import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { useState } from 'react';
-import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { useFormik } from "formik";
-import { useEffect } from 'react';
-import Textfield from '../Inputfeild/Textfield';
-import { InputAdornment } from '@mui/material';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import InfoIcon from '@mui/icons-material/Info';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
@@ -19,13 +5,24 @@ import PeopleIcon from '@mui/icons-material/People';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import SchoolIcon from "@mui/icons-material/School";
 import { LoadingButton } from '@mui/lab';
-import { DeleteJob, UpdateJob } from '../../firebase/PostAndUpdateJobs';
-import { JobDeleteInit, JobDeleteSuccess, JobUpdateFail, JobUpdateInit, JobUpdateSuccess } from '../../redux/action';
-import DialogBox from '../DialogBox/DialogBox';
-import ListDialog from './ListModal';
+import { InputAdornment } from '@mui/material';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Fade from '@mui/material/Fade';
+import Modal from '@mui/material/Modal';
+import { useFormik } from "formik";
+import * as React from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
 import { GetAppliedStudentData } from '../../firebase/GetAppliedStudentData';
+import { DeleteJob, UpdateJob } from '../../firebase/PostAndUpdateJobs';
+import { JobDeleteInit, JobUpdateFail, JobUpdateInit, JobUpdateSuccess } from '../../redux/action';
+import DialogBox from '../DialogBox/DialogBox';
 import DropDown from '../DropDown/DropDown';
-import CategoryIcon from '@mui/icons-material/Category';
+import Textfield from '../Inputfeild/Textfield';
+import ListDialog from './ListModal';
 
 const style = {
     position: 'absolute',
@@ -43,7 +40,6 @@ export default function EditModal(props) {
     const dispatch = useDispatch();
     const UserDetails = useSelector((state) => state.user);
     const { JobDetails, index } = props
-    // console.log("modal==>", JobDetails)
     const [open, setOpen] = useState(false);
     const handleEdit = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -61,16 +57,14 @@ export default function EditModal(props) {
     }
     const handleDelete = async () => {
         dispatch(JobDeleteInit())
-        // console.log(JobDetails)
         await DeleteJob(JobDetails, UserDetails.uid, dispatch, index)
 
 
     }
     const handleListModalOpen = async () => {
         if (JobDetails.ApplicantsIDs) {
-            // console.log("list open click", JobDetails.ApplicantsIDs)
+
             const ListArray = [...Object.entries(JobDetails?.ApplicantsIDs)?.map(entry => entry[0])]
-            // console.log("list array", ListArray)
             ListArray.map(async (item, index) =>
                 await GetAppliedStudentData(item, dispatch)
 
@@ -81,14 +75,9 @@ export default function EditModal(props) {
 
 
 
-        // await applicantsLinks()
     }
 
 
-    // useEffect(() => {
-    //     console.log("list modal", UserDetails.AppliedStudents)
-
-    // }, [UserDetails]);
 
     const AppliedStudent = UserDetails.AppliedStudents
 

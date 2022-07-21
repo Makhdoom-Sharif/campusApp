@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -19,44 +19,17 @@ import {
   loginFail,
   loginStart
 } from "../../redux/action";
-
-// function Copyright(props) {
-//   return (
-//     <Typography
-//       variant='body2'
-//       color='text.secondary'
-//       align='center'
-//       {...props}
-//     >
-//       {"Copyright © "}
-//       <Link to={"/"} style={{ color: "inherit", textDecoration: "underline" }}>
-//         Your Website
-//       </Link>{" "}
-//       {new Date().getFullYear()}
-//       {"."}
-//     </Typography>
-//   );
-// }
+import SnackBar from "../Snackbar/SnakBar";
 
 const theme = createTheme();
 
 export default function SignUp() {
   const [error, setError] = useState();
-  // const [Jobs, setJobs] = useState([]);
   const [open, setOpen] = useState(false);
-  // const Usestate = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const UserDetails = useSelector((state) => state.user);
 
-
-
-
-  // useEffect(() => {
-  //   if (UserDetails.currentUser === true) {
-  //     navigate("/homepage");
-  //   }
-  // }, [UserDetails.currentUser, navigate]);
   const validationSchema = Yup.object({
     email: Yup.string()
       .email()
@@ -102,10 +75,6 @@ export default function SignUp() {
 
 
 
-  // useEffect(() => { { console.log("email touch", formik) } }, [formik])
-
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -119,20 +88,14 @@ export default function SignUp() {
             alignItems: "center"
           }}
         >
-          <Snackbar
-            open={open}
-            autoHideDuration={3000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <Alert
-              onClose={handleClose}
-              severity='error'
-              sx={{ width: "100%" }}
-            >
-              {error}
-            </Alert>
-          </Snackbar>
+
+          <SnackBar severity="error" openSnackBar={open} handleCloseAlert={handleClose}
+            AlertMessage={error}
+
+          />
+
+
+
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -158,7 +121,7 @@ export default function SignUp() {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                 />
-                {/* {console.log("email touch", formik)} */}
+
                 {formik.errors.email && (
                   <p style={{ color: "red", marginLeft: "5px" }}>
                     {formik.errors.email}
@@ -212,7 +175,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider >
   );

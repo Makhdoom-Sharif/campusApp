@@ -1,10 +1,10 @@
 import { AccountCircle } from "@material-ui/icons";
 import CallIcon from "@mui/icons-material/Call";
+import CategoryIcon from '@mui/icons-material/Category';
 import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
-import NumbersIcon from "@mui/icons-material/Numbers";
+import LanguageIcon from '@mui/icons-material/Language';
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import SchoolIcon from "@mui/icons-material/School";
 import { LoadingButton } from "@mui/lab";
 import { Avatar, InputAdornment, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -22,13 +22,10 @@ import {
   ProfileUpdateInit,
   ProfileUpdateSuccess
 } from "../../redux/action";
+import DropDown from "../DropDown/DropDown";
 import Textfield from "../Inputfeild/Textfield";
 import "../StudentProfile/StudentProfile.css";
 import Title from "../Title";
-import LanguageIcon from '@mui/icons-material/Language';
-import CategoryIcon from '@mui/icons-material/Category';
-import DropDown from "../DropDown/DropDown";
-import Footer from "../Footer/Footer";
 
 export default function StudentProfile() {
   const [disable, setDisable] = useState(true);
@@ -46,7 +43,7 @@ export default function StudentProfile() {
 
   const handleUploadImage = async (e) => {
     setImgLoader(true);
-    await uploadImage({ e: e, dispatch: dispatch, ImgName: UserDetails.uid, roll: UserDetails.roll });
+    await uploadImage({ e: e, dispatch: dispatch, ImgName: UserDetails.uid, role: UserDetails.role });
     setImgLoader(false);
   };
   const validationSchema = Yup.object({
@@ -81,7 +78,7 @@ export default function StudentProfile() {
           address: values.address,
           contact: values.contact,
           service: values.service,
-          roll: UserDetails.roll,
+          role: UserDetails.role,
         });
         dispatch(ProfileUpdateSuccess(values));
       } catch (e) {
@@ -288,7 +285,6 @@ export default function StudentProfile() {
             </div>
           </div>
         </Paper>
-        {/* <Footer /> */}
       </Box>
     </>
   );

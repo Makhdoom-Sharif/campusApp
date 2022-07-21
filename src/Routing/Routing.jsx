@@ -22,23 +22,23 @@ import RelatedJobs from '../pages/RelatedJobs';
 const Routing = () => {
     const UserDetails = useSelector((state) => state.user)
     return (<>
-        {!UserDetails.currentUser ?
+        {!UserDetails.loginStatus ?
             <Routes>
 
                 <Route exact path="/" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
-                <Route path="/admin" element={<AdminPage />}></Route>
+                {/* <Route path="/admin" element={<AdminPage />}></Route> */}
                 <Route path="*" element={<Navigate replace to="/" />} />
 
             </Routes>
             :
-            UserDetails.currentUser && UserDetails.roll === 'admin' ?
+            UserDetails.loginStatus && UserDetails.role === 'admin' ?
                 <Routes>
                     <Route path="/admin" element={<AdminPage />}></Route>
                     <Route path="*" element={<Navigate replace to="/admin" />} />
                 </Routes> :
-                UserDetails.currentUser && UserDetails.roll === 'student' ? <Routes>
+                UserDetails.loginStatus && UserDetails.role === 'student' ? <Routes>
                     <Route path="/student" element={<StudentHomePage />} />
                     <Route path="/studentprofile" element={<StudentProfilePage />} />
                     <Route path="/appliedjobs" element={<AppliedJobs />} />

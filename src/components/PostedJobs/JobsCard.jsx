@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -6,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import * as React from 'react';
 
 import Typography from '@mui/material/Typography';
-import { useEffect } from 'react';
 
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import InfoIcon from '@mui/icons-material/Info';
@@ -16,71 +14,14 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import SchoolIcon from "@mui/icons-material/School";
 import { InputAdornment } from "@mui/material";
 import Textfield from "../Inputfeild/Textfield";
-import "../StudentProfile/StudentProfile.css";
-import { useState } from 'react';
-import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { useFormik } from "formik";
 import EditModal from '../Modal/EditModal';
+import "../StudentProfile/StudentProfile.css";
 
 
 const JobsCard = (props) => {
-    const { item, card, index } = props
-    const dispatch = useDispatch();
-    const UserDetails = useSelector((state) => state.user);
-    const [editIcon, SetEditIcon] = useState(false)
-    // const validationSchema = Yup.object({
-    //     JobDesignation: Yup.string(),
-    //     RequiredQualification: Yup.string(),
-    //     Location: Yup.number(),
-    //     VacantPosition: Yup.string(),
-    //     Category: Yup.number(),
-    //     JobDescription: Yup.string()
-    // });
-
-    // const formik = useFormik({
-    //     initialValues: {
-    //         JobDesignation: props.item.JobDesignation,
-    //         RequiredQualification: props.item.RequiredQualification,
-    //         Location: props.item.Location,
-    //         VacantPosition: props.item.VacantPosition,
-    //         Category: props.item.Category,
-    //         JobDescription: props.item.JobDescription
-    //     },
-    //     validationSchema,
-    //     onSubmit: async (values) => {
-    //         try {
-    //             console.log({
-    //                 uid: UserDetails.uid,
-    //                 dispatch: dispatch,
-    //                 JobDesignation: values.JobDesignation,
-    //                 RequiredQualification: values.RequiredQualification,
-    //                 Location: values.Location,
-    //                 VacantPosition: values.VacantPosition,
-    //                 Category: values.Category,
-    //                 jobID: ``
-    //             });
-    //             // dispatch(JobPostSuccess());
-    //         } catch (e) {
-    //             console.log(e);
-    //             // dispatch(JobPostFail());
-    //         }
-    //     }
-    // });
+    const { item, index } = props
 
 
-
-
-
-
-
-
-
-
-    // useEffect(() => {
-    //     console.log("card", props.card)
-    //     console.log("item", props.item)
-    // }, [])
 
     return (
 
@@ -101,7 +42,6 @@ const JobsCard = (props) => {
                         label='Required Qualification'
                         fullWidth={true}
                         name='RequiredQualification'
-                        // onChange={handleChange}
                         value={props.item.RequiredQualification}
                         InputProps={{
                             startAdornment: (

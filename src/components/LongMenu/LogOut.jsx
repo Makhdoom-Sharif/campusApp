@@ -1,17 +1,14 @@
-import { Button, MenuItem } from "@mui/material";
-import { getAuth, signOut } from "firebase/auth";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { MenuItem } from "@mui/material";
+import { signOut } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { auth } from '../../firebase/firebaseConfig';
 import { logoutFail, logoutStart, logoutSuccess } from "../../redux/action";
-import { Link } from "react-router-dom";
-import { app } from '../../firebase/firebaseConfig'
-const auth = getAuth();
+
 
 export const LogOut = () => {
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
-  const UserDetails = useSelector((state) => state.user);
+
   const handleLogOut = async () => {
     dispatch(logoutStart());
 
@@ -23,11 +20,6 @@ export const LogOut = () => {
       dispatch(logoutFail());
     }
   };
-  // useEffect(() => {
-  //   if (UserDetails.currentUser === false) {
-  //     <Link to={"/"}></Link>;
-  //   }
-  // }, [UserDetails.currentUser]);
 
   return (
     <div>

@@ -46,6 +46,7 @@ const loginUser = async (authParams) => {
                 .then(async (snapshot) => {
                   if (snapshot.exists()) {
                     await dispatch(loginSuccess(snapshot.val()))
+                    // navigate("/admin")
                   }
                 })
 

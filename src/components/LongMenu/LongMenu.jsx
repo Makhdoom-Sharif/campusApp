@@ -1,21 +1,16 @@
-import * as React from "react";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { LogOut } from "./LogOut";
-import { Link } from "react-router-dom";
+import * as React from "react";
 import { useSelector } from "react-redux";
-import { NavigateBefore } from "@material-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { LogOut } from "./LogOut";
 import ProfileNavigation from "./ProfileNavigation";
 const options = ["Profile", "Logout"];
 
 const ITEM_HEIGHT = 48;
 
 export default function LongMenu() {
-  const navigate = useNavigate();
-  const { roll } = useSelector((state) => state.user);
+  const { role } = useSelector((state) => state.user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -35,7 +30,7 @@ export default function LongMenu() {
         aria-haspopup='true'
         onClick={handleClick}
       >
-        <MoreVertIcon style={{color: "#FFFFFF"}}/>
+        <MoreVertIcon style={{ color: "#FFFFFF" }} />
       </IconButton>
       <Menu
         id='long-menu'
@@ -52,7 +47,7 @@ export default function LongMenu() {
           }
         }}
       >
-        <ProfileNavigation/>
+        <ProfileNavigation />
         <LogOut />
       </Menu>
     </div>

@@ -1,15 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 import * as React from 'react';
-import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Main from '../MainCards/Main';
 
 const theme = createTheme();
 
 const AvailabeJobs = () => {
-    const [Jobs, setJobs] = useState([])
     const UserDetails = useSelector((state) => state.user);
-    const dispatch = useDispatch();
     return (
         <Main
             Title={"Available Jobs"}

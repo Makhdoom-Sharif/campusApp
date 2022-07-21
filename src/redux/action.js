@@ -7,7 +7,7 @@ export const registerSuccess = Data => ({
   type: type.REGISTER_SUCCESS,
   payload: {
     uid: Data.uid,
-    roll: Data.roll,
+    role: Data.role,
     email: Data.email,
     userName: Data.userName
   }
@@ -26,7 +26,7 @@ export const loginSuccess = Data => ({
   payload: {
     email: Data.email,
     uid: Data.uid,
-    roll: Data.roll,
+    role: Data.role,
     userName: Data.userName,
     fullname: Data.fullname,
     fathername: Data.fathername,
@@ -175,4 +175,23 @@ export const ApplyJobSuccess = (Data) => ({
 export const AppliedJobsGetSuccess = (Data) => ({
   type: type.APPLIED_JOBS_GET_SUCCESS,
   payload: Data
+})
+
+
+export const StudentsArrays = (Data) => ({
+  type: type.STUDENTS_ARRAYS,
+  payload: {
+    ApprovedStudentsArray: Data.ApprovedStudentsArray,
+    NewApprovalStudentsArray: Data.NewApprovalStudentsArray
+
+  }
+})
+
+
+export const ApprovalSuccess = (Data) => ({
+  type: type.APPROVAL_SUCCESS,
+  payload: {
+    index: Data.index,
+    item: Data.item
+  }
 })

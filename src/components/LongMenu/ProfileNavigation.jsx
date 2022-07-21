@@ -1,7 +1,7 @@
 import { MenuItem } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ProfileNavigation = () => {
   const UserDetails = useSelector((state) => state.user);
@@ -9,7 +9,7 @@ const ProfileNavigation = () => {
     <div>
       <Link
         to={
-          UserDetails.roll === "student" ? "/studentprofile" : "/companyprofile"
+          UserDetails.role === "student" ? "/studentprofile" : "/companyprofile"
         }
         style={{ color: "inherit", textDecoration: "none" }}
       >

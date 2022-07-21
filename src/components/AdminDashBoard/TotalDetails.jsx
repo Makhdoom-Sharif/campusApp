@@ -2,12 +2,14 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from '../Title';
+import { useSelector } from 'react-redux';
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
 export default function TotalDetails() {
+  const { NewApprovalStudentsArray, ApprovedStudentsArray } = useSelector((state) => state.user);
   return (
     <React.Fragment>
       <Title>Total Details</Title>
@@ -21,7 +23,7 @@ export default function TotalDetails() {
         Registered Students:
       </Typography>
       <Typography component="p" variant="h4">
-        130001
+        {ApprovedStudentsArray.filter(Boolean).length}
       </Typography>
     </React.Fragment>
   );

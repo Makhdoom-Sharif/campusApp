@@ -7,50 +7,48 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
 import { Button } from '@mui/material';
-
-const Data = [
-  {
-    Name: "ABC",
-    Email: "ABC@gmail.com",
-    Category: "Fresher"
-  },
-  {
-    Name: "ABC",
-    Email: "ABC@gmail.com",
-    Category: "Fresher"
-  },
-  {
-    Name: "ABC",
-    Email: "ABC@gmail.com",
-    Category: "Fresher"
-  }
-];
-
+import { AcceptApprovals, RejectUser } from '../../firebase/handleApproval';
+import { useDispatch, useSelector } from 'react-redux';
 function preventDefault(event) {
   event.preventDefault();
 }
 
 export default function NewApprovals() {
+  const dispatch = useDispatch();
+  const { NewApprovalStudentsArray } = useSelector((state) => state.user);
+
+
+  const handleAcceptRequest = async (index, uid, item) => {
+    AcceptApprovals("student", index, uid, dispatch, item)
+    console.log(index, uid)
+  }
+
+  // const handleRejectRequest = async (index, uid) => {
+  //   RejectUser("student", index, uid)
+  //   console.log(index, uid)
+  // }
+
   return (
     <React.Fragment>
       <Title>New Approval Request</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-
             <TableCell>Full Name</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Category</TableCell>
+            <TableCell>ID</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Data.slice(0, 2).map((Data) => (
-            <TableRow key={Data.id}>
-              <TableCell>{Data.Name}</TableCell>
-              <TableCell>{Data.Email}</TableCell>
-              <TableCell>{Data.Category}</TableCell>
-              <TableCell><Button variant="contained" disableElevation>Accept</Button></TableCell>
-              <TableCell><Button variant="contained" disableElevation>Cancel</Button></TableCell>
+          {NewApprovalStudentsArray?.slice(0, 2).map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>{item.email}</TableCell>
+              <TableCell>{item.userName}</TableCell>
+              <TableCell><Button size='small' onClick={() => handleAcceptRequest(index, item.uid, item)} >Accept</Button></TableCell>
+              {/* <TableCell><Button size='small' onClick={() => handleRejectRequest(index, item.uid)} >Reject</Button></TableCell> */}
             </TableRow>
           ))}
         </TableBody>

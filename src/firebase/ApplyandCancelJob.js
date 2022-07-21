@@ -1,12 +1,9 @@
-import { push, ref, getDatabase, set, update, remove } from "firebase/database";
-import { ApplyJobSuccess } from "../redux/action";
+import { ref, set } from "firebase/database";
 
 import { AvailableJobs } from "./AvailableJobs";
 import { database } from './firebaseConfig';
 
 async function ApplyJob(item, uid, dispatch) {
-    // console.log(item.jobID)
-    // console.log(uid)
     try {
         await set(ref(database, `postedJobs/${item.jobID}/ApplicantsIDs/${uid}`), [uid]);
         await AvailableJobs(dispatch, uid)
@@ -17,4 +14,4 @@ async function ApplyJob(item, uid, dispatch) {
 
 }
 
-export { ApplyJob }
+export { ApplyJob };

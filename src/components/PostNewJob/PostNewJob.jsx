@@ -8,7 +8,6 @@ import { LoadingButton } from "@mui/lab";
 import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +29,6 @@ import Title from "../Title";
 
 export default function PostNewJob() {
     const [disable, setDisable] = useState(true);
-    const [ImgLoader, setImgLoader] = useState(false);
     const UserDetails = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const handleChange = (e) => {
@@ -49,9 +47,7 @@ export default function PostNewJob() {
         category: Yup.string(),
         JobDescription: Yup.string()
     });
-    const Input = styled("input")({
-        display: "none"
-    });
+
 
     const formik = useFormik({
         initialValues: {

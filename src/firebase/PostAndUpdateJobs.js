@@ -1,4 +1,4 @@
-import { push, ref, getDatabase, set, update, remove } from "firebase/database";
+import { getDatabase, ref, remove, set, update } from "firebase/database";
 import { database } from './firebaseConfig';
 
 import { JobDeleteSuccess, JobPostSuccess } from '../redux/action';
@@ -6,7 +6,6 @@ import { JobDeleteSuccess, JobPostSuccess } from '../redux/action';
 
 async function AddNewJob(JobData) {
     const Data = JSON.parse(JSON.stringify(JobData));
-    // await push(ref(database, `company/${Data.uid}/postedJobs`), { `${Data.jobID}` });
 
     try {
         await set(ref(database, `postedJobs/${Data.jobID}`), {
@@ -28,7 +27,6 @@ async function AddNewJob(JobData) {
 async function DeleteJob(JobData, uid, dispatch, index) {
 
     const Data = JSON.parse(JSON.stringify(JobData))
-    // console.log("data==>", Data)
     await remove(ref(database, `postedJobs/${Data.jobID}`)).then(() => {
         dispatch(JobDeleteSuccess(index))
         console.log("Deleted Success")
@@ -42,7 +40,6 @@ async function DeleteJob(JobData, uid, dispatch, index) {
 
 async function UpdateJob(JobData) {
 
-    const dbRef = ref(getDatabase());
     const db = getDatabase();
     const Data = JSON.parse(JSON.stringify(JobData));
     const updates = {};
@@ -61,4 +58,5 @@ async function UpdateJob(JobData) {
 
 }
 
-export { AddNewJob, UpdateJob, DeleteJob }
+export { AddNewJob, UpdateJob, DeleteJob };
+

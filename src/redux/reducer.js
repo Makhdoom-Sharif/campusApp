@@ -2,12 +2,12 @@ import * as type from "./actionType";
 
 const initialState = {
   loading: false,
-  currentUser: false,
+  loginStatus: false,
   uid: "",
-  roll: "",
+  role: "",
   error: "",
   isAdmin: false,
-  approve: true,
+  approve: false,
   email: "",
   userName: "",
   fullname: "",
@@ -22,7 +22,9 @@ const initialState = {
   alljobs: [],
   AppliedStudents: [],
   category: "",
-  AppliedJobs: []
+  AppliedJobs: [],
+  ApprovedStudentsArray: [],
+  NewApprovalStudentsArray: []
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -35,9 +37,9 @@ const userReducer = (state = initialState, action) => {
     case type.LOGOUT_SUCCESS:
       return {
         loading: false,
-        currentUser: false,
+        loginStatus: false,
         uid: "",
-        roll: "",
+        role: "",
         error: "",
         isAdmin: false,
         approve: true,
@@ -79,8 +81,9 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        currentUser: true,
-        roll: action.payload.roll,
+        loginStatus: true,
+        registerSuccess: true,
+        role: action.payload.role,
         email: action.payload.email,
         uid: action.payload.uid,
         userName: action.payload.userName,
@@ -104,13 +107,12 @@ const userReducer = (state = initialState, action) => {
     case type.JOB_POST_FAIL:
     case type.PASSWORD_RESET_FAIL:
     case type.PASSWORD_RESET_SUCCESS:
-
     case type.POFILE_UPDATE_Fail:
     case type.LOGOUT_FAIL:
       return { ...state, loading: false };
     case type.REGISTER_FAIL:
     case type.LOGIN_FAIL:
-      return { ...state, loading: false, currentUser: false };
+      return { ...state, loading: false, loginStatus: false };
     case type.PROFILE_PICTURE_UPLOAD_SUCCESS:
       return {
         ...state,
@@ -193,6 +195,23 @@ const userReducer = (state = initialState, action) => {
         ...state,
         AppliedJobs: action.payload
       }
+    case type.STUDENTS_ARRAYS:
+      return {
+        ...state,
+        ApprovedStudentsArray: action.payload.ApprovedStudentsArray,
+        NewApprovalStudentsArray: action.payload.NewApprovalStudentsArray
+      }
+
+    case type.APPROVAL_SUCCESS:
+      return {
+        ...state,
+        NewApprovalStudentsArray: [...state.NewApprovalStudentsArray.slice(0, action.payload.index),
+        ...state.NewApprovalStudentsArray.slice(action.payload.index + 1)],
+        ApprovedStudentsArray: [...state.ApprovedStudentsArray, action.payload.item]
+
+
+      }
+
     default:
       return state;
   }

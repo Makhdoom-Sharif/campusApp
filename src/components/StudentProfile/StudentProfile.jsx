@@ -23,10 +23,8 @@ import {
   ProfileUpdateSuccess
 } from "../../redux/action";
 import DropDown from "../DropDown/DropDown";
-import Footer from "../Footer/Footer";
 import Textfield from "../Inputfeild/Textfield";
 import Title from "../Title";
-// import "./StudentProfile.css";
 import CategoryIcon from '@mui/icons-material/Category';
 
 
@@ -48,7 +46,7 @@ export default function StudentProfile() {
 
   const handleUploadImage = async (e) => {
     setImgLoader(true)
-    await uploadImage({ e: e, dispatch: dispatch, ImgName: UserDetails.uid, roll: UserDetails.roll });
+    await uploadImage({ e: e, dispatch: dispatch, ImgName: UserDetails.uid, role: UserDetails.role });
     setImgLoader(false)
   };
   const validationSchema = Yup.object({
@@ -88,7 +86,7 @@ export default function StudentProfile() {
           address: values.address,
           contact: values.contact,
           qualification: values.qualification,
-          roll: UserDetails.roll,
+          role: UserDetails.role,
           category: values.category
         });
         console.log({
@@ -100,7 +98,7 @@ export default function StudentProfile() {
           address: values.address,
           contact: values.contact,
           qualification: values.qualification,
-          roll: UserDetails.roll,
+          role: UserDetails.role,
           category: values.category
         })
         dispatch(ProfileUpdateSuccess(values));
@@ -129,7 +127,6 @@ export default function StudentProfile() {
           elevation={3}
           component='form'
           onSubmit={formik.handleSubmit}
-        // onSubmit={disable ? handleUpdate : handleSubmit}
         >
           <div className='profileHead'>
             <div className='head'>
@@ -355,7 +352,6 @@ export default function StudentProfile() {
             </div>
           </div>
         </Paper>
-        {/* <Footer /> */}
       </Box>
     </>
   );

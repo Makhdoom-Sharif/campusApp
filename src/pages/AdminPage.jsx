@@ -1,6 +1,6 @@
 import React from 'react'
-import NavBar from '../components/Navbar/NavBar'
 import AdminDashBoard from '../components/AdminDashBoard/AdminDashBoard'
+import NavBar from '../components/Navbar/NavBar'
 
 
 const AdminPage = () => {

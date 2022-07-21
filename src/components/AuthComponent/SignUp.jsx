@@ -1,6 +1,5 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Snackbar } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -14,30 +13,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { signUp } from "../../firebase/signup";
 import { registerFail, registerStart } from "../../redux/action";
-
-// function Copyright(props) {
-//   return (
-//     <Typography
-//       variant="body2"
-//       color="text.secondary"
-//       align="center"
-//       {...props}
-//     >
-//       {"Copyright © "}
-//       <Link to={"/"} style={{ color: "inherit", textDecoration: "underline" }}>
-//         Your Website
-//       </Link>{" "}
-//       {new Date().getFullYear()}
-//       {"."}
-//     </Typography>
-//   );
-// }
+import SnackBar from "../Snackbar/SnakBar";
 
 const theme = createTheme();
 
@@ -47,13 +29,7 @@ export default function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const UserDetails = useSelector((state) => state.user);
-  // const { currentUser, error } = useSelector((state) => state?.user);
-  // useEffect(() => {
-  //   if (UserDetails.currentUser===true) {
-  //     navigate("/homepage");
-  //   }
-  // }, [UserDetails.currentUser, navigate]);
-  const [roll, setRoll] = useState(null);
+  const [role, setRoll] = useState(null);
   const validationSchema = Yup.object({
     email: Yup.string()
       .email()
@@ -62,7 +38,7 @@ export default function SignUp() {
         /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/
       ),
     password: Yup.string().min(6).max(10).required(),
-    roll: Yup.string().required(),
+    role: Yup.string().required(),
     userName: Yup.string().required("Input Must be valid"),
   });
 
@@ -71,7 +47,7 @@ export default function SignUp() {
       email: "",
       password: "",
       userName: "",
-      roll: "",
+      role: "",
     },
     validationSchema,
 
@@ -81,22 +57,20 @@ export default function SignUp() {
         await signUp({
           email: values.email,
           password: values.password,
-          roll: values.roll,
+          role: values.role,
           userName: values.userName,
           dispatch
         });
-        alert("SignUp Successfully");
-        values.roll === 'student' ? navigate('/student') : navigate('/company')
+        // alert("SignUp Successfully");
+        values.role === 'student' ? navigate('/student') : navigate('/company')
       } catch (e) {
         dispatch(registerFail());
         setOpen(true);
-        console.log(e);
         setError(e.message);
+        console.log(e.message)
       }
     },
   });
-  // console.log(formik.errors);
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -117,20 +91,10 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Snackbar
-            open={open}
-            autoHideDuration={3000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <Alert
-              onClose={handleClose}
-              severity="error"
-              sx={{ width: "100%" }}
-            >
-              {error}
-            </Alert>
-          </Snackbar>
+          <SnackBar severity="error" openSnackBar={open} handleCloseAlert={handleClose}
+            AlertMessage={error}
+
+          />
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -141,7 +105,6 @@ export default function SignUp() {
             component="form"
             noValidate
             onSubmit={formik.handleSubmit}
-            // onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -186,7 +149,7 @@ export default function SignUp() {
                   <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="roll"
+                    name="role"
                     value={formik.values.inCompliance}
                     onChange={(e) => {
                       setRoll(e.target.value);
@@ -209,7 +172,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 {(() => {
-                  if (roll === "student") {
+                  if (role === "student") {
                     return (
                       <>
                         <TextField
@@ -224,7 +187,7 @@ export default function SignUp() {
                         />
                       </>
                     );
-                  } else if (roll === "company") {
+                  } else if (role === "company") {
                     return (
                       <TextField
                         required
@@ -270,7 +233,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );

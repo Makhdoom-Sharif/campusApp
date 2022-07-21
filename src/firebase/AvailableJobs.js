@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { child, get, getDatabase, ref } from "firebase/database";
 import { AppliedJobsGetSuccess, GetAllJobs } from "../redux/action";
 const dbRef = ref(getDatabase());
@@ -36,39 +35,6 @@ async function AvailableJobs(dispatch, uid) {
             dispatch(GetAllJobs(AvailableJobsArray.flat()))
 
             dispatch(AppliedJobsGetSuccess(AppliedJobsArray.flat()))
-
-
-            // console.log('Availablearray=>', AvailableJobsArray.flat())
-            // console.log('Appliedarray=>', AppliedJobsArray.flat())
-
-
-
-
-
-
-            // console.log('applicants==>', arr)
-
-
-            // const ListArray = [...Object.entries(JobDetails?.ApplicantsIDs)?.map(entry => entry[0])]
-
-            // ref.orderByChild('height').equalTo(25).on('child_added', (snapshot) => {
-            //     console.log(snapshot.key);
-            // });
-            // async function appliedJobs() {
-            //     return await jobArray.map((item, index) => item?.ApplicantsIDs)
-            // }
-
-
-
-            // const appliedjobs = await appliedJobs()
-
-
-            // console.log("applied====>", appliedjobs)
-
-
-
-
-
         }
     }).catch(error => {
         console.log("available jobs error", error)
@@ -76,4 +42,4 @@ async function AvailableJobs(dispatch, uid) {
 
 }
 
-export { AvailableJobs }
+export { AvailableJobs };

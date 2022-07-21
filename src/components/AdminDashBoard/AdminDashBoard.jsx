@@ -24,6 +24,9 @@ import Orders from './StudentsData';
 import NavBar from '../Navbar/NavBar'
 import CompanyData from './CompanyData'
 import StudentsData from './StudentsData'
+import { Approvals } from '../../firebase/NewApproval';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 
 function Copyright(props) {
@@ -44,11 +47,16 @@ const drawerWidth = 240;
 const mdTheme = createTheme();
 
 function DashboardContent() {
+
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  useEffect(() => {
+    Approvals(dispatch)
+  }, [])
   return (
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
@@ -96,6 +104,6 @@ function DashboardContent() {
   );
 }
 
-export default function Dashboard() {
+export default function AdminDashBoard() {
   return <DashboardContent />;
 }

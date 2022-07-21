@@ -1,22 +1,21 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Alert, Avatar, Snackbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import CssBaseline from "@mui/material/CssBaseline";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
 import Fab from "@mui/material/Fab";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Fade from "@mui/material/Fade";
-import { Avatar, Button } from "@mui/material";
-import "./NavBar.css";
-import { Link, useLocation } from "react-router-dom";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import PropTypes from "prop-types";
+import * as React from "react";
 import { useSelector } from "react-redux";
-import { LogOut } from "../LongMenu/LogOut";
-import LongMenu from "../LongMenu/LongMenu";
+import { Link } from "react-router-dom";
 import Drawer from "../Drawer/Drawer";
+import LongMenu from "../LongMenu/LongMenu";
+import "./NavBar.css";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -57,8 +56,7 @@ ScrollTop.propTypes = {
 };
 
 export default function BackToTop(props) {
-  const { currentUser, loading, roll, profilePicture, fullname, userName } = useSelector((state) => state.user);
-  // .log(location.pathname);
+  const { loginStatus, role, profilePicture, fullname, userName, registerSuccess } = useSelector((state) => state.user);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -66,13 +64,13 @@ export default function BackToTop(props) {
         <Toolbar style={{ justifyContent: "space-between" }}>
           <Typography variant="h6" component="div">
             <div className="Left-Nav">
-              {currentUser && <Drawer />}
+              {loginStatus && <Drawer />}
 
 
               <Link
                 to={
-                  currentUser
-                    ? roll === "student"
+                  loginStatus
+                    ? role === "student"
                       ? "/student"
                       : "/company"
                     : "/"
@@ -84,11 +82,11 @@ export default function BackToTop(props) {
             </div>
           </Typography>
           <div className="buttons">
-            {currentUser && (
+            {loginStatus && (
               <>
                 <div style={{ marginRight: "15px", display: "flex", flexDirection: "row", alignItems: "center" }}>
                   <Avatar alt={fullname} src={profilePicture} style={{ marginRight: "10px" }} />
-                  <p>{roll === "student" ? "StudentID:" : ""}{userName}</p>
+                  <p>{role === "student" ? "StudentID:" : ""}{userName}</p>
                 </div>
                 <LongMenu />
               </>

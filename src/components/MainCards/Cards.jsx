@@ -5,31 +5,25 @@ import Grid from '@mui/material/Grid';
 import * as React from 'react';
 
 import Typography from '@mui/material/Typography';
-import { useEffect } from 'react';
 
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import InfoIcon from '@mui/icons-material/Info';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import PeopleIcon from '@mui/icons-material/People';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import SchoolIcon from "@mui/icons-material/School";
 import { InputAdornment } from "@mui/material";
-import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { ApplyJob } from '../../firebase/ApplyandCancelJob';
 import DialogBox from '../DialogBox/DialogBox';
 import Textfield from "../Inputfeild/Textfield";
-import "../StudentProfile/StudentProfile.css";
-import { ApplyJob } from '../../firebase/ApplyandCancelJob';
 import EditModal from '../Modal/EditModal';
+import "../StudentProfile/StudentProfile.css";
 
 
 const JobsCard = (props) => {
     const UserDetails = useSelector((state) => state.user);
     const dispatch = useDispatch()
-    // const handleApply = async () => {
 
-    // }
-    // console.log(props.item)
     const handleAgreeClick = async () => {
         await ApplyJob(props.item, props.uid, dispatch)
     }
@@ -144,7 +138,7 @@ const JobsCard = (props) => {
                     />
 
                 </CardContent>
-                {props.item.category === UserDetails.category && UserDetails.roll === "student" && <Typography>
+                {props.item.category === UserDetails.category && UserDetails.role === "student" && <Typography>
                     Note: Your Profile Matches
                 </Typography>}
 

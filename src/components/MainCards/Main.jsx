@@ -1,16 +1,10 @@
-import { Card } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { ApplyJob } from '../../firebase/ApplyandCancelJob';
-import Footer from '../Footer/Footer';
 import Cards from "./Cards";
 
 
