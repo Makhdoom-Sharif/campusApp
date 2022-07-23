@@ -42,4 +42,25 @@ async function AvailableJobs(dispatch, uid) {
 
 }
 
-export { AvailableJobs };
+
+
+
+
+
+
+
+const AllJobsArray = async (uid, dispatch) => {
+    await get(child(dbRef, `postedJobs/`)).then(async (snapshot) => {
+
+        if (snapshot.exists()) {
+
+            async function filterArray() {
+                return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
+            }
+            const jobArray = await filterArray()
+            dispatch(GetAllJobs(jobArray))
+
+        }
+    })
+}
+export { AvailableJobs, AllJobsArray };

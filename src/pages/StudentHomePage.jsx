@@ -7,12 +7,12 @@ import { Typography } from '@mui/material';
 const StudentHomePage = () => {
 
 
-  const { approve } = useSelector((state) => state.user);
+  const { approved, blocked } = useSelector((state) => state.user);
   return (
     <div>
 
       <NavBar />
-      {approve ?
+      {approved && !blocked ?
         <AvailableJobs />
         : <Typography
           component="h1"

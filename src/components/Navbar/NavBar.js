@@ -64,7 +64,8 @@ export default function BackToTop(props) {
         <Toolbar style={{ justifyContent: "space-between" }}>
           <Typography variant="h6" component="div">
             <div className="Left-Nav">
-              {loginStatus && <Drawer />}
+              {
+                loginStatus && role !== "admin" && <Drawer />}
 
 
               <Link

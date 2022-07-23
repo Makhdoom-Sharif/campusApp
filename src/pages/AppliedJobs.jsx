@@ -6,12 +6,13 @@ import { useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 const AppliedJobs = () => {
 
-    const { approve } = useSelector((state) => state.user);
+    const { approved, blocked
+    } = useSelector((state) => state.user);
     return (
         <div>
             <NavBar />
 
-            {approve ?
+            {approved && !blocked ?
                 <AppliedJobsView />
                 : <Typography
                     component="h1"

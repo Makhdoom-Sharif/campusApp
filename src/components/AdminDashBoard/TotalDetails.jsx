@@ -9,20 +9,20 @@ function preventDefault(event) {
 }
 
 export default function TotalDetails() {
-  const { NewApprovalStudentsArray, ApprovedStudentsArray } = useSelector((state) => state.user);
+  const { ApprovedStudentsArray, ApprovedCompaniesArray } = useSelector((state) => state.user);
   return (
     <React.Fragment>
       <Title>Total Details</Title>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
+      <Typography color="text.secondary" sx={{ flex: 1 }} >
         Registered Companies:
       </Typography>
-      <Typography component="p" variant="h4">
-        130001
+      <Typography component="p" variant="h4" sx={{ flex: 1 }}>
+        {ApprovedCompaniesArray.filter(Boolean).length}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         Registered Students:
       </Typography>
-      <Typography component="p" variant="h4">
+      <Typography component="p" variant="h4" sx={{ flex: 1 }}>
         {ApprovedStudentsArray.filter(Boolean).length}
       </Typography>
     </React.Fragment>

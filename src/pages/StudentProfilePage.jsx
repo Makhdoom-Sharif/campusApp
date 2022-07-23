@@ -5,11 +5,12 @@ import Footer from '../components/Footer/Footer'
 import NavBar from '../components/Navbar/NavBar'
 import StudentProfile from '../components/StudentProfile/StudentProfile'
 const StudentProfilePage = () => {
-  const { approve } = useSelector((state) => state.user);
+  const { approved, blocked
+  } = useSelector((state) => state.user);
   return (
     <div>
       <NavBar />
-      {approve ?
+      {approved && !blocked ?
         <StudentProfile />
         : <Typography
           component="h1"

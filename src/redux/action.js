@@ -37,7 +37,9 @@ export const loginSuccess = Data => ({
     ImgUrl: Data.ImgUrl,
     website: Data.website,
     service: Data.service,
-    category: Data.category
+    category: Data.category,
+    approved: Data.approved,
+    blocked: Data.blocked
   }
 });
 export const GetAllJobs = Data => ({
@@ -187,11 +189,56 @@ export const StudentsArrays = (Data) => ({
   }
 })
 
+export const CompaniesArrays = (Data) => ({
+  type: type.COMPANIES_ARRAYS,
+  payload: {
+    ApprovedCompaniesArray: Data.ApprovedCompaniesArray,
+    NewApprovalCompaniesArray: Data.NewApprovalCompaniesArray,
 
-export const ApprovalSuccess = (Data) => ({
-  type: type.APPROVAL_SUCCESS,
+  }
+})
+
+
+
+export const ApprovalSuccessStudents = (Data) => ({
+  type: type.APPROVAL_SUCCESS_STUDENTS,
   payload: {
     index: Data.index,
     item: Data.item
+  }
+})
+
+export const ApprovalSuccessCompanies = (Data) => ({
+  type: type.APPROVAL_SUCCESS_COMPANIES,
+  payload: {
+    index: Data.index,
+    item: Data.item
+  }
+})
+
+
+export const CompanyBlockedOrUnNlockSuccess = (Data) => ({
+  type: type.COMPANY_BLOCKED_OR_UNBLOCK_SUCCESS,
+  payload: {
+    index: Data.index,
+    item: Data.data
+  }
+})
+
+
+export const StudentBlockedOrUnNlockSuccess = (Data) => ({
+  type: type.STUDENT_BLOCKED_OR_UNBLOCK_SUCCESS,
+  payload: {
+    index: Data.index,
+    item: Data.data
+  }
+})
+
+
+export const UserBlockAndUnblock = (Data) => ({
+  type: type.USER_BLOCK_AND_UNBLOCK,
+  payload: {
+    approved: Data.approved,
+    blocked: Data.blocked
   }
 })

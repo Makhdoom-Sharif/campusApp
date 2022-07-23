@@ -17,7 +17,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import PostNewJobPage from "../pages/PostNewJobPage";
 import { useSelector } from 'react-redux';
 import AppliedJobs from '../pages/AppliedJobs';
-import RelatedJobs from '../pages/RelatedJobs';
+// import RelatedJobs from '../pages/RelatedJobs';
 
 const Routing = () => {
     const UserDetails = useSelector((state) => state.user)
@@ -42,7 +42,7 @@ const Routing = () => {
                     <Route path="/student" element={<StudentHomePage />} />
                     <Route path="/studentprofile" element={<StudentProfilePage />} />
                     <Route path="/appliedjobs" element={<AppliedJobs />} />
-                    <Route path="/relatedjobs" element={<RelatedJobs />} />
+                    {/* <Route path="/relatedjobs" element={<RelatedJobs />} /> */}
                     <Route path="*" element={<Navigate replace to="/student" />} />
                 </Routes>
                     :

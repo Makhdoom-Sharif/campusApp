@@ -3,7 +3,7 @@ import { CompareRounded } from "@material-ui/icons";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { child, equalTo, get, getDatabase, query, ref } from "firebase/database";
 import { GetAllJobs, loginSuccess } from "../redux/action";
-import { AvailableJobs } from "./AvailableJobs";
+import { AllJobsArray, AvailableJobs } from "./AvailableJobs";
 import { database } from "./firebaseConfig";
 
 const auth = getAuth();
@@ -27,19 +27,20 @@ const loginUser = async (authParams) => {
             if (snapshot.exists()) {
               await dispatch(loginSuccess(snapshot.val()))
 
-              await get(child(dbRef, `postedJobs/`)).then(async (snapshot) => {
+              // await get(child(dbRef, `postedJobs/`)).then(async (snapshot) => {
 
-                if (snapshot.exists()) {
+              //   if (snapshot.exists()) {
 
-                  async function filterArray() {
-                    return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
-                  }
-                  const jobArray = await filterArray()
-                  dispatch(GetAllJobs(jobArray))
-                  navigate("/company")
-                }
-              })
-
+              //     async function filterArray() {
+              //       return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
+              //     }
+              //     const jobArray = await filterArray()
+              //     dispatch(GetAllJobs(jobArray))
+              //     navigate("/company")
+              //   }
+              // })
+              AllJobsArray(uid, dispatch)
+              navigate("/company")
                 ;
             } else {
               await get(child(dbRef, `admin/${uid}`))

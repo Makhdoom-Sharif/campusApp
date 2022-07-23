@@ -1,7 +1,7 @@
 import { getDatabase, ref, remove, set, update } from "firebase/database";
 import { database } from './firebaseConfig';
 import { getAuth } from "firebase/auth";
-import { ApprovalSuccess } from "../redux/action";
+import { ApprovalSuccessStudents, ApprovalSuccessCompanies } from "../redux/action";
 // import { JobDeleteSuccess, JobPostSuccess } from '../redux/action';
 const db = getDatabase();
 
@@ -37,7 +37,15 @@ async function AcceptApprovals(category, index, uid, dispatch, item) {
 
 
     await update(ref(db, `${category}/${uid}`), { approved: true }).then(() => {
-        dispatch(ApprovalSuccess({ index, item }))
+        if (category === "student") {
+            console.log("S==>", { index, item })
+            dispatch(ApprovalSuccessStudents({ index, item }))
+
+        }
+        else {
+            console.log("C==>", { index, item })
+            dispatch(ApprovalSuccessCompanies({ index, item }))
+        }
         console.log("approved!");
     })
         .catch(error => {

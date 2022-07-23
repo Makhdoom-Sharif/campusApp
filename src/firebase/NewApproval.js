@@ -1,23 +1,9 @@
 import { child, get, getDatabase, ref } from "firebase/database";
-import { AppliedJobsGetSuccess, GetAllJobs, StudentsArrays } from "../redux/action";
-import { onValue } from "firebase/database";
-
+import { CompaniesArrays, StudentsArrays } from "../redux/action";
+import { app } from '../firebase/firebaseConfig'
 const dbRef = ref(getDatabase());
-// const db = getDatabase();
-
-
-// const starCountRef = ref(db, 'student/');
-// onValue(starCountRef, (snapshot) => {
-//     const data = snapshot.val();
-//     console.log("realtime==>", data)
-// });
-
-
-
 
 const Approvals = async (dispatch) => {
-
-
 
 
 
@@ -35,8 +21,6 @@ const Approvals = async (dispatch) => {
                     item?.approved === false ? item : false)
             }
             const NewApprovalStudentsArray = await NewApprovalStudentsFunction()
-            // console.log("filter=>", NewApprovalStudentsArray)
-
 
 
             async function ApprovedStudents() {
@@ -44,10 +28,8 @@ const Approvals = async (dispatch) => {
                     item?.approved === true ? item : false)
             }
             const ApprovedStudentsArray = await ApprovedStudents()
-            // console.log("Aprroved=>", ApprovedStudentsArray)
             await dispatch(StudentsArrays({ ApprovedStudentsArray, NewApprovalStudentsArray }))
 
-            // var myFilterArray = myArray.filter(Boolean);
         }
     }).catch(error => {
         console.log("available jobs error", error)
@@ -74,14 +56,18 @@ const Approvals = async (dispatch) => {
                 return await AllCompany?.map((item, index) =>
                     item?.approved === false ? item : false)
             }
-            const NewApprovalsArray = await NewApprovals()
-            console.log("Company  filter=>", NewApprovalsArray)
+            const NewApprovalCompaniesArray = await NewApprovals()
+            console.log("Company  filter=>", NewApprovalCompaniesArray)
             async function ApprovedCompanies() {
                 return await AllCompany?.map((item, index) =>
                     item?.approved === true ? item : false)
             }
             const ApprovedCompaniesArray = await ApprovedCompanies()
             console.log("Companies Aprroved=>", ApprovedCompaniesArray)
+
+            await dispatch(CompaniesArrays({ ApprovedCompaniesArray, NewApprovalCompaniesArray }))
+
+
         }
     }).catch(error => {
         console.log("available jobs error", error)

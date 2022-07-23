@@ -10,7 +10,7 @@ const GetAppliedStudentData = async (props, dispatch) => {
     await get(child(dbRef, `student/${props}`)).then(async (snapshot) => {
         if (snapshot.exists()) {
             await snapshot.val()
-            console.log("std", snapshot.val())
+            // console.log("std", snapshot.val())
             dispatch(GetAppliedStudents(snapshot.val()))
         }
     }).catch((error) => {

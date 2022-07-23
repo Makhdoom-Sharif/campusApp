@@ -1,32 +1,18 @@
-import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listitems';
-import NewApprovals from './NewApprovals';
-import TotalDetails from './TotalDetails';
-import Orders from './StudentsData';
-import NavBar from '../Navbar/NavBar'
-import CompanyData from './CompanyData'
-import StudentsData from './StudentsData'
-import { Approvals } from '../../firebase/NewApproval';
-import { useDispatch, useSelector } from 'react-redux';
+import Paper from '@mui/material/Paper';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+// import NewApprovals from './NewApprovals';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Approvals } from '../../firebase/NewApproval';
+import TableData from './Table/Table';
+import TabNavigation from './TabNavigation/TabNavigation';
+import TotalDetails from './TotalDetails';
 
 
 function Copyright(props) {
@@ -47,7 +33,7 @@ const drawerWidth = 240;
 const mdTheme = createTheme();
 
 function DashboardContent() {
-
+  const { ApprovedCompaniesArray, ApprovedStudentsArray } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -68,7 +54,7 @@ function DashboardContent() {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 240,
+                height: 350,
               }}
             >
               <TotalDetails />
@@ -80,21 +66,36 @@ function DashboardContent() {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 240,
+                height: 350,
               }}
             >
-              <NewApprovals />
+              <TabNavigation />
             </Paper>
           </Grid>
           {/* Recent Deposits */}
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <CompanyData />
+              {/* <CompanyData /> */}
+              <TableData
+                Title={"Registered Companies"}
+                TableCellHead1={"Company Name"}
+                TableCellHead2={"Email"}
+                Data={ApprovedCompaniesArray}
+                TableCellLinkText={"See Posted Jobs"}
+                ListDilogTitle={"All Registered Companies"}
+              />
             </Paper>
           </Grid>
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <StudentsData />
+              <TableData
+                Title={"Registered Students"}
+                TableCellHead1={"Student ID"}
+                TableCellHead2={"Email"}
+                Data={ApprovedStudentsArray}
+                TableCellLinkText={"See Applied Jobs"}
+                ListDilogTitle={"All Registered Students"}
+              />
             </Paper>
           </Grid>
         </Grid>

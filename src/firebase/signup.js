@@ -22,7 +22,7 @@ async function writeUserData(uid, email, role, userName, dispatch) {
       role: role,
       userName: userName,
       approved: false,
-      blocked: true
+      blocked: false
     });
 
 

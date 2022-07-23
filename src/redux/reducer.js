@@ -24,7 +24,10 @@ const initialState = {
   category: "",
   AppliedJobs: [],
   ApprovedStudentsArray: [],
-  NewApprovalStudentsArray: []
+  NewApprovalStudentsArray: [],
+  ApprovedCompaniesArray: [],
+  NewApprovalCompaniesArray: [],
+  blocked: false
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -42,7 +45,7 @@ const userReducer = (state = initialState, action) => {
         role: "",
         error: "",
         isAdmin: false,
-        approve: true,
+        approved: true,
         email: "",
         userName: "",
         fullname: "",
@@ -56,7 +59,8 @@ const userReducer = (state = initialState, action) => {
         service: "",
         alljobs: [],
         appliedjobs: [],
-        relatedjobs: []
+        relatedjobs: [],
+
       };
     case type.JOB_UPDATE_INIT:
     case type.JOB_POST_INIT:
@@ -96,7 +100,9 @@ const userReducer = (state = initialState, action) => {
         profilePicture: action.payload.ImgUrl,
         website: action.payload.website,
         service: action.payload.service,
-        category: action.payload.category
+        category: action.payload.category,
+        approved: action.payload.approved,
+        blocked: action.payload.blocked
       };
     case type.GET_ALL_JOB:
       return {
@@ -201,8 +207,13 @@ const userReducer = (state = initialState, action) => {
         ApprovedStudentsArray: action.payload.ApprovedStudentsArray,
         NewApprovalStudentsArray: action.payload.NewApprovalStudentsArray
       }
-
-    case type.APPROVAL_SUCCESS:
+    case type.COMPANIES_ARRAYS:
+      return {
+        ...state,
+        ApprovedCompaniesArray: action.payload.ApprovedCompaniesArray,
+        NewApprovalCompaniesArray: action.payload.NewApprovalCompaniesArray
+      }
+    case type.APPROVAL_SUCCESS_STUDENTS:
       return {
         ...state,
         NewApprovalStudentsArray: [...state.NewApprovalStudentsArray.slice(0, action.payload.index),
@@ -211,7 +222,50 @@ const userReducer = (state = initialState, action) => {
 
 
       }
+    case type.APPROVAL_SUCCESS_COMPANIES:
+      return {
+        ...state,
+        NewApprovalCompaniesArray: [...state.NewApprovalCompaniesArray.slice(0, action.payload.index),
+        ...state.NewApprovalCompaniesArray.slice(action.payload.index + 1)],
+        ApprovedCompaniesArray: [...state.ApprovedCompaniesArray, action.payload.item]
 
+
+      }
+
+
+    case type.COMPANY_BLOCKED_OR_UNBLOCK_SUCCESS:
+      return {
+        ...state,
+        ApprovedCompaniesArray: state.ApprovedCompaniesArray.map(
+          (item, i) => i === action.payload.index ? action.payload.item
+            : item
+        )
+
+      }
+
+
+
+
+
+
+    case type.STUDENT_BLOCKED_OR_UNBLOCK_SUCCESS:
+      return {
+        ...state,
+        ApprovedStudentsArray: state.ApprovedStudentsArray.map(
+          (item, i) => i === action.payload.index ? action.payload.item
+            : item
+        )
+
+      }
+
+
+
+    case type.USER_BLOCK_AND_UNBLOCK:
+      return {
+        ...state,
+        approved: action.payload.approved,
+        blocked: action.payload.blocked
+      }
     default:
       return state;
   }
