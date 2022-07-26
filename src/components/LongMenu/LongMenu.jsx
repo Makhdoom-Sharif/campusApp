@@ -30,7 +30,7 @@ export default function LongMenu() {
         aria-haspopup='true'
         onClick={handleClick}
       >
-        <MoreVertIcon style={{ color: "#FFFFFF" }} />
+        <MoreVertIcon style={{ color: "#fff" }} />
       </IconButton>
       <Menu
         id='long-menu'
@@ -47,7 +47,7 @@ export default function LongMenu() {
           }
         }}
       >
-        <ProfileNavigation />
+        {role !== "admin" && <ProfileNavigation />}
         <LogOut />
       </Menu>
     </div>

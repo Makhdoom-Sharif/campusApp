@@ -20,6 +20,9 @@ import {
   loginStart
 } from "../../redux/action";
 import SnackBar from "../Snackbar/SnakBar";
+import './style.css'
+
+
 
 const theme = createTheme();
 
@@ -33,11 +36,9 @@ export default function SignUp() {
   const validationSchema = Yup.object({
     email: Yup.string()
       .email()
-      .required()
-      .matches(
-        /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/
-      ),
-    password: Yup.string().min(6).max(10).required()
+      .required("Email is mandatory")
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email is invalid'),
+    password: Yup.string().min(6, "Password must be at least 6 character long").max(10, "Password must be at most 10 character long").required("Password is mandatory")
   });
 
   const formik = useFormik({
@@ -96,7 +97,7 @@ export default function SignUp() {
 
 
 
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} className='Button'>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
@@ -106,7 +107,6 @@ export default function SignUp() {
             component='form'
             noValidate
             onSubmit={formik.handleSubmit}
-            // onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -123,7 +123,7 @@ export default function SignUp() {
                 />
 
                 {formik.errors.email && (
-                  <p style={{ color: "red", marginLeft: "5px" }}>
+                  <p style={{ color: "red", marginLeft: "5px", display: "flex" }}>
                     {formik.errors.email}
                   </p>
                 )}
@@ -140,11 +140,12 @@ export default function SignUp() {
                   onChange={formik.handleChange}
                   value={formik.values.password}
                 />
-                {formik.errors.password && (
-                  <p style={{ color: "red", marginLeft: "5px" }}>
+                {formik.errors.password ? (
+                  <p style={{ color: "red", marginLeft: "5px", display: "flex" }}>
                     {formik.errors.password}
                   </p>
-                )}
+                ) : null}
+
               </Grid>
             </Grid>
             <LoadingButton
@@ -153,26 +154,28 @@ export default function SignUp() {
               variant='contained'
               sx={{ mt: 3, mb: 2 }}
               loading={UserDetails.loading ? true : false}
+              className='Button'
+
             >
               Log In
             </LoadingButton>
-            <Grid container justifyContent='flex-end'>
-              <Grid style={{ justifyContent: 'space-between' }} item>
-                <Link
-                  to={UserDetails.loading ? "#" : "/forgotpassword"}
-                  style={{ color: "inherit", textDecoration: "underline", paddingRight: "30px" }}
-                >
-                  {"Forget Passwrord?"}
-                </Link>
-                <Link
-                  to={UserDetails.loading ? "#" : "/signup"}
-                  style={{ color: "inherit", textDecoration: "underline" }}
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
 
-              </Grid>
+            <Grid className="Links">
+              <Link
+                to={UserDetails.loading ? "#" : "/forgotpassword"}
+                style={{ color: "inherit", textDecoration: "underline" }}
+              >
+                {"Forget Passwrord?"}
+              </Link>
+              <Link
+                to={UserDetails.loading ? "#" : "/signup"}
+                style={{ color: "inherit", textDecoration: "underline", paddingLeft: "20px" }}
+              >
+                {"Don't have an account? Sign Up"}
+              </Link>
+
             </Grid>
+
           </Box>
         </Box>
       </Container>

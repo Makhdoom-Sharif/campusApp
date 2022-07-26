@@ -15,7 +15,8 @@ async function AddNewJob(JobData) {
             VacantPosition: Data.VacantPosition,
             category: Data.category,
             jobID: Data.jobID,
-            companyID: Data.uid
+            companyID: Data.uid,
+            blocked: false
         });
         JobData.dispatch(JobPostSuccess(Data));
         console.log("job post successfull")

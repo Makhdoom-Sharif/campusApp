@@ -24,7 +24,7 @@ export default function TabNavigation() {
                 <Title>New Approval Request</Title>
 
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                    <TabList onChange={handleChange} aria-label="lab API tabs example" textIndicator={"#491D84"}>
                         <Tab label="Students" value="1" />
                         <Tab label="Companies" value="2" />
                     </TabList>

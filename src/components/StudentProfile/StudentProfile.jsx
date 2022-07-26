@@ -314,7 +314,7 @@ export default function StudentProfile() {
                 style={{ marginBottom: "10px" }}
               />
               <DropDown
-                sx={{ m: 1, width: 475 }}
+                sx={{ mt: 1, width: 475 }}
                 variant='standard'
                 label='Category'
                 name='category'

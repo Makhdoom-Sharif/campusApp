@@ -1,11 +1,12 @@
-import { getDatabase, ref, remove, set, update } from "firebase/database";
+import { getDatabase, ref, remove, set, update, get, child } from "firebase/database";
 import { database } from './firebaseConfig';
 import { getAuth } from "firebase/auth";
 import { CompanyBlockedOrUnNlockSuccess, StudentBlockedOrUnNlockSuccess } from "../redux/action";
+// import { getDatabase, ref, remove, set, update } from "firebase/database";
 // import { JobDeleteSuccess, JobPostSuccess } from '../redux/action';
 
 
-
+const dbRef = ref(getDatabase());
 async function handleBlockOrUnblock(role, item, dispatch, index) {
 
     // const Data = JSON.parse(JSON.stringify(JobData))
@@ -18,7 +19,7 @@ async function handleBlockOrUnblock(role, item, dispatch, index) {
 
     const data = item.blocked ? { ...item, blocked: false } : { ...item, blocked: true }
     // console.log("data=>", data)
-    await update(ref(database, `${role}/${data.uid}`), { blocked: data.blocked }).then(() => {
+    await update(ref(database, `${role}/${data.uid}`), { blocked: data.blocked }).then(async () => {
         if (role === "student") {
 
             console.log("success student")
@@ -27,6 +28,21 @@ async function handleBlockOrUnblock(role, item, dispatch, index) {
 
         }
         else {
+            await get(child(dbRef, `postedJobs/`)).then(async (snapshot) => {
+
+                if (snapshot.exists()) {
+
+                    async function filterArray() {
+                        return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === data.uid)
+                    }
+                    const jobArray = await filterArray()
+                    jobArray.map((item, index) => {
+                        update(ref(database, `postedJobs/${item.jobID}`), { blocked: data.blocked })
+                    })
+
+                }
+            })
+
 
             dispatch(CompanyBlockedOrUnNlockSuccess({ index, data }))
 

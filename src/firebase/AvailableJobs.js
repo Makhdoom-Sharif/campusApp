@@ -16,16 +16,18 @@ async function AvailableJobs(dispatch, uid) {
             async function AvailableJobs() {
 
                 return await jobArray?.map((item, index) =>
-                    item?.ApplicantsIDs ?
-                        Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? false : item) : item)
+                    item.blocked ? false :
+                        item?.ApplicantsIDs ?
+                            Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? false : item) : item)
             }
 
 
             async function AppliedJobs() {
 
                 return await jobArray?.map((item, index) =>
-                    item?.ApplicantsIDs ?
-                        Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? item : false) : false)
+                    item.blocked ? false :
+                        item?.ApplicantsIDs ?
+                            Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? item : false) : false)
             }
 
             const AvailableJobsArray = await AvailableJobs()
@@ -63,4 +65,10 @@ const AllJobsArray = async (uid, dispatch) => {
         }
     })
 }
+
+
+
+
+
+
 export { AvailableJobs, AllJobsArray };

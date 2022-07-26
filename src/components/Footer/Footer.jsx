@@ -21,7 +21,7 @@ function Copyright(props) {
         >
             {"Copyright © "}
             <Link to={role === 'student' ? '/student' : '/company'} style={{ color: "inherit", textDecoration: "underline" }}>
-                Campus Recruitment System
+                Recruiters
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}

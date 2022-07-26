@@ -58,37 +58,37 @@ ScrollTop.propTypes = {
 export default function BackToTop(props) {
   const { loginStatus, role, profilePicture, fullname, userName, registerSuccess } = useSelector((state) => state.user);
   return (
-    <React.Fragment>
+    <React.Fragment >
       <CssBaseline />
-      <AppBar>
+      <AppBar className='NavBar'>
         <Toolbar style={{ justifyContent: "space-between" }}>
-          <Typography variant="h6" component="div">
-            <div className="Left-Nav">
-              {
-                loginStatus && role !== "admin" && <Drawer />}
+          <div className="Left-Nav">
+            {/* <Typography variant="h6" component="div"> */}
+            {
+              loginStatus && role !== "admin" && <Drawer />}
 
 
-              <Link
-                to={
-                  loginStatus
-                    ? role === "student"
-                      ? "/student"
-                      : "/company"
-                    : "/"
-                }
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                The Campus Recruitment App
-              </Link>
-            </div>
-          </Typography>
+            <Link
+              to={
+                loginStatus
+                  ? role === "student"
+                    ? "/student"
+                    : "/company"
+                  : "/"
+              }
+              className='NavBarTitle'
+            >
+              Recruiters
+            </Link>
+            {/* </Typography> */}
+          </div>
           <div className="buttons">
             {loginStatus && (
               <>
-                <div style={{ marginRight: "15px", display: "flex", flexDirection: "row", alignItems: "center" }}>
+                {role !== "admin" && <div className="AvatarBlock" >
                   <Avatar alt={fullname} src={profilePicture} style={{ marginRight: "10px" }} />
-                  <p>{role === "student" ? "StudentID:" : ""}{userName}</p>
-                </div>
+                  <p className="ID" >{role === "student" ? "StudentID:" : ""}{userName}</p>
+                </div>}
                 <LongMenu />
               </>
             )}
@@ -96,12 +96,12 @@ export default function BackToTop(props) {
         </Toolbar>
       </AppBar>
       <Toolbar id="back-to-top-anchor" />
-      <Container>
+      <Container >
         <Box sx={{ my: 2 }}>
         </Box>
       </Container>
-      <ScrollTop {...props}>
-        <Fab size="small" aria-label="scroll back to top">
+      <ScrollTop {...props} >
+        <Fab size="small" aria-label="scroll back to top" className='NavBar' >
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

@@ -20,10 +20,8 @@ const Main = (props) => {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <main>
-                    {/* Hero unit */}
                     <Box
                         sx={{
-                            bgcolor: 'background.paper',
                             pt: 8,
                             pb: 6,
                         }}
@@ -33,8 +31,8 @@ const Main = (props) => {
                                 component="h1"
                                 variant="h3"
                                 align="center"
-                                color="text.primary"
                                 gutterBottom
+
                             >
                                 {props.Title}
                             </Typography>

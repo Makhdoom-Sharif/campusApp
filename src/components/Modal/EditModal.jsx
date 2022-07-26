@@ -298,10 +298,10 @@ export default function EditModal(props) {
                     </Box>
                 </Fade>
             </Modal>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
                 <DialogBox ButtonText={"Delete"} size="small" DialogBoxTitle={"Do you want to delete this posted job?"} DialogBoxText={"Note:This post will be deleted permenantly."} AgreeButtonText={"Yes"} CancelButtonText={"No"} handleAgreeClick={handleDelete} />
                 <Button size="small" onClick={handleEdit}>Edit</Button>
-                <ListDialog ListButtonText={"View Applicants"} ListDilogTitle={"Applicants:"}
+                <ListDialog ListButtonText={"Applicants"} ListDilogTitle={"Applicants:"}
                     ListDialogCloseButton={"Close"} handleListModalOpen={handleListModalOpen}
                     AppliedStudent={AppliedStudent} />
             </div>

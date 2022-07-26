@@ -15,7 +15,7 @@ export const LogOut = () => {
     try {
       await signOut(auth);
       dispatch(logoutSuccess());
-      alert("logout Sccess");
+
     } catch (e) {
       dispatch(logoutFail());
     }

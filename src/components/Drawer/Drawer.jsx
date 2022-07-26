@@ -16,6 +16,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
+import "../Navbar/NavBar.css"
 export default function Drawer() {
     const { role } = useSelector((state) => state.user);
     const [state, setState] = useState({
@@ -58,7 +59,7 @@ export default function Drawer() {
             </List>
                 :
                 <List>
-                    {['View Applied Jobs', 'View Related Jobs'].map((text, index) => (
+                    {['View Applied Jobs'].map((text, index) => (
                         <Link to={text === 'View Applied Jobs' ? "/appliedjobs" : "/relatedjobs"} style={{ textDecoration: "none", color: "inherit" }}>
                             <ListItem key={text} disablePadding>
                                 <ListItemButton>
@@ -79,7 +80,7 @@ export default function Drawer() {
         <div>
 
             <React.Fragment key={'left'}>
-                <Button onClick={toggleDrawer('left', true)}><  MenuIcon style={{ color: "#ffff" }} /></Button>
+                <Button onClick={toggleDrawer('left', true)} ><  MenuIcon className='DrawerIcon' /></Button>
                 <SwipeableDrawer
                     anchor={'left'}
                     open={state['left']}

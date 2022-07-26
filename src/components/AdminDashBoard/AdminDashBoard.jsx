@@ -33,7 +33,7 @@ const drawerWidth = 240;
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const { ApprovedCompaniesArray, ApprovedStudentsArray } = useSelector((state) => state.user);
+  const { ApprovedCompaniesArray, ApprovedStudentsArray, alljobs, AppliedJobs } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -83,6 +83,10 @@ function DashboardContent() {
                 Data={ApprovedCompaniesArray}
                 TableCellLinkText={"See Posted Jobs"}
                 ListDilogTitle={"All Registered Companies"}
+                ListButtonText1={"See Posted Jobs"}
+                ListDilogTitle1={"All Posted Jobs"}
+                alljobs={alljobs}
+                ListDialogCloseButton1={"Close"}
               />
             </Paper>
           </Grid>
@@ -95,6 +99,11 @@ function DashboardContent() {
                 Data={ApprovedStudentsArray}
                 TableCellLinkText={"See Applied Jobs"}
                 ListDilogTitle={"All Registered Students"}
+                ListButtonText1={"See Applied Jobs"}
+                ListDilogTitle1={"All Applied Jobs"}
+                alljobs={AppliedJobs}
+                ListDialogCloseButton1={"Close"}
+
               />
             </Paper>
           </Grid>

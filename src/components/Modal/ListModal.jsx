@@ -76,8 +76,8 @@ export default function ListDialog(props) {
                         </Table>
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClick}>{props.ListDialogCloseButton}</Button>
+                <DialogActions >
+                    <Button onClick={handleClick} size="small" >{props.ListDialogCloseButton}</Button>
                 </DialogActions>
             </Dialog>
         </div>

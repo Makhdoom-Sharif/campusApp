@@ -21,7 +21,7 @@ const StudentHomePage = () => {
           color="text.primary"
           gutterBottom
         >
-          You are not authorizes. Contact to admin team
+          You are not authorizes. <br />Contact to admin team
         </Typography>
       }
       <Footer />

@@ -28,12 +28,16 @@ import {
   passordResetFail,
   passwordResetInitiaite,
   passwordResetSuccess
-} from "../redux/action";
+} from "../../redux/action";
+import './style.css'
+import SnackBar from "../Snackbar/SnakBar";
 
 const auth = getAuth();
 
 const theme = createTheme();
 const ResetPassword = () => {
+  const [openSnackBar, setopenSnackBar] = useState(false)
+  const [error, setError] = useState();
   const [open, setOpen] = useState(false);
   const [reset, setReset] = useState(false);
   const dispatch = useDispatch();
@@ -43,9 +47,7 @@ const ResetPassword = () => {
     email: Yup.string()
       .email()
       .required()
-      .matches(
-        /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/
-      ),
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email is invalid'),
   });
 
   const formik = useFormik({
@@ -62,7 +64,8 @@ const ResetPassword = () => {
         setOpen(true);
       } catch (e) {
         dispatch(passordResetFail());
-        alert(e);
+        setopenSnackBar(true)
+        setError(e.message);
       }
     },
   });
@@ -70,7 +73,10 @@ const ResetPassword = () => {
     setOpen(false);
     setReset(true);
   };
-
+  const handleCloseSnackBar = () => {
+    setopenSnackBar(false);
+    setError("")
+  }
   useEffect(() => {
     if (reset) {
       navigate("/");
@@ -90,7 +96,11 @@ const ResetPassword = () => {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <SnackBar severity="error" openSnackBar={openSnackBar} handleCloseAlert={handleCloseSnackBar}
+              AlertMessage={error}
+
+            />
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} className='Button'>
               <RotateLeftOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -126,6 +136,7 @@ const ResetPassword = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 loading={UserDetails.loading ? true : false}
+                className='Button'
               >
                 Send Email
               </LoadingButton>
@@ -158,7 +169,7 @@ const ResetPassword = () => {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose}>Done</Button>
+                <Button onClick={handleClose} className='Button'>Done</Button>
               </DialogActions>
             </Dialog>
           </Box>

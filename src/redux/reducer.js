@@ -39,13 +39,14 @@ const userReducer = (state = initialState, action) => {
       return { ...state, loading: true };
     case type.LOGOUT_SUCCESS:
       return {
+        ...state,
         loading: false,
         loginStatus: false,
         uid: "",
         role: "",
         error: "",
         isAdmin: false,
-        approved: true,
+        approve: false,
         email: "",
         userName: "",
         fullname: "",
@@ -58,8 +59,14 @@ const userReducer = (state = initialState, action) => {
         website: "",
         service: "",
         alljobs: [],
-        appliedjobs: [],
-        relatedjobs: [],
+        AppliedStudents: [],
+        category: "",
+        AppliedJobs: [],
+        ApprovedStudentsArray: [],
+        NewApprovalStudentsArray: [],
+        ApprovedCompaniesArray: [],
+        NewApprovalCompaniesArray: [],
+        blocked: false
 
       };
     case type.JOB_UPDATE_INIT:
