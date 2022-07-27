@@ -77,7 +77,7 @@ export default function PostNewJob() {
 
                 handleReset()
             } catch (e) {
-                console.log(e);
+                // console.log(e);
                 dispatch(JobPostFail());
             }
         }

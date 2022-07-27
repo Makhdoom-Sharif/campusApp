@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch()
   const { uid, role } = useSelector((state) => state.user)
 
-  // const [state, setState] = useState(false)
+
 
   useEffect(() => {
 
@@ -25,11 +25,11 @@ function App() {
         const starCountRef = ref(database, `student/${uid}`);
         onValue(starCountRef, (snapshot) => {
           const data = snapshot.val();
-          console.log("app==>", data)
+          // console.log("app==>", data)
           dispatch(UserBlockAndUnblock({ blocked: data?.blocked, approved: data?.approved }))
           if (data?.approved && !data?.blocked && data?.role === "student") {
             AvailableJobs(dispatch, uid)
-            console.log("dsd")
+            // console.log("dsd")
           } else {
             console.log("else runs")
           }
@@ -41,7 +41,7 @@ function App() {
         const starCountRefCompany = ref(database, `company/${uid}`);
         onValue(starCountRefCompany, (snapshot) => {
           const data = snapshot.val();
-          console.log("==>", data)
+          // console.log("==>", data)
           dispatch(UserBlockAndUnblock({ blocked: data?.blocked, approved: data?.approved }))
         })
 
@@ -50,10 +50,10 @@ function App() {
 
 
 
-        const starCountRefPost = ref(database, 'postedJobs/');
-        onValue(starCountRefPost, (snapshot) => {
-          AllJobsArray(uid, dispatch)
-        })
+        // const starCountRefPost = ref(database, 'postedJobs/');
+        // onValue(starCountRefPost, (snapshot) => {
+        //   AllJobsArray(uid, dispatch)
+        // })
 
 
       }

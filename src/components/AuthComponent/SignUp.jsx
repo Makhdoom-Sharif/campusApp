@@ -33,7 +33,7 @@ export default function SignUp() {
   const [role, setRoll] = useState(null);
   const validationSchema = Yup.object({
     email: Yup.string()
-      .email()
+      .email("Email is invalid")
       .required()
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email is invalid'),
     password: Yup.string().min(6, "Password must be at least 6 character long").max(10, "Password must be at most 10 character long").required("Password is mandatory").required(),
@@ -116,9 +116,17 @@ export default function SignUp() {
                   autoComplete="email"
                   onChange={formik.handleChange}
                   value={formik.values.email}
+                  sx={{
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#532696"
+                      }
+                    }
+                  }}
+                  InputLabelProps={{ style: { color: '#000000' } }}
                 />
                 {formik.errors.email && (
-                  <p style={{ color: "red", marginLeft: "5px" }}>
+                  <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
                     {formik.errors.email}
                   </p>
                 )}
@@ -134,9 +142,17 @@ export default function SignUp() {
                   autoComplete="new-password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
+                  sx={{
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#532696"
+                      }
+                    }
+                  }}
+                  InputLabelProps={{ style: { color: '#000000' } }}
                 />
                 {formik.errors.password && (
-                  <p style={{ color: "red", marginLeft: "5px" }}>
+                  <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
                     {formik.errors.password}
                   </p>
                 )}
@@ -151,17 +167,19 @@ export default function SignUp() {
                     onChange={(e) => {
                       setRoll(e.target.value);
                     }}
+
                   >
                     <FormControlLabel
                       onChange={formik.handleChange}
                       value="student"
-                      control={<Radio />}
+                      control={<Radio style={{ color: "#532696" }} />}
                       label="Student"
+
                     />
                     <FormControlLabel
                       onChange={formik.handleChange}
                       value="company"
-                      control={<Radio />}
+                      control={<Radio style={{ color: "#532696" }} />}
                       label="company"
                     />
                   </RadioGroup>
@@ -181,6 +199,14 @@ export default function SignUp() {
                           autoFocus
                           onChange={formik.handleChange}
                           value={formik.values.userName}
+                          sx={{
+                            "& .MuiOutlinedInput-root.Mui-focused": {
+                              "& > fieldset": {
+                                borderColor: "#532696"
+                              }
+                            }
+                          }}
+                          InputLabelProps={{ style: { color: '#000000' } }}
                         />
                       </>
                     );
@@ -196,6 +222,14 @@ export default function SignUp() {
                         autoFocus
                         onChange={formik.handleChange}
                         value={formik.values.userName}
+                        sx={{
+                          "& .MuiOutlinedInput-root.Mui-focused": {
+                            "& > fieldset": {
+                              borderColor: "#532696"
+                            }
+                          }
+                        }}
+                        InputLabelProps={{ style: { color: '#000000' } }}
                       />
                     );
                   } else {
@@ -203,7 +237,7 @@ export default function SignUp() {
                   }
                 })()}
                 {formik.errors.userName && (
-                  <p style={{ color: "red", marginLeft: "5px" }}>
+                  <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
                     {formik.errors.userName}
                   </p>
                 )}

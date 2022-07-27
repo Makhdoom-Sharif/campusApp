@@ -23,7 +23,7 @@ export async function imgUpdate(url, uid, role) {
   updates[`${role}/${uid}`] = URL;
   await update(ref(db, `${role}/${uid}`), URL)
     .then(() => {
-      console.log("url update");
+      // console.log("url update");
     })
     .catch(() => {
       console.log("error occurred");

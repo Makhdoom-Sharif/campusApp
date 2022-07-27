@@ -27,18 +27,6 @@ const loginUser = async (authParams) => {
             if (snapshot.exists()) {
               await dispatch(loginSuccess(snapshot.val()))
 
-              // await get(child(dbRef, `postedJobs/`)).then(async (snapshot) => {
-
-              //   if (snapshot.exists()) {
-
-              //     async function filterArray() {
-              //       return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
-              //     }
-              //     const jobArray = await filterArray()
-              //     dispatch(GetAllJobs(jobArray))
-              //     navigate("/company")
-              //   }
-              // })
               AllJobsArray(uid, dispatch)
               navigate("/company")
                 ;

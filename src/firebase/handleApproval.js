@@ -38,15 +38,15 @@ async function AcceptApprovals(category, index, uid, dispatch, item) {
 
     await update(ref(db, `${category}/${uid}`), { approved: true }).then(() => {
         if (category === "student") {
-            console.log("S==>", { index, item })
+            // console.log("S==>", { index, item })
             dispatch(ApprovalSuccessStudents({ index, item }))
 
         }
         else {
-            console.log("C==>", { index, item })
+            // console.log("C==>", { index, item })
             dispatch(ApprovalSuccessCompanies({ index, item }))
         }
-        console.log("approved!");
+        // console.log("approved!");
     })
         .catch(error => {
             console.log(error);

@@ -89,21 +89,9 @@ export default function StudentProfile() {
           role: UserDetails.role,
           category: values.category
         });
-        console.log({
-          uid: UserDetails.uid,
-          dispatch: dispatch,
-          fullname: values.fullname,
-          fathername: values.fathername,
-          cnic: values.cnic,
-          address: values.address,
-          contact: values.contact,
-          qualification: values.qualification,
-          role: UserDetails.role,
-          category: values.category
-        })
         dispatch(ProfileUpdateSuccess(values));
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         dispatch(ProfileUpdateFail());
       }
     }
@@ -165,6 +153,10 @@ export default function StudentProfile() {
                 id='input-with-icon-textfield'
                 label='Full Name'
                 name='fullname'
+                inputProps={{
+                  maxLength: 20
+                }}
+
                 fullWidth
                 onChange={handleChange}
                 value={formik.values.fullname}

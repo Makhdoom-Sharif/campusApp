@@ -45,8 +45,8 @@ const ResetPassword = () => {
   const UserDetails = useSelector((state) => state.user);
   const validationSchema = Yup.object({
     email: Yup.string()
-      .email()
-      .required()
+      .email('Email is invalid')
+      .required("Email is required")
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email is invalid'),
   });
 
@@ -86,7 +86,7 @@ const ResetPassword = () => {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" minWidth="xs">
           <CssBaseline />
           <Box
             sx={{
@@ -112,25 +112,38 @@ const ResetPassword = () => {
               onSubmit={formik.handleSubmit}
               noValidate
               sx={{ mt: 1 }}
+              style={{
+                display: "flex",
+                flexDirection: "column"
+              }}
             >
               <TextField
-                margin="normal"
+
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 onChange={formik.handleChange}
                 value={formik.values.email}
+                style={{ minWidth: 375, maxWidth: 375 }}
+                sx={{
+                  "& .MuiOutlinedInput-root.Mui-focused": {
+                    "& > fieldset": {
+                      borderColor: "#532696"
+                    }
+                  }
+                }}
+                InputLabelProps={{ style: { color: '#000000' } }}
               />
               {formik.errors.email && (
-                <p style={{ color: "red", marginLeft: "5px" }}>
+                <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
                   {formik.errors.email}
                 </p>
               )}
               <LoadingButton
+                style={{ minWidth: 375, maxWidth: 375 }}
                 type="submit"
                 fullWidth
                 variant="contained"

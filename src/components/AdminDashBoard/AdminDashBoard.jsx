@@ -13,27 +13,14 @@ import { Approvals } from '../../firebase/NewApproval';
 import TableData from './Table/Table';
 import TabNavigation from './TabNavigation/TabNavigation';
 import TotalDetails from './TotalDetails';
+import { onValue, ref } from "firebase/database";
+import { database } from "../../firebase/firebaseConfig";
 
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const drawerWidth = 240;
 
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const { ApprovedCompaniesArray, ApprovedStudentsArray, alljobs, AppliedJobs } = useSelector((state) => state.user);
+  const { ApprovedCompaniesArray, ApprovedStudentsArray, alljobs, AppliedJobs, uid } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -41,8 +28,18 @@ function DashboardContent() {
   };
 
   useEffect(() => {
-    Approvals(dispatch)
-  }, [])
+
+    if (uid) {
+      const starCountRefPost = ref(database, 'postedJobs/');
+      onValue(starCountRefPost, (snapshot) => {
+        Approvals(dispatch)
+      })
+    }
+
+
+
+
+  }, [uid])
   return (
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
@@ -108,7 +105,7 @@ function DashboardContent() {
             </Paper>
           </Grid>
         </Grid>
-        <Copyright sx={{ pt: 4 }} />
+
       </Container>
     </ThemeProvider>
   );

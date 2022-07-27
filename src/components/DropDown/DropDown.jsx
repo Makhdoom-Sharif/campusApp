@@ -28,7 +28,6 @@ export default function DropDown(props) {
           onClick={() => setDisable(false)}
           disableUnderline={disable}
           renderValue={(value) => {
-            console.log(value);
             return (
               <Box sx={{ display: "flex", gap: 1 }}>
                 {props.Icon}

@@ -1,6 +1,6 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, CircularProgress, Snackbar } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -35,7 +35,7 @@ export default function SignUp() {
 
   const validationSchema = Yup.object({
     email: Yup.string()
-      .email()
+      .email('Email is invalid')
       .required("Email is mandatory")
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email is invalid'),
     password: Yup.string().min(6, "Password must be at least 6 character long").max(10, "Password must be at most 10 character long").required("Password is mandatory")
@@ -120,10 +120,18 @@ export default function SignUp() {
                   autoComplete='email'
                   onChange={formik.handleChange}
                   value={formik.values.email}
+                  sx={{
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#532696"
+                      }
+                    }
+                  }}
+                  InputLabelProps={{ style: { color: '#000000' } }}
                 />
 
                 {formik.errors.email && (
-                  <p style={{ color: "red", marginLeft: "5px", display: "flex" }}>
+                  <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
                     {formik.errors.email}
                   </p>
                 )}
@@ -139,9 +147,17 @@ export default function SignUp() {
                   autoComplete='new-password'
                   onChange={formik.handleChange}
                   value={formik.values.password}
+                  sx={{
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#532696"
+                      }
+                    }
+                  }}
+                  InputLabelProps={{ style: { color: '#000000' } }}
                 />
                 {formik.errors.password ? (
-                  <p style={{ color: "red", marginLeft: "5px", display: "flex" }}>
+                  <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
                     {formik.errors.password}
                   </p>
                 ) : null}
@@ -149,6 +165,7 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <LoadingButton
+              // loadingIndicator={< CircularProgress color="#fff" size={16} />}
               type='submit'
               fullWidth
               variant='contained'

@@ -55,7 +55,11 @@ export default function TableData(props) {
                     </TableBody>
                 </Table>
             </Box>
-            <ListModalApproval ListButtonText={"See more"} Data={props.Data} ListDilogTitle={props.ListDilogTitle} Blocking={true} Accepting={false} />
+            {props.Data.length && <ListModalApproval ListButtonText={"See more"} Data={props.Data} ListDilogTitle={props.ListDilogTitle} Blocking={true} Accepting={false}
+                alljobs={props.alljobs}
+                ListDialogCloseButton1={props.ListDialogCloseButton1}
+                ListButtonText1={props.ListButtonText1} ListDilogTitle1={props.ListDilogTitle1}
+            />}
         </React.Fragment >
     );
 }

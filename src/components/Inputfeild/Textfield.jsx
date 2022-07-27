@@ -37,6 +37,14 @@ const Textfield = (props) => {
         style={props.style}
         onKeyPress={props.onKeyPress}
         autoComplete={props.autoComplete}
+        sx={{
+          "& .MuiOutlinedInput-root.Mui-focused": {
+            "& > fieldset": {
+              borderColor: "#532696"
+            }
+          }
+        }}
+        InputLabelProps={{ style: { color: '#000000' } }}
       />
       {props.editIcon ? disable && (
         <button className='btn' onClick={handleBtn}>

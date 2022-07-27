@@ -34,9 +34,9 @@ async function AvailableJobs(dispatch, uid) {
 
             const AppliedJobsArray = await AppliedJobs()
 
-            dispatch(GetAllJobs(AvailableJobsArray.flat()))
+            dispatch(GetAllJobs(AvailableJobsArray.flat().filter(Boolean)))
 
-            dispatch(AppliedJobsGetSuccess(AppliedJobsArray.flat()))
+            dispatch(AppliedJobsGetSuccess(AppliedJobsArray.flat().filter(Boolean)))
         }
     }).catch(error => {
         console.log("available jobs error", error)
@@ -60,7 +60,7 @@ const AllJobsArray = async (uid, dispatch) => {
                 return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
             }
             const jobArray = await filterArray()
-            dispatch(GetAllJobs(jobArray))
+            dispatch(GetAllJobs(jobArray.filter(Boolean)))
 
         }
     })

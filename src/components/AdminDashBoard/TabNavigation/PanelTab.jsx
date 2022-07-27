@@ -22,7 +22,6 @@ export default function PanelTab(props) {
 
     const handleAcceptRequest = async (index, uid, item, role) => {
         AcceptApprovals(role, index, uid, dispatch, item)
-        // console.log(index, uid)
     }
     return (
         <React.Fragment>
@@ -53,7 +52,7 @@ export default function PanelTab(props) {
 
 
 
-                <ListModalApproval ListButtonText={"See more"} Data={props.Data} ListDilogTitle={props.ListDilogTitle} Blocking={false} Accepting={true} />
+                {props.Data.length ? <ListModalApproval ListButtonText={"See more"} Data={props.Data} ListDilogTitle={props.ListDilogTitle} Blocking={false} Accepting={true} /> : null}
             </Box >
         </React.Fragment>
     );

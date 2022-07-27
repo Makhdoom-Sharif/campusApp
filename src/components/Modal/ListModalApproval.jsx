@@ -11,6 +11,7 @@ import { RemoveAppliedStudent } from '../../redux/action';
 import ProfileModal from './ProfileModal';
 import { AcceptApprovals } from '../../firebase/handleApproval';
 import { handleBlockOrUnblock } from '../../firebase/BlockandUblock';
+import ViewJobsModalAdmin from './ViewJobsModalAdmin';
 export default function ListModalApproval(props) {
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
@@ -35,12 +36,14 @@ export default function ListModalApproval(props) {
     }
 
     const handleBtnClick = (index, item) => {
-        BlockOrUnblockHandler(item.role, item, index)
-        handleAcceptRequest(index, item.uid, item, item.role)
+        if (item.approved) {
+            BlockOrUnblockHandler(item.role, item, index)
+        } else {
+            handleAcceptRequest(index, item.uid, item, item.role)
+        }
     }
     const handleAcceptRequest = async (index, uid, item, role) => {
         AcceptApprovals(role, index, uid, dispatch, item)
-        // console.log(index, uid)
     }
     const BlockOrUnblockHandler = (role, item, index) => {
         handleBlockOrUnblock(role, item, dispatch, index)
@@ -80,11 +83,16 @@ export default function ListModalApproval(props) {
                             <TableBody>
                                 {props.Data?.map((item, index) => (
                                     <TableRow key={item.id}>
-                                        {/* <TableCell> <Avatar alt={Data.fullname} src={Data.ImgUrl} style={{ marginRight: "10px" }} /></TableCell> */}
                                         <TableCell>{item.userName}</TableCell>
                                         <TableCell>{item.email}</TableCell>
                                         <TableCell><Button size='small' onClick={() => handleBtnClick(index, item)} >{props.Accepting ? "Accept" : item.blocked ? "Unblock" : "Block"}</Button></TableCell>
-                                        <TableCell></TableCell>
+                                        <TableCell style={{ minWidth: "200px" }}>
+                                            <ViewJobsModalAdmin ListButtonText1={props.ListButtonText1} ListDilogTitle1={props.ListDilogTitle1}
+                                                uid={item.uid}
+                                                alljobs={props.alljobs}
+                                                ListDialogCloseButton1={props.ListDialogCloseButton1}
+                                                item={item} />
+                                        </TableCell>
                                         <TableCell></TableCell>
                                     </TableRow>
                                 ))}

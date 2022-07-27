@@ -5,7 +5,7 @@ import { GetAppliedStudents } from "../redux/action";
 
 
 const GetAppliedStudentData = async (props, dispatch) => {
-    console.log("props===>", props)
+    // console.log("props===>", props)
     const dbRef = ref(getDatabase());
     await get(child(dbRef, `student/${props}`)).then(async (snapshot) => {
         if (snapshot.exists()) {
