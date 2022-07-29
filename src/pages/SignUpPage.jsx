@@ -5,10 +5,12 @@ import SignUp from '../components/AuthComponent/SignUp'
 
 const SignUpPage = () => {
   return (
-    <div>
+    <div className='container'>
 
       <NavBar />
-      <SignUp />
+      <div className='main' >
+        <SignUp />
+      </div>
       <Footer />
     </div>
   )

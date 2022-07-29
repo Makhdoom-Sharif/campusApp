@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { RemoveAppliedStudent } from '../../redux/action';
 import ProfileModal from './ProfileModal';
@@ -23,12 +24,24 @@ export default function ListDialog(props) {
 
     const handleClose = () => {
         dispatch(RemoveAppliedStudent())
+        props.handleListClose()
         setOpen(false);
     };
     const handleOpen = async () => {
-        await props.handleListModalOpen().then(() => handleClickOpen())
+        await props.handleListModalOpen()
+        //     .then(() => {
+        //     handleClickOpen()
+        // })
+        // if (props.AppliedStudent[0]) {
+        //     handleClickOpen()
+        // }
 
     }
+
+    useEffect(() => {
+        dispatch(RemoveAppliedStudent())
+    }, [])
+
     const handleClick = () => {
         handleClose()
     }
@@ -48,7 +61,7 @@ export default function ListDialog(props) {
                 {props.ListButtonText}
             </Button>
             <Dialog
-                open={open}
+                open={props.openList}
                 onClose={handleClose}
                 scroll={scroll}
                 aria-labelledby="scroll-dialog-title"

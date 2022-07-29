@@ -13,6 +13,7 @@ const Textfield = (props) => {
   return (
     <div className='input-field'>
       <TextField
+        focused={!disable}
         onBlur={() => setDisable(true)}
         multiline
         rowsMax={4}

@@ -59,13 +59,14 @@ export default function StudentProfile() {
 
   const formik = useFormik({
     initialValues: {
-      fullname: UserDetails.fullname,
-      website: UserDetails.website,
-      address: UserDetails.address,
-      contact: UserDetails.contact,
-      service: UserDetails.service
+      fullname: UserDetails.fullname || "",
+      website: UserDetails.website || "",
+      address: UserDetails.address || "",
+      contact: UserDetails.contact || "",
+      service: UserDetails.service || ""
     },
     validationSchema,
+    enableReinitialize: true,
     onSubmit: async (values) => {
       dispatch(ProfileUpdateInit());
       setDisable(true);

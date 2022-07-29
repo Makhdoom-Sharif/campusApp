@@ -11,7 +11,7 @@ const GetAppliedStudentData = async (props, dispatch) => {
         if (snapshot.exists()) {
             await snapshot.val()
             // console.log("std", snapshot.val())
-            dispatch(GetAppliedStudents(snapshot.val()))
+            await dispatch(GetAppliedStudents(snapshot.val()))
         }
     }).catch((error) => {
         console.error(error)

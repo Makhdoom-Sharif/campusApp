@@ -7,7 +7,7 @@ export async function ProfileUpdate(userData) {
   updates[`${userData.role}/${userData.uid}`] = Data;
   await update(ref(db, `${userData.role}/${userData.uid}`), Data)
     .then(() => {
-      userData.dispatch(ProfileUpdateSuccess(userData));
+      // userData.dispatch(ProfileUpdateSuccess(userData));
       console.log("Data saved successfully!");
     })
     .catch(error => {

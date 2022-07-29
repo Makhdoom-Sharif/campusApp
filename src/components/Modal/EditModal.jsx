@@ -22,6 +22,7 @@ import { JobDeleteInit, JobUpdateFail, JobUpdateInit, JobUpdateSuccess } from '.
 import DialogBox from '../DialogBox/DialogBox';
 import DropDown from '../DropDown/DropDown';
 import Textfield from '../Inputfeild/Textfield';
+import SnackBar from '../Snackbar/SnakBar';
 import ListDialog from './ListModal';
 
 const style = {
@@ -37,28 +38,48 @@ const style = {
 };
 
 export default function EditModal(props) {
+    const [snackDisplay, setSnackDispaly] = useState(false)
+    const [openList, setOpenList] = useState(false)
     const dispatch = useDispatch();
     const UserDetails = useSelector((state) => state.user);
+    const AppliedStudent = UserDetails.AppliedStudents
     const { JobDetails, index } = props
     const [open, setOpen] = useState(false);
     const handleEdit = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [disable, setDisable] = useState(true)
+    const [errorMessage, setErrorMessage] = useState("")
 
 
-
+    const handleCloseAlert = () => {
+        setSnackDispaly(false)
+        // setErrorMessage("")
+    }
+    const handleListClose = () => {
+        setOpenList(false)
+    }
     const handleReset = () => {
         setDisable(true);
         formik.handleReset();
+        // console.log(formik.values)
     };
+
     const handleChange = (e) => {
         setDisable(false)
         formik.handleChange(e)
     }
+
     const handleDelete = async () => {
         dispatch(JobDeleteInit())
-        await DeleteJob(JobDetails, UserDetails.uid, dispatch, index)
-
+        try {
+            await DeleteJob(JobDetails, UserDetails.uid, dispatch, index)
+            setErrorMessage("Job deleted successfully")
+            setSnackDispaly(true)
+            console.log("success");
+        } catch {
+            setErrorMessage("Job deletion failed")
+            setSnackDispaly(true)
+        }
 
     }
     const handleListModalOpen = async () => {
@@ -67,10 +88,13 @@ export default function EditModal(props) {
             const ListArray = [...Object.entries(JobDetails?.ApplicantsIDs)?.map(entry => entry[0])]
             ListArray.map(async (item, index) =>
                 await GetAppliedStudentData(item, dispatch)
-
             )
+
+            setOpenList(true)
         } else {
-            console.log("first")
+            setErrorMessage("No Applicants Found")
+            setSnackDispaly(true)
+            // console.log("first", JobDetails)
         }
 
 
@@ -79,7 +103,7 @@ export default function EditModal(props) {
 
 
 
-    const AppliedStudent = UserDetails.AppliedStudents
+
 
     const validationSchema = Yup.object({
         JobDesignation: Yup.string(),
@@ -116,8 +140,8 @@ export default function EditModal(props) {
                     jobID: JobDetails.jobID,
                     JobDescription: values.JobDescription
                 })
-
-                dispatch(JobUpdateSuccess({ ...values, jobID: JobDetails.jobID, index }));
+                console.log(JobDetails)
+                dispatch(JobUpdateSuccess({ ...values, jobID: JobDetails.jobID, index, ApplicantsIDs: JobDetails.ApplicantsIDs }));
             } catch (e) {
                 console.log(e);
                 dispatch(JobUpdateFail());
@@ -129,6 +153,7 @@ export default function EditModal(props) {
 
     return (
         <div>
+            <SnackBar openSnackBar={snackDisplay} handleCloseAlert={handleCloseAlert} severity={"error"} AlertMessage={errorMessage} />
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -299,11 +324,17 @@ export default function EditModal(props) {
                 </Fade>
             </Modal>
             <div style={{ display: "flex", alignItems: "center" }}>
-                <DialogBox ButtonText={"Delete"} size="small" DialogBoxTitle={"Do you want to delete this posted job?"} DialogBoxText={"Note:This post will be deleted permenantly."} AgreeButtonText={"Yes"} CancelButtonText={"No"} handleAgreeClick={handleDelete} />
+                <DialogBox ButtonText={"Delete"} size="small" DialogBoxTitle={"Do you want to delete this posted job?"}
+                    DialogBoxText={"Note:This post will be deleted permenantly."}
+                    AgreeButtonText={"Yes"}
+                    CancelButtonText={"No"}
+                    handleAgreeClick={handleDelete} />
                 <Button size="small" onClick={handleEdit}>Edit</Button>
                 <ListDialog ListButtonText={"Applicants"} ListDilogTitle={"Applicants:"}
                     ListDialogCloseButton={"Close"} handleListModalOpen={handleListModalOpen}
-                    AppliedStudent={AppliedStudent} />
+                    AppliedStudent={AppliedStudent}
+                    openList={openList}
+                    handleListClose={handleListClose} />
             </div>
 
         </div>

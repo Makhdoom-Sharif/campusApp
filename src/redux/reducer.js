@@ -71,9 +71,9 @@ const userReducer = (state = initialState, action) => {
       };
     case type.JOB_UPDATE_INIT:
     case type.JOB_POST_INIT:
-    case type.POFILE_UPDATE_INIT:
+    case type.PROFILE_UPDATE_INIT:
       return { ...state, loading: true };
-    case type.POFILE_UPDATE_SUCCESS:
+    case type.PROFILE_UPDATE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -120,7 +120,7 @@ const userReducer = (state = initialState, action) => {
     case type.JOB_POST_FAIL:
     case type.PASSWORD_RESET_FAIL:
     case type.PASSWORD_RESET_SUCCESS:
-    case type.POFILE_UPDATE_Fail:
+    case type.PROFILE_UPDATE_Fail:
     case type.LOGOUT_FAIL:
       return { ...state, loading: false };
     case type.REGISTER_FAIL:
@@ -240,33 +240,35 @@ const userReducer = (state = initialState, action) => {
       }
 
 
-    case type.COMPANY_BLOCKED_OR_UNBLOCK_SUCCESS:
+    case type.COMPANY_BLOCKED_OR_UNBLOCK_SUCCESS: {
+      let approvedCompanies = [...state.ApprovedCompaniesArray]
+      let currentIndex = approvedCompanies.findIndex((item) => item?.email === action?.payload?.item?.email)
+      if (currentIndex !== -1)
+        approvedCompanies[currentIndex] = action.payload.item
       return {
         ...state,
-        ApprovedCompaniesArray: state.ApprovedCompaniesArray.map(
-          (item, i) => i === action.payload.index ? action.payload.item
-            : item
-        )
+        ApprovedCompaniesArray: approvedCompanies
+
+      }
+    }
+
+
+
+
+
+    case type.STUDENT_BLOCKED_OR_UNBLOCK_SUCCESS: {
+      let approvedStudents = [...state.ApprovedStudentsArray]
+      let currentIndex = approvedStudents.findIndex((item) => item?.email === action?.payload?.item?.email)
+      if (currentIndex !== -1)
+        approvedStudents[currentIndex] = action.payload.item
+      return {
+        ...state,
+        ApprovedStudentsArray: approvedStudents
 
       }
 
 
-
-
-
-
-    case type.STUDENT_BLOCKED_OR_UNBLOCK_SUCCESS:
-      return {
-        ...state,
-        ApprovedStudentsArray: state.ApprovedStudentsArray.map(
-          (item, i) => i === action.payload.index ? action.payload.item
-            : item
-        )
-
-      }
-
-
-
+    }
     case type.USER_BLOCK_AND_UNBLOCK:
       return {
         ...state,

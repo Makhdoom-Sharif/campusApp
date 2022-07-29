@@ -10,11 +10,12 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Approvals } from '../../firebase/NewApproval';
-import TableData from './Table/Table';
+// import TableData from './Table/Table';
 import TabNavigation from './TabNavigation/TabNavigation';
 import TotalDetails from './TotalDetails';
 import { onValue, ref } from "firebase/database";
 import { database } from "../../firebase/firebaseConfig";
+import TableU from './Table/TableU';
 
 
 const mdTheme = createTheme();
@@ -30,7 +31,7 @@ function DashboardContent() {
   useEffect(() => {
 
     if (uid) {
-      const starCountRefPost = ref(database, 'postedJobs/');
+      const starCountRefPost = ref(database, 'company/');
       onValue(starCountRefPost, (snapshot) => {
         Approvals(dispatch)
       })
@@ -39,7 +40,8 @@ function DashboardContent() {
 
 
 
-  }, [uid])
+  }, [])
+
   return (
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
@@ -51,7 +53,7 @@ function DashboardContent() {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 350,
+                height: 535,
               }}
             >
               <TotalDetails />
@@ -63,7 +65,7 @@ function DashboardContent() {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 350,
+                height: 535,
               }}
             >
               <TabNavigation />
@@ -73,7 +75,7 @@ function DashboardContent() {
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
               {/* <CompanyData /> */}
-              <TableData
+              <TableU
                 Title={"Registered Companies"}
                 TableCellHead1={"Company Name"}
                 TableCellHead2={"Email"}
@@ -89,7 +91,7 @@ function DashboardContent() {
           </Grid>
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <TableData
+              <TableU
                 Title={"Registered Students"}
                 TableCellHead1={"Student ID"}
                 TableCellHead2={"Email"}

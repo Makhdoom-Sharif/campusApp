@@ -29,7 +29,6 @@ async function handleBlockOrUnblock(role, item, dispatch, index) {
                 }
             })
 
-
             dispatch(CompanyBlockedOrUnNlockSuccess({ index, data }))
         }
 

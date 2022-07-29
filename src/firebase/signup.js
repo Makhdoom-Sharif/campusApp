@@ -30,7 +30,7 @@ async function writeUserData(uid, email, role, userName, dispatch) {
 
 
 
-    await AvailableJobs(dispatch)
+    role === "student" && await AvailableJobs(dispatch)
     dispatch(registerSuccess({ uid, email, role, userName }));
 
   } catch (error) {

@@ -4,9 +4,11 @@ import NavBar from '../components/Navbar/NavBar'
 import ResetPassword from "../components/AuthComponent/ResetPassword";
 const ForgotPassword = () => {
   return (
-    <div>
+    <div className='container'>
       <NavBar />
-      <ResetPassword />
+      <div className='main'>
+        <ResetPassword />
+      </div>
       <Footer />
     </div>
   )

@@ -2,12 +2,14 @@ import React from 'react'
 import NavBar from '../components/Navbar/NavBar'
 import Login from '../components/AuthComponent/Login'
 import Footer from '../components/Footer/Footer'
-
+import './style.css'
 const LoginPage = () => {
   return (
-    <div>
+    <div className='container'>
       <NavBar />
-      <Login />
+      <div className='main'>
+        <Login />
+      </div>
       <Footer />
     </div>
   )

@@ -9,21 +9,23 @@ const StudentHomePage = () => {
 
   const { approved, blocked } = useSelector((state) => state.user);
   return (
-    <div>
+    <div className='container'>
 
       <NavBar />
-      {approved && !blocked ?
-        <AvailableJobs />
-        : <Typography
-          component="h1"
-          variant="h3"
-          align="center"
-          color="text.primary"
-          gutterBottom
-        >
-          You are not authorizes. <br />Contact to admin team
-        </Typography>
-      }
+      <div className='main'>
+        {approved && !blocked ?
+          <AvailableJobs />
+          : <Typography
+            component="h1"
+            variant="h3"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            You are not authorizes. <br />Contact to admin team
+          </Typography>
+        }
+      </div>
       <Footer />
     </div>
   )

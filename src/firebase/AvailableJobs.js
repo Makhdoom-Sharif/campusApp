@@ -12,16 +12,6 @@ async function AvailableJobs(dispatch, uid) {
             const jobArray = await myFunction()
 
 
-
-            async function AvailableJobs() {
-
-                return await jobArray?.map((item, index) =>
-                    item.blocked ? false :
-                        item?.ApplicantsIDs ?
-                            Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? false : item) : item)
-            }
-
-
             async function AppliedJobs() {
 
                 return await jobArray?.map((item, index) =>
@@ -30,13 +20,19 @@ async function AvailableJobs(dispatch, uid) {
                             Object?.entries(item?.ApplicantsIDs)?.map((entry) => entry[0] === uid ? item : false) : false)
             }
 
-            const AvailableJobsArray = await AvailableJobs()
+            const AppliedJobsList = await AppliedJobs()
+            const AppliedJobsArray = AppliedJobsList.flat().filter(Boolean)
 
-            const AppliedJobsArray = await AppliedJobs()
 
-            dispatch(GetAllJobs(AvailableJobsArray.flat().filter(Boolean)))
 
-            dispatch(AppliedJobsGetSuccess(AppliedJobsArray.flat().filter(Boolean)))
+            // console.log(jobArray)
+            // console.log(AppliedJobsArray)
+            const AvailableJobsArray = jobArray.filter(a => !AppliedJobsArray.map(b => b.jobID).includes(a.jobID))
+
+            // console.log("filter", AvailableJobsArray)
+            dispatch(GetAllJobs(AvailableJobsArray))
+
+            dispatch(AppliedJobsGetSuccess(AppliedJobsArray))
         }
     }).catch(error => {
         console.log("available jobs error", error)
@@ -60,6 +56,7 @@ const AllJobsArray = async (uid, dispatch) => {
                 return await [...Object.entries(snapshot.val()).map(entry => entry[1])].filter(element => element.companyID === uid)
             }
             const jobArray = await filterArray()
+            // console.log("company jobs===>", jobArray.filter(Boolean))
             dispatch(GetAllJobs(jobArray.filter(Boolean)))
 
         }

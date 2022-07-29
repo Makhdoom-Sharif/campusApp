@@ -38,7 +38,7 @@ export default function SignUp() {
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email is invalid'),
     password: Yup.string().min(6, "Password must be at least 6 character long").max(10, "Password must be at most 10 character long").required("Password is mandatory").required(),
     role: Yup.string().required("Role is mandatory"),
-    userName: Yup.string().required("Input Must be valid"),
+    userName: Yup.string().required("Input Must be valid").matches(/^[a-zA-Z0-9\s]+(?:[-:%/\\()\u2122.+][a-zA-Z0-9\s]+)*$/, "Not a valid entry").trim(),
   });
 
   const formik = useFormik({

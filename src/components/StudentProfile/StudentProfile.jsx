@@ -31,6 +31,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 
 
 export default function StudentProfile() {
+  // const [UploadBtn, setUploadBtn] = useState(false)
   const [disable, setDisable] = useState(true);
   const [ImgLoader, setImgLoader] = useState(false);
   const UserDetails = useSelector((state) => state.user);
@@ -39,16 +40,20 @@ export default function StudentProfile() {
     setDisable(false);
     formik.handleChange(e);
   };
+
   const handleReset = () => {
-    setDisable(true);
     formik.handleReset();
+    setDisable(true);
+
   };
 
   const handleUploadImage = async (e) => {
     setImgLoader(true)
     await uploadImage({ e: e, dispatch: dispatch, ImgName: UserDetails.uid, role: UserDetails.role });
     setImgLoader(false)
+    // setUploadBtn(false)
   };
+
   const validationSchema = Yup.object({
     fullname: Yup.string(),
     fathername: Yup.string(),
@@ -64,13 +69,13 @@ export default function StudentProfile() {
 
   const formik = useFormik({
     initialValues: {
-      fullname: UserDetails.fullname,
-      fathername: UserDetails.fathername,
-      cnic: UserDetails.cnic,
-      address: UserDetails.address,
-      contact: UserDetails.contact,
-      qualification: UserDetails.qualification,
-      category: UserDetails.category
+      fullname: UserDetails.fullname || "",
+      fathername: UserDetails.fathername || "",
+      cnic: UserDetails.cnic || "",
+      address: UserDetails.address || "",
+      contact: UserDetails.contact || "",
+      qualification: UserDetails.qualification || "",
+      category: UserDetails.category || ""
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -91,7 +96,7 @@ export default function StudentProfile() {
         });
         dispatch(ProfileUpdateSuccess(values));
       } catch (e) {
-        // console.log(e);
+
         dispatch(ProfileUpdateFail());
       }
     }
@@ -107,9 +112,10 @@ export default function StudentProfile() {
           "& > :not(style)": {
             m: 1,
             width: "128vh",
-            height: "128vh"
+            height: "100vh"
           }
         }}
+        component='form'
       >
         <Paper
           elevation={3}
@@ -119,14 +125,15 @@ export default function StudentProfile() {
           <div className='profileHead'>
             <div className='head'>
               <div>
-                <label htmlFor='icon-button-file' className='uploadBtn'>
+                <label htmlFor='icon-button-file' className='uploadBtn' >
                   <Input
                     accept='image/*'
                     onChange={handleUploadImage}
                     id='icon-button-file'
                     type='file'
+                    disabled={ImgLoader}
                   />
-                  <IconButton aria-label='upload picture' component='span'>
+                  <IconButton aria-label='upload picture' component='span'   >
                     <PhotoCamera />
                   </IconButton>
                 </label>
@@ -146,7 +153,7 @@ export default function StudentProfile() {
               justifyContent: "center"
             }}
           >
-            <div className='profile'>
+            <div className='profile' type='form'>
               <Title>Personal Info</Title>
               <Textfield
                 editIcon={true}
@@ -178,7 +185,7 @@ export default function StudentProfile() {
                 fullWidth={true}
                 name='fathername'
                 onChange={handleChange}
-                value={formik.values.fathername}
+                value={formik.values.fathername || ""}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
@@ -306,7 +313,7 @@ export default function StudentProfile() {
                 style={{ marginBottom: "10px" }}
               />
               <DropDown
-                sx={{ mt: 1, width: 475 }}
+                sx={{ mt: 1, width: 500 }}
                 variant='standard'
                 label='Category'
                 name='category'
@@ -348,3 +355,7 @@ export default function StudentProfile() {
     </>
   );
 }
+
+
+
+

@@ -6,7 +6,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Title from '../../Title';
 import { useSelector } from 'react-redux';
-import PanelTab from './PanelTab'
+// import PanelTab from './PanelTab'
+import PanelTabU from './PanelTabU';
 
 
 
@@ -19,9 +20,9 @@ export default function TabNavigation() {
     };
 
     return (
-        <Box sx={{ width: '100%', typography: 'body1' }}>
+        <Box sx={{ width: '100%', typography: 'body1', height: "100%", display: "flex", flexDirection: "column", justifyContent: "stretch" }}>
             <TabContext value={value}>
-                <Title>New Approval Request</Title>
+                <Title >New Approval Request</Title>
 
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example" textIndicator={"#491D84"}>
@@ -29,11 +30,11 @@ export default function TabNavigation() {
                         <Tab label="Companies" value="2" />
                     </TabList>
                 </Box>
-                <TabPanel value="1">
-                    <PanelTab TableHead1={"ID"} TableHead2={"Email"} Data={NewApprovalStudentsArray} ListDilogTitle={"All Approval Requests"} />
+                <TabPanel value="1" style={{ padding: "0px" }}>
+                    <PanelTabU TableHead1={"ID"} TableHead2={"Email"} Data={NewApprovalStudentsArray} ListDilogTitle={"All Approval Requests"} />
                 </TabPanel>
-                <TabPanel value="2">
-                    <PanelTab TableHead1={"Company"} TableHead2={"Email"} Data={NewApprovalCompaniesArray} ListDilogTitle={"All Approval Requests"} />
+                <TabPanel value="2" style={{ padding: "0px", height: "100%" }}>
+                    <PanelTabU TableHead1={"Company"} TableHead2={"Email"} Data={NewApprovalCompaniesArray} ListDilogTitle={"All Approval Requests"} />
                 </TabPanel>
             </TabContext>
         </Box>

@@ -73,10 +73,10 @@ export const logoutFail = error => ({
 
 
 export const ProfileUpdateInit = () => ({
-  type: type.POFILE_UPDATE_INIT
+  type: type.PROFILE_UPDATE_INIT
 });
 export const ProfileUpdateSuccess = Data => ({
-  type: type.POFILE_UPDATE_SUCCESS,
+  type: type.PROFILE_UPDATE_SUCCESS,
   payload: {
     fullname: Data.fullname,
     fathername: Data.fathername,
@@ -90,7 +90,7 @@ export const ProfileUpdateSuccess = Data => ({
   }
 });
 export const ProfileUpdateFail = Data => ({
-  type: type.POFILE_UPDATE_Fail
+  type: type.PROFILE_UPDATE_Fail
 });
 export const ProfilePictureUploadSuccess = Data => ({
   type: type.PROFILE_PICTURE_UPLOAD_SUCCESS,
@@ -137,7 +137,8 @@ export const JobUpdateSuccess = (Data) => ({
     VacantPosition: Data.VacantPosition,
     jobID: Data.jobID,
     index: Data.index,
-    JobDescription: Data.JobDescription
+    JobDescription: Data.JobDescription,
+    ApplicantsIDs: Data.ApplicantsIDs
   }
 })
 export const JobUpdateFail = () => ({
@@ -204,7 +205,7 @@ export const ApprovalSuccessStudents = (Data) => ({
   type: type.APPROVAL_SUCCESS_STUDENTS,
   payload: {
     index: Data.index,
-    item: Data.item
+    item: Data.data
   }
 })
 
@@ -212,7 +213,7 @@ export const ApprovalSuccessCompanies = (Data) => ({
   type: type.APPROVAL_SUCCESS_COMPANIES,
   payload: {
     index: Data.index,
-    item: Data.item
+    item: Data.data
   }
 })
 
@@ -220,7 +221,7 @@ export const ApprovalSuccessCompanies = (Data) => ({
 export const CompanyBlockedOrUnNlockSuccess = (Data) => ({
   type: type.COMPANY_BLOCKED_OR_UNBLOCK_SUCCESS,
   payload: {
-    index: Data.index,
+    // index: Data.index,
     item: Data.data
   }
 })
@@ -229,7 +230,7 @@ export const CompanyBlockedOrUnNlockSuccess = (Data) => ({
 export const StudentBlockedOrUnNlockSuccess = (Data) => ({
   type: type.STUDENT_BLOCKED_OR_UNBLOCK_SUCCESS,
   payload: {
-    index: Data.index,
+    // index: Data.index,
     item: Data.data
   }
 })

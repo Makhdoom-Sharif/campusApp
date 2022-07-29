@@ -34,17 +34,17 @@ async function AcceptApprovals(category, index, uid, dispatch, item) {
     // }).catch((e) => {
     //     console.log("delete fails", e)
     // })
-
+    const data = { ...item, approved: true }
 
     await update(ref(db, `${category}/${uid}`), { approved: true }).then(() => {
         if (category === "student") {
             // console.log("S==>", { index, item })
-            dispatch(ApprovalSuccessStudents({ index, item }))
+            dispatch(ApprovalSuccessStudents({ index, data }))
 
         }
         else {
             // console.log("C==>", { index, item })
-            dispatch(ApprovalSuccessCompanies({ index, item }))
+            dispatch(ApprovalSuccessCompanies({ index, data }))
         }
         // console.log("approved!");
     })

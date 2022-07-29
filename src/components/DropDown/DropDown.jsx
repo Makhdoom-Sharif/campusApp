@@ -13,7 +13,7 @@ export default function DropDown(props) {
   return (
     <Box sx={props.sx}>
       <FormControl fullWidth={props.fullWidth} >
-        <InputLabel id="demo-multiple-checkbox-label" >{props.label}:</InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label">{props.label}:</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id={props.id}

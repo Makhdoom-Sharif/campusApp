@@ -20,6 +20,7 @@ import {
 } from "../../redux/action";
 import DropDown from '../DropDown/DropDown';
 import Textfield from "../Inputfeild/Textfield";
+import SnackBar from '../Snackbar/SnakBar';
 import "../StudentProfile/StudentProfile.css";
 import Title from "../Title";
 
@@ -28,6 +29,9 @@ import Title from "../Title";
 
 
 export default function PostNewJob() {
+    const [errorMessage, setErrorMessage] = useState("")
+    const [severitySnackbar, setSeveritySnackbar] = useState("")
+    const [snackDisplay, setSnackDispaly] = useState(false)
     const [disable, setDisable] = useState(true);
     const UserDetails = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -35,6 +39,11 @@ export default function PostNewJob() {
         setDisable(false);
         formik.handleChange(e);
     };
+    const handleCloseAlert = () => {
+        setSnackDispaly(false)
+        setSeveritySnackbar("")
+        setErrorMessage("")
+    }
     const handleReset = () => {
         setDisable(true);
         formik.handleReset();
@@ -74,10 +83,14 @@ export default function PostNewJob() {
                     JobDescription: values.JobDescription,
                     jobID: `${v4()}`
                 });
-
+                setErrorMessage("Job Posted Successfully")
+                setSeveritySnackbar("success")
+                setSnackDispaly(true)
                 handleReset()
             } catch (e) {
-                // console.log(e);
+                setErrorMessage("Job post failed")
+                setSeveritySnackbar("error")
+                setSnackDispaly(true)
                 dispatch(JobPostFail());
             }
         }
@@ -93,15 +106,18 @@ export default function PostNewJob() {
                     "& > :not(style)": {
                         m: 1,
                         width: "128vh",
-                        height: "128vh"
+                        height: "80vh"
                     }
                 }}
             >
+
+
                 <Paper
                     elevation={3}
                     component='form'
                     onSubmit={formik.handleSubmit}
                 >
+                    <SnackBar openSnackBar={snackDisplay} handleCloseAlert={handleCloseAlert} severity={severitySnackbar} AlertMessage={errorMessage} />
                     <div className='profileHead'>
                         <div className='head'>
                         </div>
@@ -219,7 +235,7 @@ export default function PostNewJob() {
                                 style={{ marginBottom: "10px" }}
                             />
                             <DropDown
-                                sx={{ m: 1, width: 475 }}
+                                sx={{ m: 1, width: 500 }}
                                 variant='standard'
                                 label='Category'
                                 name='category'
@@ -242,7 +258,7 @@ export default function PostNewJob() {
                                 disabled={disable}
                                 loading={UserDetails.loading ? true : false}
                             >
-                                Apply Changes
+                                Post
                             </LoadingButton>
                         </div>
                         <div className='reset-btn'>

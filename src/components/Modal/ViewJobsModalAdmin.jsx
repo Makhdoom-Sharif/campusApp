@@ -63,7 +63,12 @@ export default function ViewJobsModalAdmin(props) {
                 aria-describedby="scroll-dialog-description"
                 fullWidth={true}
             >
-                <DialogTitle id="scroll-dialog-title">{props.ListDilogTitle1}</DialogTitle>
+                <DialogTitle id="scroll-dialog-title" style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }} >{props.ListDilogTitle1}</DialogTitle>
                 <DialogContent dividers={scroll === 'paper'}>
                     <DialogContentText
                         id="scroll-dialog-description"
@@ -95,7 +100,7 @@ export default function ViewJobsModalAdmin(props) {
                                             />
 
                                         ))
-                                        : <Typography>No jobs available</Typography>
+                                        : <Typography >No jobs available</Typography>
                                 }
 
 

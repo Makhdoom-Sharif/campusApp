@@ -12,12 +12,44 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import HomeIcon from '@mui/icons-material/Home';
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../Navbar/NavBar.css"
 export default function Drawer() {
+
+    const CompanyDrawerTabs = [
+        {
+            name: "Home",
+            pathname: "/company"
+        },
+        {
+            name: "Post Now Job",
+            pathname: "/postnewjobs"
+        }
+    ]
+
+    const StudentDrawerTabs = [
+        {
+            name: 'Home',
+            pathname: '/student'
+        },
+        {
+            name: 'View Applied Jobs',
+            pathname: '/appliedjobs'
+        }]
+
+    const mystyle = {
+        backgroundColor: "#220D50", color: "#fff"
+    }
+    const iconStyle = {
+        color: "#fff"
+    }
+
+    const location = useLocation();
+    // console.log("==>", location.pathname)
     const { role } = useSelector((state) => state.user);
     const [state, setState] = useState({
         bottom: false,
@@ -42,14 +74,17 @@ export default function Drawer() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             {role === 'company' ? <List>
-                {['Post New Jobs', 'Posted Jobs'].map((text, index) => (
-                    <Link to={text === 'Post New Jobs' ? "/postnewjobs" : "/postedjobs"} style={{ textDecoration: "none", color: "inherit" }}>
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton >
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <WorkIcon /> : <WorkHistoryIcon />}
+                {CompanyDrawerTabs.map((item, index) => (
+                    <Link to={item.name === 'Home' ? "/company" : "/postnewjobs"} style={{ textDecoration: "none", color: "inherit" }}>
+                        <ListItem text={item.name} disablePadding>
+                            <ListItemButton style={location.pathname === item.pathname ? mystyle : null}>
+                                <ListItemIcon >
+                                    {index % 2 === 0 ?
+                                        <WorkHistoryIcon style={location.pathname === item.pathname ? iconStyle : null} />
+                                        :
+                                        <WorkIcon style={location.pathname === item.pathname ? iconStyle : null} />}
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText primary={item.name} />
                             </ListItemButton>
                         </ListItem>
                         <Divider />
@@ -59,14 +94,17 @@ export default function Drawer() {
             </List>
                 :
                 <List>
-                    {['View Applied Jobs'].map((text, index) => (
-                        <Link to={text === 'View Applied Jobs' ? "/appliedjobs" : "/relatedjobs"} style={{ textDecoration: "none", color: "inherit" }}>
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
+                    {StudentDrawerTabs.map((item, index) => (
+                        <Link to={item.name === 'View Applied Jobs' ? "/appliedjobs" : "/student"} style={{ textDecoration: "none", color: "inherit" }}>
+                            <ListItem key={item.name} disablePadding>
+                                <ListItemButton style={location.pathname === item.pathname ? mystyle : null}>
                                     <ListItemIcon>
-                                        {index % 2 === 0 ? <FactCheckIcon /> : <LinkIcon />}
+                                        {index % 2 === 0 ?
+                                            <HomeIcon style={location.pathname === item.pathname ? iconStyle : null} />
+                                            :
+                                            <FactCheckIcon style={location.pathname === item.pathname ? iconStyle : null} />}
                                     </ListItemIcon>
-                                    <ListItemText primary={text} />
+                                    <ListItemText primary={item.name} />
                                 </ListItemButton>
                             </ListItem>
                             <Divider />

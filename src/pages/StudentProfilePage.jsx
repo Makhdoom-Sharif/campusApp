@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Footer from '../components/Footer/Footer'
 import NavBar from '../components/Navbar/NavBar'
-import StudentProfile from '../components/StudentProfile/StudentProfile'
+import StudentProfile from '../components/StudentProfile/StudentProfileU'
 const StudentProfilePage = () => {
   const { approved, blocked
   } = useSelector((state) => state.user);
