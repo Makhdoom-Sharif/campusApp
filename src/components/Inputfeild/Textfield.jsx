@@ -1,5 +1,5 @@
 import EditIcon from "@mui/icons-material/Edit";
-import { TextField } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../StudentProfile/StudentProfile.css";
 const Textfield = (props) => {
@@ -48,9 +48,9 @@ const Textfield = (props) => {
         InputLabelProps={{ style: { color: '#000000' } }}
       />
       {props.editIcon ? disable && (
-        <button className='btn' onClick={handleBtn}>
-          <EditIcon className='Icon-btn' />
-        </button>
+        <IconButton size="small" onClick={handleBtn} >
+          <EditIcon fontSize="16px" />
+        </IconButton>
       ) : <></>
 
       }

@@ -84,111 +84,114 @@ const ResetPassword = () => {
   }, [reset, navigate]);
 
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <Container component="main" minWidth="xs">
-          <CssBaseline />
+
+    <ThemeProvider theme={theme}>
+      <Container component="main" >
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            maxWidth: "448px",
+            px: "26px",
+            mx: "auto"
+          }}
+        >
+          <SnackBar severity="error" openSnackBar={openSnackBar} handleCloseAlert={handleCloseSnackBar}
+            AlertMessage={error}
+
+          />
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} className='Button'>
+            <RotateLeftOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Forgot Password..?
+          </Typography>
+          <p>Enter your registered email address in order to get reset link.</p>
           <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            noValidate
             sx={{
-              marginTop: 8,
+              mt: 1,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              width: "100%"
             }}
           >
-            <SnackBar severity="error" openSnackBar={openSnackBar} handleCloseAlert={handleCloseSnackBar}
-              AlertMessage={error}
-
-            />
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} className='Button'>
-              <RotateLeftOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Forgot Password..?
-            </Typography>
-            <p>Enter your registered email address in order to get reset link.</p>
-            <Box
-              component="form"
-              onSubmit={formik.handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-              style={{
-                display: "flex",
-                flexDirection: "column"
-              }}
-            >
-              <TextField
-
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                style={{ minWidth: 375, maxWidth: 375 }}
-                sx={{
-                  "& .MuiOutlinedInput-root.Mui-focused": {
-                    "& > fieldset": {
-                      borderColor: "#532696"
-                    }
+            <TextField
+              required
+              fullWidth
+              // id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              sx={{
+                "& .MuiOutlinedInput-root.Mui-focused": {
+                  "& > fieldset": {
+                    borderColor: "#532696"
                   }
-                }}
-                InputLabelProps={{ style: { color: '#000000' } }}
-              />
-              {formik.errors.email && (
-                <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
-                  {formik.errors.email}
-                </p>
-              )}
-              <LoadingButton
-                style={{ minWidth: 375, maxWidth: 375 }}
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                loading={UserDetails.loading ? true : false}
-                className='Button'
-              >
-                Send Email
-              </LoadingButton>
-              <Grid container justifyContent='flex-end'>
-                <Grid style={{ justifyContent: 'space-between' }} item>
-                  <Link to={UserDetails.loading ? "#" : "/"}
-                    style={{ color: "inherit", textDecoration: "underline" }}
-                  >
-                    {"Go back to login page?"}
-                  </Link>
-
-                </Grid>
-              </Grid>
-
-            </Box>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="draggable-dialog-title"
+                },
+              }}
+              InputLabelProps={{ style: { color: '#000000' } }}
+            />
+            {formik.errors.email && (
+              <p style={{ color: "red", marginLeft: "5px", display: "flex", marginBottom: "0px", marginTop: "0px" }}>
+                {formik.errors.email}
+              </p>
+            )}
+            <LoadingButton
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3, mb: 2,
+              }}
+              loading={UserDetails.loading ? true : false}
+              className='Button'
             >
-              <DialogTitle
-                style={{ cursor: "move" }}
-                id="draggable-dialog-title"
-              >
-                Link Sent Successfully
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Password Reset Link has been sent to your Email.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} className='Button'>Done</Button>
-              </DialogActions>
-            </Dialog>
+              Send Email
+            </LoadingButton>
+            <Grid container justifyContent='flex-end'>
+              <Grid style={{ justifyContent: 'space-between' }} item>
+                <Link to={UserDetails.loading ? "#" : "/"}
+                  style={{ color: "inherit", textDecoration: "underline" }}
+                >
+                  {"Go back to login page?"}
+                </Link>
+
+              </Grid>
+            </Grid>
+
           </Box>
-        </Container>
-      </ThemeProvider>
-    </div>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="draggable-dialog-title"
+          >
+            <DialogTitle
+              style={{ cursor: "move" }}
+              id="draggable-dialog-title"
+            >
+              Link Sent Successfully
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Password Reset Link has been sent to your Email.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} className='Button'>Done</Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+      </Container>
+    </ThemeProvider>
+
   );
 };
 

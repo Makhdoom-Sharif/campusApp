@@ -49,11 +49,11 @@ export default function PostNewJob() {
         formik.handleReset();
     };
     const validationSchema = Yup.object({
-        JobDesignation: Yup.string(),
-        RequiredQualification: Yup.string(),
+        JobDesignation: Yup.string().required(),
+        RequiredQualification: Yup.string().required(),
         Location: Yup.string(),
-        VacantPosition: Yup.string(),
-        category: Yup.string(),
+        VacantPosition: Yup.string().required(),
+        category: Yup.string().required(),
         JobDescription: Yup.string()
     });
 
@@ -235,7 +235,15 @@ export default function PostNewJob() {
                                 style={{ marginBottom: "10px" }}
                             />
                             <DropDown
-                                sx={{ m: 1, width: 500 }}
+                                sx={{ m: 1, width: "100%" }}
+                                // selectStyle={{
+                                // "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+                                //     color: "red !important"
+                                // }
+                                // "&:focus": {
+                                //     color: "red !important"
+                                // }
+                                // }}
                                 variant='standard'
                                 label='Category'
                                 name='category'
@@ -245,6 +253,7 @@ export default function PostNewJob() {
                                 arrayCategoray={["Fresher", "Mid-Level", "Senior"]}
                                 fullWidth={true}
                                 Icon={<CategoryIcon />}
+
                             />
 
                         </div>

@@ -7,12 +7,12 @@ import { Typography } from '@mui/material';
 import './style.css'
 const AppliedJobs = () => {
 
-    const { approved, blocked
+    const { approved, blocked, alljobs
     } = useSelector((state) => state.user);
     return (
         <div className='container' >
             <NavBar />
-            <div className='main'>
+            <div className={alljobs.length < 1 ? 'mainNoData' : "main"}>
                 {approved && !blocked ?
                     <AppliedJobsView />
                     : <Typography

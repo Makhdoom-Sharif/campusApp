@@ -178,12 +178,14 @@ export default function SignUp() {
             </LoadingButton>
 
             <Grid className="Links">
-              <Link
+              <Box component={Link}
                 to={UserDetails.loading ? "#" : "/forgotpassword"}
-                style={{ color: "inherit", textDecoration: "underline" }}
+                sx={{
+                  color: "inherit", textDecoration: "underline",
+                }}
               >
                 {"Forget Passwrord?"}
-              </Link>
+              </Box>
               <Link
                 to={UserDetails.loading ? "#" : "/signup"}
                 style={{ color: "inherit", textDecoration: "underline", paddingLeft: "20px" }}

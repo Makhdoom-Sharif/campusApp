@@ -13,11 +13,19 @@ export default function DropDown(props) {
   return (
     <Box sx={props.sx}>
       <FormControl fullWidth={props.fullWidth} >
-        <InputLabel id="demo-multiple-checkbox-label">{props.label}:</InputLabel>
+        <InputLabel
+          // id="demo-multiple-checkbox-label"
+          sx={{
+            // color: "red"
+            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+              color: "red"
+            }
+          }}>{props.label}:</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id={props.id}
           value={props.value}
+
           label={props.label}
           onChange={props.onChange}
           fullWidth={props.fullWidth}
@@ -27,6 +35,12 @@ export default function DropDown(props) {
           disabled={disable}
           onClick={() => setDisable(false)}
           disableUnderline={disable}
+          // sx={props.selectStyle || {}}
+          // sx={{
+          //   "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
+          //     color: "red !important"
+          //   }
+          // }}
           renderValue={(value) => {
             return (
               <Box sx={{ display: "flex", gap: 1 }}>

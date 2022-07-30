@@ -7,7 +7,7 @@ const LoginPage = () => {
   return (
     <div className='container'>
       <NavBar />
-      <div className='main'>
+      <div className='mainAuth'>
         <Login />
       </div>
       <Footer />

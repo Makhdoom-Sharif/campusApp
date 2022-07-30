@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import './style.css'
 const CompanyHomePage = () => {
-  const { approved, blocked
+  const { approved, blocked, alljobs
   } = useSelector((state) => state.user);
   return (
     <div className='container'>
       <NavBar />
-      <div className='main'>
+      <div className={alljobs.length < 1 ? 'mainNoData' : "main"}>
         {approved && !blocked ?
           <PostedJobs />
           : <Typography
